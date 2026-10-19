@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="id" class="h-full bg-slate-50">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mandiri Merchant Growth Hub — KCP Cibubur Lapangan Tembak</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Leaflet.js Maps CDN -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Plus Jakarta Sans', 'sans-serif'] },
+                    colors: {
+                        mandiri: {
+                            navy: '#002855',
+                            dark: '#001D3D',
+                            blue: '#00529C',
+                            gold: '#FFB800',
+                            goldHover: '#E5A600',
+                            light: '#F0F4F8'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #f1f5f9; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        #dashboardMap, #modalMap { z-index: 1; }
+        
+        /* Custom Leaflet Marker Pulse Effect */
+        .custom-gold-icon {
+            filter: drop-shadow(0px 3px 6px rgba(0, 40, 85, 0.4));
+            transition: transform 0.2s ease-in-out;
+        }
+        .custom-gold-icon:hover {
+            transform: scale(1.15);
+        }
+    </style>
+</head>
+<body class="h-full text-slate-800 antialiased flex overflow-hidden">
+
+    <!-- SIDEBAR NAVIGATION -->
+    <aside class="w-72 bg-mandiri-dark text-white flex flex-col justify-between shadow-2xl flex-shrink-0 z-20">
+        <div>
+            <!-- Header Brand -->
+            <div class="p-6 border-b border-slate-800 flex items-center space-x-3.5">
+                <div class="w-11 h-11 bg-gradient-to-tr from-mandiri-gold to-amber-300 rounded-xl flex items-center justify-center text-mandiri-dark font-extrabold text-2xl shadow-lg shadow-amber-500/20">
+                    m
+                </div>
+                <div>
+                    <h1 class="font-bold text-base tracking-tight text-white leading-none">MANDIRI</h1>
+                    <p class="text-[11px] text-amber-400 font-semibold tracking-wide uppercase mt-1">Growth Hub 324</p>
+                </div>
+            </div>
+            
+            <div class="px-6 pt-6 pb-2 text-[10px] font-bold text-slate-400 tracking-wider uppercase">
+                Program Branch X (ODP IT)
+            </div>
+
+            <!-- Navigation Links -->
+            <nav class="space-y-1.5 px-3">
+                <button onclick="switchTab('dashboard')" id="nav-dashboard" class="w-full flex items-center space-x-3.5 px-4 py-3 rounded-xl text-xs font-semibold transition-all duration-200 bg-white/10 text-white shadow-sm border border-white/10">
+                    <i class="fa-solid fa-chart-pie text-mandiri-gold text-base w-5"></i>
+                    <span>Dashboard & KPIs</span>
+                </button>
+                <button onclick="switchTab('database')" id="nav-database" class="w-full flex items-center space-x-3.5 px-4 py-3 rounded-xl text-xs font-semibold text-slate-400 hover:text-white hover:bg-white/5 transition-all duration-200">
+                    <i class="fa-solid fa-store text-base w-5"></i>
+                    <span>Merchant Database</span>
+                </button>
+                <button onclick="switchTab('owner')" id="nav-owner" class="w-full flex items-center space-x-3.5 px-4 py-3 rounded-xl text-xs font-semibold text-slate-400 hover:text-white hover:bg-white/5 transition-all duration-200">
+                    <i class="fa-solid fa-diagram-project text-base w-5"></i>
+                    <span>Owner Intelligence</span>
+                </button>
+                <button onclick="switchTab('visitlog')" id="nav-visitlog" class="w-full flex items-center space-x-3.5 px-4 py-3 rounded-xl text-xs font-semibold text-slate-400 hover:text-white hover:bg-white/5 transition-all duration-200">
+                    <i class="fa-solid fa-calendar-check text-base w-5"></i>
+                    <span>Daily Visit Log</span>
+                </button>
+            </nav>
+        </div>
+
+        <!-- Footer Info -->
+        <div class="p-4 m-3 rounded-xl bg-slate-900/60 border border-slate-800/80 text-xs text-slate-400">
+            <div class="flex items-center space-x-2 text-white font-semibold mb-1">
+                <i class="fa-solid fa-location-dot text-rose-500 text-xs"></i>
+                <span>Cibubur Lap. Tembak</span>
+            </div>
+            <p class="text-[11px] text-slate-400">Area Jakarta Kota — ODP IT</p>
+            <div class="mt-3 pt-2 border-t border-slate-800 text-[10px] text-amber-400 flex items-center justify-between font-mono">
+                <span>DATA-DRIVEN</span>
+                <i class="fa-solid fa-shield-halved"></i>
+            </div>
+        </div>
+    </aside>
+
+    <!-- MAIN CONTENT AREA -->
+    <main class="flex-1 flex flex-col min-w-0 overflow-y-auto custom-scrollbar bg-slate-50">
+
+        <!-- TOP BAR -->
+        <header class="bg-white/80 backdrop-blur-md border-b border-slate-200/80 px-8 py-4 flex items-center justify-between sticky top-0 z-10 shadow-sm">
+            <div>
+                <h2 id="page-title" class="text-xl font-extrabold text-slate-900 tracking-tight">Executive Dashboard & Analytics</h2>
+                <p class="text-xs text-slate-500 mt-0.5">Strategi: <span class="font-semibold text-mandiri-navy">Follow the Owner, Grow the Network</span></p>
+            </div>
+            <div class="flex items-center space-x-3">
+                <div class="hidden sm:flex items-center space-x-2 bg-emerald-50 text-emerald-700 px-3 py-1.5 rounded-full border border-emerald-200/60 text-xs font-medium">
+                    <span class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span>
+                    <span>System Active</span>
+                </div>
+                <button onclick="openAddVisitModal()" class="bg-mandiri-navy hover:bg-mandiri-blue text-white text-xs font-semibold px-4 py-2.5 rounded-xl flex items-center space-x-2 transition-all duration-200 shadow-md shadow-mandiri-navy/20">
+                    <i class="fa-solid fa-plus text-xs"></i>
+                    <span>Catat Kunjungan</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- CONTENT TAB 1: DASHBOARD -->
+        <div id="tab-dashboard" class="p-8 space-y-8">
+            
+            <!-- Quick Win Banner -->
+            <div class="bg-gradient-to-r from-amber-500/10 via-amber-500/5 to-transparent border-l-4 border-mandiri-gold p-4 rounded-r-2xl border-y border-r border-amber-200/60 flex items-start space-x-4">
+                <div class="p-2.5 bg-mandiri-gold text-mandiri-dark rounded-xl shadow-md">
+                    <i class="fa-solid fa-bolt text-lg"></i>
+                </div>
+                <div>
+                    <h4 class="text-xs font-extrabold uppercase tracking-wider text-amber-900">Peluang Quick Win Terdeteksi!</h4>
+                    <p class="text-xs text-slate-700 mt-1 leading-relaxed">
+                        Terdapat <span class="font-bold text-mandiri-navy">224 Merchant Existing</span> yang telah memiliki rekening Bank Mandiri namun masih menggunakan EDC/QRIS bank kompetitor.
+                    </p>
+                </div>
+            </div>
+
+            <!-- KEY METRICS CARDS -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-md transition">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Total Toko Mapped</p>
+                            <h3 class="text-3xl font-extrabold text-slate-900 mt-1.5" id="stat-total-toko">1,496</h3>
+                        </div>
+                        <div class="p-3 bg-blue-50 text-mandiri-blue rounded-xl"><i class="fa-solid fa-store text-lg"></i></div>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-slate-100 flex items-center text-xs text-slate-500">
+                        <span class="text-emerald-600 font-bold mr-1.5"><i class="fa-solid fa-check-circle"></i> 100%</span> Terpetakan
+                    </div>
+                </div>
+
+                <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-md transition">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Mandiri Existing</p>
+                            <h3 class="text-3xl font-extrabold text-slate-900 mt-1.5">224</h3>
+                        </div>
+                        <div class="p-3 bg-emerald-50 text-emerald-600 rounded-xl"><i class="fa-solid fa-building-columns text-lg"></i></div>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-slate-100 flex items-center text-xs text-slate-500">
+                        <span class="text-emerald-600 font-bold mr-1.5">15.0%</span> Penetrasi Rekening
+                    </div>
+                </div>
+
+                <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-md transition">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Target EDC Migration</p>
+                            <h3 class="text-3xl font-extrabold text-mandiri-goldHover mt-1.5">154</h3>
+                        </div>
+                        <div class="p-3 bg-amber-50 text-amber-600 rounded-xl"><i class="fa-solid fa-credit-card text-lg"></i></div>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-slate-100 flex items-center text-xs text-slate-500">
+                        Target Migrasi Kompetitor
+                    </div>
+                </div>
+
+                <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-md transition">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Owner High Influence</p>
+                            <h3 class="text-3xl font-extrabold text-purple-700 mt-1.5">3</h3>
+                        </div>
+                        <div class="p-3 bg-purple-50 text-purple-600 rounded-xl"><i class="fa-solid fa-crown text-lg"></i></div>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-slate-100 flex items-center text-xs text-slate-500">
+                        Saldo > Rp 500M & Multi-Bisnis
+                    </div>
+                </div>
+            </div>
+
+            <!-- CHARTS SECTION -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <!-- Pipeline Funnel Chart -->
+                <div class="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="font-bold text-slate-900 text-sm flex items-center space-x-2">
+                            <i class="fa-solid fa-filter text-mandiri-blue"></i>
+                            <span>Pipeline Status Funnel (Prospek)</span>
+                        </h3>
+                        <span class="text-[11px] text-slate-400">Update Real-time</span>
+                    </div>
+                    <div class="h-64">
+                        <canvas id="pipelineChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Market Share Chart -->
+                <div class="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="font-bold text-slate-900 text-sm flex items-center space-x-2">
+                            <i class="fa-solid fa-chart-pie text-mandiri-blue"></i>
+                            <span>Market Share EDC & Layanan Pembayaran</span>
+                        </h3>
+                        <span class="text-[11px] text-slate-400">Glodok & Cibubur</span>
+                    </div>
+                    <div class="h-64">
+                        <canvas id="segmentChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MAP SECTION (GOOGLE MAPS STYLE & GOLD POINTERS) -->
+            <div class="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm space-y-4">
+                <div class="flex justify-between items-center">
+                    <h3 class="font-bold text-slate-900 text-sm flex items-center space-x-2">
+                        <i class="fa-solid fa-map-location-dot text-mandiri-blue"></i>
+                        <span>Peta Persebaran Merchant & Ekosistem Bisnis</span>
+                    </h3>
+                    <div class="flex items-center space-x-2 text-[11px]">
+                        <span class="inline-flex items-center font-semibold text-slate-600"><span class="w-3 h-3 rounded-full bg-amber-400 mr-1.5 shadow-sm"></span> Mandiri Gold Pointer</span>
+                        <span class="text-slate-300">|</span>
+                        <span class="text-slate-400">Google Maps View</span>
+                    </div>
+                </div>
+                <div id="dashboardMap" class="w-full h-96 rounded-xl overflow-hidden border border-slate-200 shadow-inner"></div>
+            </div>
+
+            <!-- SUMMARY TABLE -->
+            <div class="bg-white rounded-2xl border border-slate-200/80 shadow-sm p-6 overflow-hidden">
+                <h3 class="font-bold text-slate-900 text-sm mb-4 flex items-center space-x-2">
+                    <i class="fa-solid fa-layer-group text-mandiri-blue"></i>
+                    <span>Breakdown Potensi Per Area Operasional</span>
+                </h3>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse text-xs">
+                        <thead>
+                            <tr class="bg-slate-50/80 text-slate-500 font-bold border-b border-slate-200">
+                                <th class="py-3.5 px-4">Area Operasional</th>
+                                <th class="py-3.5 px-4">Total Toko</th>
+                                <th class="py-3.5 px-4">Mandiri Existing</th>
+                                <th class="py-3.5 px-4">Penetrasi Mandiri</th>
+                                <th class="py-3.5 px-4">Target Migrasi EDC</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100 font-medium">
+                            <tr class="hover:bg-slate-50/50 transition">
+                                <td class="py-3.5 px-4 text-slate-900 font-semibold">Glodok / Cibubur Central Plaza</td>
+                                <td class="py-3.5 px-4">257</td>
+                                <td class="py-3.5 px-4">49</td>
+                                <td class="py-3.5 px-4"><span class="px-2 py-1 rounded-md bg-blue-50 text-mandiri-blue font-bold">19.1%</span></td>
+                                <td class="py-3.5 px-4 text-amber-600 font-bold">35 Toko</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50/50 transition">
+                                <td class="py-3.5 px-4 text-slate-900 font-semibold">Harco / Lapangan Tembak Corridor</td>
+                                <td class="py-3.5 px-4">1,239</td>
+                                <td class="py-3.5 px-4">175</td>
+                                <td class="py-3.5 px-4"><span class="px-2 py-1 rounded-md bg-blue-50 text-mandiri-blue font-bold">14.1%</span></td>
+                                <td class="py-3.5 px-4 text-amber-600 font-bold">119 Toko</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- CONTENT TAB 2: DATABASE -->
+        <div id="tab-database" class="p-8 space-y-6 hidden">
+            <!-- TOP SUMMARY WIDGETS -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div class="bg-white p-4 rounded-xl border border-slate-200/80 shadow-sm flex items-center space-x-3.5">
+                    <div class="p-3 bg-blue-50 text-mandiri-blue rounded-xl font-bold"><i class="fa-solid fa-store"></i></div>
+                    <div>
+                        <p class="text-[10px] uppercase tracking-wider font-bold text-slate-400">Total Prospek</p>
+                        <h4 class="text-lg font-extrabold text-slate-900">1,496 Toko</h4>
+                    </div>
+                </div>
+                <div class="bg-white p-4 rounded-xl border border-slate-200/80 shadow-sm flex items-center space-x-3.5">
+                    <div class="p-3 bg-rose-50 text-rose-600 rounded-xl font-bold"><i class="fa-solid fa-fire"></i></div>
+                    <div>
+                        <p class="text-[10px] uppercase tracking-wider font-bold text-slate-400">Prioritas HOT</p>
+                        <h4 class="text-lg font-extrabold text-rose-600">154 Target</h4>
+                    </div>
+                </div>
+                <div class="bg-white p-4 rounded-xl border border-slate-200/80 shadow-sm flex items-center space-x-3.5">
+                    <div class="p-3 bg-amber-50 text-amber-600 rounded-xl font-bold"><i class="fa-solid fa-comments font-bold"></i></div>
+                    <div>
+                        <p class="text-[10px] uppercase tracking-wider font-bold text-slate-400">Sedang Negosiasi</p>
+                        <h4 class="text-lg font-extrabold text-amber-600">18 Toko</h4>
+                    </div>
+                </div>
+                <div class="bg-white p-4 rounded-xl border border-slate-200/80 shadow-sm flex items-center space-x-3.5">
+                    <div class="p-3 bg-emerald-50 text-emerald-600 rounded-xl font-bold"><i class="fa-solid fa-circle-check"></i></div>
+                    <div>
+                        <p class="text-[10px] uppercase tracking-wider font-bold text-slate-400">Konversi Sukses</p>
+                        <h4 class="text-lg font-extrabold text-emerald-600">12 Merchant</h4>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MAIN DATABASE CARD -->
+            <div class="bg-white rounded-2xl border border-slate-200/80 shadow-sm p-6 space-y-5">
+                <div class="flex flex-col md:flex-row justify-between items-center gap-4 pb-4 border-b border-slate-100">
+                    <div class="relative w-full md:w-96">
+                        <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3.5 text-slate-400 text-xs"></i>
+                        <input type="text" id="dbSearch" onkeyup="filterDatabase()" placeholder="Cari nama toko, PIC, atau lokasi..." class="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:bg-white focus:ring-2 focus:ring-mandiri-blue focus:outline-none transition">
+                    </div>
+                    <div class="flex items-center space-x-3 w-full md:w-auto">
+                        <select id="dbFilterStatus" onchange="filterDatabase()" class="border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs focus:ring-2 focus:ring-mandiri-blue focus:outline-none bg-slate-50 font-semibold text-slate-700">
+                            <option value="">Semua Pipeline</option>
+                            <option value="Belum Kontak">Belum Kontak</option>
+                            <option value="Sudah Ditemui">Sudah Ditemui</option>
+                            <option value="Tertarik">Tertarik</option>
+                            <option value="Negosiasi">Negosiasi</option>
+                            <option value="Konversi">Konversi</option>
+                            <option value="Reject">Reject</option>
+                        </select>
+                        <select id="dbFilterPrioritas" onchange="filterDatabase()" class="border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs focus:ring-2 focus:ring-mandiri-blue focus:outline-none bg-slate-50 font-semibold text-slate-700">
+                            <option value="">Semua Prioritas</option>
+                            <option value="HOT">🔥 HOT (Quick Win)</option>
+                            <option value="WARM">⚡ WARM</option>
+                            <option value="COLD">❄️ COLD</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse text-xs" id="dbTable">
+                        <thead>
+                            <tr class="bg-slate-50/80 text-slate-400 font-extrabold uppercase tracking-wider border-b border-slate-200 text-[10px]">
+                                <th class="py-3.5 px-4">Merchant Info</th>
+                                <th class="py-3.5 px-4">Owner / PIC</th>
+                                <th class="py-3.5 px-4">Ekosistem Rekening</th>
+                                <th class="py-3.5 px-4">Status Pipeline</th>
+                                <th class="py-3.5 px-4">Prioritas</th>
+                                <th class="py-3.5 px-4 text-center">Tindakan</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100 font-medium" id="dbTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- CONTENT TAB 3: OWNER NETWORK -->
+        <div id="tab-owner" class="p-8 space-y-6 hidden">
+            <div class="bg-gradient-to-r from-mandiri-dark via-mandiri-navy to-mandiri-blue text-white p-6 rounded-2xl shadow-xl flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <div>
+                    <span class="text-[10px] font-bold text-mandiri-gold tracking-widest uppercase bg-white/10 px-3 py-1 rounded-full border border-white/10">Metodologi ODP 324</span>
+                    <h3 class="font-extrabold text-xl text-white mt-2">Follow the Owner, Grow the Network</h3>
+                    <p class="text-xs text-slate-300 mt-1 max-w-2xl">Pemetaan ekosistem bisnis pemilik usaha di luar kawasan cabang.</p>
+                </div>
+                <div class="bg-white/10 backdrop-blur-md p-4 rounded-xl border border-white/10 text-right min-w-[180px]">
+                    <span class="block text-[11px] text-slate-300">Total Owner Teridentifikasi</span>
+                    <span class="text-3xl font-extrabold text-mandiri-gold">9 Owner</span>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-2xl border border-slate-200/80 shadow-sm p-6 overflow-hidden">
+                <h4 class="font-bold text-slate-900 text-sm mb-4 flex items-center space-x-2">
+                    <i class="fa-solid fa-crown text-mandiri-gold"></i>
+                    <span>Owner Profile & Influence Scoring</span>
+                </h4>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse text-xs">
+                        <thead>
+                            <tr class="bg-slate-50/80 text-slate-500 font-bold border-b border-slate-200">
+                                <th class="py-3.5 px-4">Nama Owner</th>
+                                <th class="py-3.5 px-4">Toko Utama</th>
+                                <th class="py-3.5 px-4">Influence Tier</th>
+                                <th class="py-3.5 px-4">Saldo Mandiri</th>
+                                <th class="py-3.5 px-4">Masa Nasabah</th>
+                                <th class="py-3.5 px-4">Lini Bisnis Luar Area</th>
+                                <th class="py-3.5 px-4">Potensi Produk</th>
+                                <th class="py-3.5 px-4">Status Progress</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100 font-medium" id="ownerTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- CONTENT TAB 4: VISIT LOG -->
+        <div id="tab-visitlog" class="p-8 space-y-6 hidden">
+            <div class="bg-white rounded-2xl border border-slate-200/80 shadow-sm p-6 space-y-4">
+                <div class="flex justify-between items-center pb-4 border-b border-slate-100">
+                    <h3 class="font-bold text-slate-900 text-sm flex items-center space-x-2">
+                        <i class="fa-solid fa-list-check text-mandiri-blue"></i>
+                        <span>Daily Visit Log Banker</span>
+                    </h3>
+                    <button onclick="openAddVisitModal()" class="bg-mandiri-navy hover:bg-mandiri-blue text-white text-xs font-semibold px-3.5 py-2 rounded-xl transition">
+                        + Tambah Visit Log
+                    </button>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse text-xs">
+                        <thead>
+                            <tr class="bg-slate-50/80 text-slate-500 font-bold border-b border-slate-200">
+                                <th class="py-3.5 px-4">Tanggal</th>
+                                <th class="py-3.5 px-4">Nama Toko</th>
+                                <th class="py-3.5 px-4">Banker PIC</th>
+                                <th class="py-3.5 px-4">Catatan Kunjungan</th>
+                                <th class="py-3.5 px-4">Status Pipeline</th>
+                                <th class="py-3.5 px-4">Tgl Follow-up</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100 font-medium" id="visitLogTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- MAP POP-UP MODAL -->
+    <div id="mapModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center hidden z-50 p-4">
+        <div class="bg-white rounded-2xl p-6 w-full max-w-2xl shadow-2xl border border-slate-100 space-y-4">
+            <div class="flex justify-between items-center border-b border-slate-100 pb-3">
+                <div>
+                    <h3 class="font-extrabold text-slate-900 text-sm" id="modalMapTitle">Lokasi Merchant</h3>
+                    <p class="text-[11px] text-slate-500" id="modalMapSub">Detail koordinat lokasi dan alamat ruko</p>
+                </div>
+                <button onclick="closeMapModal()" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <div id="modalMap" class="w-full h-80 rounded-xl overflow-hidden border border-slate-200 shadow-inner"></div>
+            <div class="pt-2 flex justify-end">
+                <button onclick="closeMapModal()" class="px-5 py-2.5 bg-mandiri-navy text-white text-xs font-bold rounded-xl">Tutup Map</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- VISIT MODAL -->
+    <div id="visitModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center hidden z-50 p-4">
+        <div class="bg-white rounded-2xl p-6 w-full max-w-md shadow-2xl border border-slate-100 space-y-4">
+            <div class="flex justify-between items-center border-b border-slate-100 pb-3">
+                <h3 class="font-extrabold text-slate-900 text-sm">Catat Kunjungan Harian</h3>
+                <button onclick="closeAddVisitModal()" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-base"></i></button>
+            </div>
+            <form id="visitForm" onsubmit="handleVisitSubmit(event)" class="space-y-4 text-xs">
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1.5">Pilih Toko Target</label>
+                    <select id="modalToko" required class="w-full border border-slate-200 rounded-xl p-2.5 bg-slate-50 focus:ring-2 focus:ring-mandiri-blue focus:outline-none"></select>
+                </div>
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1.5">Banker PIC</label>
+                    <input type="text" id="modalBanker" required placeholder="Contoh: Farhan (ODP IT)" class="w-full border border-slate-200 rounded-xl p-2.5 focus:ring-2 focus:ring-mandiri-blue focus:outline-none">
+                </div>
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1.5">Catatan Interaksi</label>
+                    <textarea id="modalNotes" required rows="3" placeholder="Bertemu owner, sepakat demo EDC contactless..." class="w-full border border-slate-200 rounded-xl p-2.5 focus:ring-2 focus:ring-mandiri-blue focus:outline-none"></textarea>
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1.5">Update Pipeline</label>
+                        <select id="modalStatus" class="w-full border border-slate-200 rounded-xl p-2.5 bg-slate-50 focus:ring-2 focus:ring-mandiri-blue focus:outline-none">
+                            <option value="Sudah Ditemui">Sudah Ditemui</option>
+                            <option value="Tertarik">Tertarik</option>
+                            <option value="Negosiasi">Negosiasi</option>
+                            <option value="Konversi">Konversi</option>
+                            <option value="Reject">Reject</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1.5">Follow-up Date</label>
+                        <input type="date" id="modalFollowUp" required class="w-full border border-slate-200 rounded-xl p-2.5 focus:ring-2 focus:ring-mandiri-blue focus:outline-none">
+                    </div>
+                </div>
+                <div class="pt-2 flex justify-end space-x-2.5 border-t border-slate-100">
+                    <button type="button" onclick="closeAddVisitModal()" class="px-4 py-2.5 rounded-xl border border-slate-200 text-slate-600 font-semibold">Batal</button>
+                    <button type="submit" class="px-5 py-2.5 bg-mandiri-navy text-white rounded-xl font-bold shadow-md">Simpan Log</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC & MAPS -->
+    <script>
+        let merchantDatabase = [
+            { id: 1, name: "PT TRITUNGGAL CIPTA BUANA", pic: "Bpk. Hendra", location: "Glodok Plaza H-12", lat: -6.1398, lng: 106.8162, mandiriAccount: "Tidak", edcBank: "BCA", status: "Belum Kontak", priority: "HOT" },
+            { id: 2, name: "ICA STABILIZER (PT Indodaya)", pic: "Bpk. Koh Felix", location: "Glodok Plaza A-04", lat: -6.1402, lng: 106.8165, mandiriAccount: "Ya", edcBank: "BCA", status: "Sudah Ditemui", priority: "HOT" },
+            { id: 3, name: "PT DATA JAYA ABADI", pic: "Bu Fenty / Koh Felix", location: "Harco Glodok Blok B", lat: -6.1411, lng: 106.8158, mandiriAccount: "Ya", edcBank: "BCA", status: "Tertarik", priority: "HOT" },
+            { id: 4, name: "DJ MUSIK", pic: "Josep Sumina", location: "Harco Glodok Lt. 1", lat: -6.1415, lng: 106.8155, mandiriAccount: "Ya", edcBank: "BRI", status: "Sudah Ditemui", priority: "WARM" },
+            { id: 5, name: "TOKO AUDIO UTAMA CIBUBUR", pic: "Bpk. Rudi", location: "Lapangan Tembak No. 45", lat: -6.3458, lng: 106.8835, mandiriAccount: "Ya", edcBank: "BCA", status: "Negosiasi", priority: "HOT" }
+        ];
+
+        let ownerNetwork = [
+            { name: "PT Indodaya Cipta (ICA)", store: "ICA Stabilizer", tier: "HIGH", balance: "3,742,676,028", tenure: "> 5 tahun", otherBiz: "Gudang Solar Panel (Pademangan)", potential: "KUR Modal Kerja + Giro Bisnis", progress: "Identifikasi" },
+            { name: "Bu Fenty / Koh Felix", store: "PT Data Jaya Abadi", tier: "HIGH", balance: "687,780,471", tenure: "> 5 tahun", otherBiz: "Pusat Printer (Jakarta Barat)", potential: "Cash Management + Payroll", progress: "Identifikasi" },
+            { name: "Josep Sumina", store: "DJ Musik", tier: "HIGH", balance: "652,000,000", tenure: "3-5 tahun", otherBiz: "Toko Audio ITC Mangga Dua", potential: "EDC/QRIS + Giro Bisnis", progress: "Identifikasi" }
+        ];
+
+        let visitLogs = [
+            { date: "2026-10-18", store: "PT DATA JAYA ABADI", banker: "Farhan (ODP)", notes: "Ketemu Owner, berminat Livin Merchant untuk kasir cabang.", status: "Tertarik", followUp: "2026-10-22" },
+            { date: "2026-10-17", store: "ICA STABILIZER", banker: "Aradea (ODP)", notes: "Diskusi kebutuhan KUR gudang solar panel Pademangan.", status: "Sudah Ditemui", followUp: "2026-10-21" }
+        ];
+
+        let dashboardMap, modalMapInstance, modalMarker;
+
+        // GOOGLE MAPS TILE LAYER (SERIES BEBAS API KEY & MODERN GOOGLE TILE VIEW)
+        const googleTileUrl = 'https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}';
+        const googleAttrib = '&copy; <a href="https://maps.google.com">Google Maps</a>';
+
+        // CUSTOM MANDIRI GOLD MARKER (SVG POINTER)
+        const mandiriGoldIcon = L.divIcon({
+            className: 'custom-gold-icon',
+            html: `
+                <svg width="32" height="42" viewBox="0 0 32 42" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M16 0C7.16344 0 0 7.16344 0 16C0 28 16 42 16 42C16 42 32 28 32 16C32 7.16344 24.8366 0 16 0Z" fill="#FFB800"/>
+                    <path d="M16 2C23.732 2 30 8.26801 30 16C30 26.5 17 38.5 16 39.4C15 38.5 2 26.5 2 16C2 8.26801 8.26801 2 16 2Z" fill="#E5A600"/>
+                    <circle cx="16" cy="15" r="7" fill="#002855"/>
+                    <circle cx="16" cy="15" r="3" fill="#FFFFFF"/>
+                </svg>
+            `,
+            iconSize: [32, 42],
+            iconAnchor: [16, 42],
+            popupAnchor: [0, -38]
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderDatabaseTable(merchantDatabase);
+            renderOwnerTable();
+            renderVisitLogTable();
+            initCharts();
+            initDashboardMap();
+            populateModalDropdown();
+        });
+
+        function switchTab(tabName) {
+            ['dashboard', 'database', 'owner', 'visitlog'].forEach(t => {
+                document.getElementById(`tab-${t}`).classList.add('hidden');
+                document.getElementById(`nav-${t}`).className = "w-full flex items-center space-x-3.5 px-4 py-3 rounded-xl text-xs font-semibold text-slate-400 hover:text-white hover:bg-white/5 transition-all duration-200";
+            });
+
+            document.getElementById(`tab-${tabName}`).classList.remove('hidden');
+            document.getElementById(`nav-${tabName}`).className = "w-full flex items-center space-x-3.5 px-4 py-3 rounded-xl text-xs font-semibold transition-all duration-200 bg-white/10 text-white shadow-sm border border-white/10";
+
+            const titles = {
+                dashboard: "Executive Dashboard & Analytics",
+                database: "Merchant Database (1,496 Toko Mapped)",
+                owner: "Owner Intelligence (Follow the Owner)",
+                visitlog: "Daily Visit Log & Follow-up Tracker"
+            };
+            document.getElementById('page-title').innerText = titles[tabName];
+            
+            if (tabName === 'dashboard' && dashboardMap) {
+                setTimeout(() => dashboardMap.invalidateSize(), 200);
+            }
+        }
+
+        function renderDatabaseTable(data) {
+            const tbody = document.getElementById('dbTableBody');
+            tbody.innerHTML = '';
+            data.forEach((item) => {
+                let badgeClass = item.status === 'Konversi' ? 'bg-emerald-100 text-emerald-800 border-emerald-200' :
+                                 item.status === 'Tertarik' ? 'bg-blue-100 text-mandiri-blue border-blue-200' :
+                                 item.status === 'Negosiasi' ? 'bg-amber-100 text-amber-800 border-amber-200' :
+                                 item.status === 'Reject' ? 'bg-rose-100 text-rose-800 border-rose-200' : 'bg-slate-100 text-slate-600 border-slate-200';
+                
+                let prioBadge = item.priority === 'HOT' ? '<span class="px-2.5 py-1 rounded-lg bg-rose-50 text-rose-600 border border-rose-200 font-extrabold flex items-center w-max"><i class="fa-solid fa-fire mr-1 text-[10px]"></i> HOT</span>' :
+                                item.priority === 'WARM' ? '<span class="px-2.5 py-1 rounded-lg bg-amber-50 text-amber-600 border border-amber-200 font-bold flex items-center w-max"><i class="fa-solid fa-bolt mr-1 text-[10px]"></i> WARM</span>' :
+                                '<span class="px-2.5 py-1 rounded-lg bg-slate-100 text-slate-500 font-medium flex items-center w-max">COLD</span>';
+
+                const initials = item.name.substring(0, 2).toUpperCase();
+
+                tbody.innerHTML += `
+                    <tr class="hover:bg-slate-50/80 transition-all duration-150 border-b border-slate-100">
+                        <td class="py-4 px-4">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-9 h-9 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center font-extrabold text-mandiri-navy text-xs shrink-0 shadow-sm">
+                                    ${initials}
+                                </div>
+                                <div>
+                                    <div class="font-extrabold text-slate-900 text-xs">${item.name}</div>
+                                    <button onclick="openMapModal('${item.name}', '${item.location}', ${item.lat}, ${item.lng})" class="text-[11px] text-mandiri-blue font-semibold hover:underline flex items-center mt-0.5">
+                                        <i class="fa-solid fa-map-pin text-mandiri-gold mr-1"></i>${item.location}
+                                    </button>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="py-4 px-4">
+                            <div class="font-bold text-slate-800 text-xs">${item.pic}</div>
+                            <div class="text-[10px] text-slate-400">Verifikasi Lapangan</div>
+                        </td>
+                        <td class="py-4 px-4">
+                            <div class="flex items-center space-x-2">
+                                <span class="px-2 py-0.5 rounded text-[10px] font-bold ${item.mandiriAccount === 'Ya' ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-100 text-slate-400'}">
+                                    Mandiri: ${item.mandiriAccount}
+                                </span>
+                                <span class="text-[11px] font-bold text-mandiri-navy bg-blue-50 px-2 py-0.5 rounded border border-blue-100">
+                                    EDC ${item.edcBank}
+                                </span>
+                            </div>
+                        </td>
+                        <td class="py-4 px-4">
+                            <span class="px-3 py-1.5 rounded-xl text-[11px] font-extrabold border ${badgeClass} inline-block">
+                                ${item.status}
+                            </span>
+                        </td>
+                        <td class="py-4 px-4">${prioBadge}</td>
+                        <td class="py-4 px-4 text-center">
+                            <button onclick="openAddVisitModalFor('${item.name}')" class="px-3.5 py-2 bg-mandiri-navy hover:bg-mandiri-blue text-white font-bold rounded-xl shadow-sm transition text-xs flex items-center justify-center space-x-1.5 mx-auto">
+                                <i class="fa-solid fa-pen-to-square text-[10px]"></i>
+                                <span>Visit</span>
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        function renderOwnerTable() {
+            const tbody = document.getElementById('ownerTableBody');
+            tbody.innerHTML = '';
+            ownerNetwork.forEach(item => {
+                let tierBadge = item.tier === 'HIGH' ? 'bg-purple-100 text-purple-800 font-extrabold' : 'bg-blue-100 text-blue-800 font-bold';
+                tbody.innerHTML += `
+                    <tr class="hover:bg-slate-50/80 transition border-b border-slate-100">
+                        <td class="py-3.5 px-4 font-bold text-slate-900">${item.name}</td>
+                        <td class="py-3.5 px-4 text-slate-600">${item.store}</td>
+                        <td class="py-3.5 px-4"><span class="px-2.5 py-1 rounded-full text-[10px] ${tierBadge}">${item.tier}</span></td>
+                        <td class="py-3.5 px-4 font-mono font-bold text-emerald-700">Rp ${item.balance}</td>
+                        <td class="py-3.5 px-4 text-slate-500">${item.tenure}</td>
+                        <td class="py-3.5 px-4 font-semibold text-slate-700"><i class="fa-solid fa-location-dot text-mandiri-gold mr-1.5"></i>${item.otherBiz}</td>
+                        <td class="py-3.5 px-4 font-bold text-mandiri-navy">${item.potential}</td>
+                        <td class="py-3.5 px-4"><span class="px-2.5 py-1 rounded-full bg-amber-100 text-amber-800 text-[10px] font-bold">${item.progress}</span></td>
+                    </tr>
+                `;
+            });
+        }
+
+        function renderVisitLogTable() {
+            const tbody = document.getElementById('visitLogTableBody');
+            tbody.innerHTML = '';
+            visitLogs.forEach(item => {
+                tbody.innerHTML += `
+                    <tr class="hover:bg-slate-50/80 transition border-b border-slate-100">
+                        <td class="py-3.5 px-4 font-mono text-slate-400">${item.date}</td>
+                        <td class="py-3.5 px-4 font-bold text-slate-900">${item.store}</td>
+                        <td class="py-3.5 px-4 text-slate-600">${item.banker}</td>
+                        <td class="py-3.5 px-4 text-slate-600">${item.notes}</td>
+                        <td class="py-3.5 px-4 font-bold text-mandiri-blue">${item.status}</td>
+                        <td class="py-3.5 px-4 font-mono font-bold text-rose-600">${item.followUp}</td>
+                    </tr>
+                `;
+            });
+        }
+
+        function filterDatabase() {
+            const query = document.getElementById('dbSearch').value.toLowerCase();
+            const statusFilter = document.getElementById('dbFilterStatus').value;
+            const priorityFilter = document.getElementById('dbFilterPrioritas').value;
+
+            const filtered = merchantDatabase.filter(item => {
+                const matchQuery = item.name.toLowerCase().includes(query) || item.pic.toLowerCase().includes(query) || item.location.toLowerCase().includes(query);
+                const matchStatus = statusFilter === "" || item.status === statusFilter;
+                const matchPriority = priorityFilter === "" || item.priority === priorityFilter;
+                return matchQuery && matchStatus && matchPriority;
+            });
+
+            renderDatabaseTable(filtered);
+        }
+
+        // INITIALIZE DASHBOARD MAP (GOOGLE MAPS STYLE & GOLD POINTERS)
+        function initDashboardMap() {
+            dashboardMap = L.map('dashboardMap').setView([-6.1405, 106.8160], 15);
+            L.tileLayer(googleTileUrl, { attribution: googleAttrib, maxZoom: 20 }).addTo(dashboardMap);
+
+            merchantDatabase.forEach(item => {
+                L.marker([item.lat, item.lng], { icon: mandiriGoldIcon }).addTo(dashboardMap)
+                    .bindPopup(`
+                        <div class="p-1">
+                            <h4 class="font-bold text-slate-900 text-xs">${item.name}</h4>
+                            <p class="text-[11px] text-slate-500">${item.location}</p>
+                            <span class="inline-block mt-1 font-bold text-[10px] text-blue-700 bg-blue-50 px-2 py-0.5 rounded border border-blue-200">EDC: ${item.edcBank}</span>
+                        </div>
+                    `);
+            });
+        }
+
+        // POP-UP MAP MODAL FOR INDIVIDUAL MERCHANT
+        function openMapModal(name, location, lat, lng) {
+            document.getElementById('modalMapTitle').innerText = name;
+            document.getElementById('modalMapSub').innerText = location;
+            document.getElementById('mapModal').classList.remove('hidden');
+
+            setTimeout(() => {
+                if (!modalMapInstance) {
+                    modalMapInstance = L.map('modalMap').setView([lat, lng], 17);
+                    L.tileLayer(googleTileUrl, { attribution: googleAttrib, maxZoom: 20 }).addTo(modalMapInstance);
+                    modalMarker = L.marker([lat, lng], { icon: mandiriGoldIcon }).addTo(modalMapInstance);
+                } else {
+                    modalMapInstance.invalidateSize();
+                    modalMapInstance.setView([lat, lng], 17);
+                    modalMarker.setLatLng([lat, lng]);
+                }
+                modalMarker.bindPopup(`
+                    <div class="p-1">
+                        <h4 class="font-bold text-slate-900 text-xs">${name}</h4>
+                        <p class="text-[11px] text-slate-500">${location}</p>
+                    </div>
+                `).openPopup();
+            }, 200);
+        }
+
+        function closeMapModal() {
+            document.getElementById('mapModal').classList.add('hidden');
+        }
+
+        function openAddVisitModal() { document.getElementById('visitModal').classList.remove('hidden'); }
+        function openAddVisitModalFor(storeName) {
+            document.getElementById('modalToko').value = storeName;
+            openAddVisitModal();
+        }
+        function closeAddVisitModal() { document.getElementById('visitModal').classList.add('hidden'); }
+
+        function populateModalDropdown() {
+            const select = document.getElementById('modalToko');
+            select.innerHTML = '';
+            merchantDatabase.forEach(item => {
+                select.innerHTML += `<option value="${item.name}">${item.name} (${item.location})</option>`;
+            });
+        }
+
+        function handleVisitSubmit(e) {
+            e.preventDefault();
+            const store = document.getElementById('modalToko').value;
+            const banker = document.getElementById('modalBanker').value;
+            const notes = document.getElementById('modalNotes').value;
+            const status = document.getElementById('modalStatus').value;
+            const followUp = document.getElementById('modalFollowUp').value;
+
+            const today = new Date().toISOString().split('T')[0];
+            visitLogs.unshift({ date: today, store, banker, notes, status, followUp });
+
+            const found = merchantDatabase.find(m => m.name === store);
+            if (found) found.status = status;
+
+            renderVisitLogTable();
+            renderDatabaseTable(merchantDatabase);
+            closeAddVisitModal();
+            alert('Daily Visit Log berhasil disimpan!');
+        }
+
+        function initCharts() {
+            const ctxPipeline = document.getElementById('pipelineChart').getContext('2d');
+            new Chart(ctxPipeline, {
+                type: 'bar',
+                data: {
+                    labels: ['Belum Kontak', 'Sudah Ditemui', 'Tertarik', 'Negosiasi', 'Konversi', 'Reject'],
+                    datasets: [{
+                        data: [1488, 3, 2, 1, 1, 1],
+                        backgroundColor: ['#94a3b8', '#60a5fa', '#00529C', '#FFB800', '#10b981', '#f43f5e'],
+                        borderRadius: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: { y: { grid: { color: '#f1f5f9' } }, x: { grid: { display: false } } }
+                }
+            });
+
+            const ctxSegment = document.getElementById('segmentChart').getContext('2d');
+            new Chart(ctxSegment, {
+                type: 'doughnut',
+                data: {
+                    labels: ['EDC BCA (Competitor)', 'EDC BRI/Lainnya', 'EDC Mandiri (Existing)', 'Belum EDC'],
+                    datasets: [{
+                        data: [850, 420, 154, 72],
+                        backgroundColor: ['#002855', '#00529C', '#FFB800', '#e2e8f0'],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 11 } } } },
+                    cutout: '70%'
+                }
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,1613 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0866D9">
+  <title>Merchant Opportunity & Conversion Hub</title>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+    :root {
+      --blue: #0875E1;
+      --blue-dark: #0755B8;
+      --blue-light: #EAF4FF;
+      --yellow: #FFD52E;
+      --yellow-light: #FFF8D8;
+      --ink: #17263C;
+      --muted: #8491A5;
+      --line: #E8EDF4;
+      --bg: #F5F7FB;
+      --white: #FFFFFF;
+      --green: #159A72;
+      --green-light: #E5F7EF;
+      --red: #D95362;
+      --red-light: #FFF0F1;
+      --purple: #7662D9;
+      --shadow: 0 8px 30px rgba(27, 54, 93, .055);
+      --radius: 18px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      font-size: 13px;
+      overflow-x: hidden;
+    }
+
+    button, input, select, textarea { font: inherit; }
+    button { cursor: pointer; }
+    button:focus-visible, input:focus-visible, select:focus-visible {
+      outline: 3px solid #A7D2FF;
+      outline-offset: 2px;
+    }
+
+    .app { display: flex; min-height: 100vh; position: relative; }
+
+    /* BACKDROP MOBILE SIDEBAR */
+    .sidebar-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(18, 35, 61, 0.4);
+      backdrop-filter: blur(3px);
+      z-index: 29;
+    }
+    .sidebar-overlay.show { display: block; }
+
+    .sidebar {
+      width: 248px;
+      background: #fff;
+      border-right: 1px solid var(--line);
+      padding: 25px 17px;
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      transition: transform .25s ease;
+      z-index: 30;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      padding: 2px 9px 20px;
+    }
+
+    .brand-mark {
+      width: 43px;
+      height: 43px;
+      border-radius: 14px;
+      background: var(--blue);
+      display: grid;
+      place-items: center;
+      box-shadow: 0 6px 15px #0875E133;
+      color: white;
+      font-weight: 800;
+      font-size: 22px;
+      position: relative;
+    }
+
+    .brand-mark::after {
+      content: "";
+      position: absolute;
+      right: -2px;
+      bottom: -2px;
+      width: 13px;
+      height: 13px;
+      background: var(--yellow);
+      border-radius: 5px;
+      border: 3px solid white;
+    }
+
+    .brand-name {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: -.5px;
+    }
+
+    .brand-sub { color: var(--muted); font-size: 10px; margin-top: 4px; }
+
+    .role-switcher {
+      background: #F0F5FD;
+      border: 1px solid #DCE6F5;
+      border-radius: 12px;
+      padding: 4px;
+      margin-bottom: 12px;
+      display: flex;
+      gap: 4px;
+    }
+
+    .role-btn {
+      flex: 1;
+      border: 0;
+      background: transparent;
+      padding: 6px 4px;
+      border-radius: 8px;
+      font-size: 10px;
+      font-weight: 800;
+      color: #62728D;
+      transition: .2s;
+    }
+
+    .role-btn.active {
+      background: white;
+      color: var(--blue);
+      box-shadow: 0 2px 6px rgba(0,0,0,.06);
+    }
+
+    .nav-label {
+      color: #A0AABC;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 1.2px;
+      padding: 12px 12px 6px;
+    }
+
+    .nav-item {
+      border: 0;
+      background: transparent;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      width: 100%;
+      padding: 11px 13px;
+      margin: 2px 0;
+      border-radius: 12px;
+      color: #718096;
+      font-size: 12px;
+      text-align: left;
+      font-weight: 600;
+      transition: .2s;
+    }
+
+    .nav-item:hover { background: #F5F8FD; color: var(--blue); }
+
+    .nav-item.active {
+      background: var(--blue-light);
+      color: var(--blue);
+      font-weight: 800;
+    }
+
+    .nav-icon {
+      width: 21px;
+      font-size: 16px;
+      text-align: center;
+    }
+
+    .nav-count {
+      margin-left: auto;
+      background: var(--yellow);
+      color: #594800;
+      border-radius: 6px;
+      padding: 3px 7px;
+      font-size: 10px;
+      font-weight: 800;
+    }
+
+    .sidebar-bottom { margin-top: auto; }
+
+    .branch-card {
+      background: linear-gradient(145deg, #F0F7FF, #FFFBEA);
+      border: 1px solid #E9F0F8;
+      border-radius: 15px;
+      padding: 14px;
+      margin: 15px 3px 12px;
+    }
+
+    .branch-label {
+      color: var(--muted);
+      font-size: 10px;
+      margin-bottom: 7px;
+    }
+
+    .branch-name { font-size: 12px; font-weight: 800; line-height: 1.5; }
+    .branch-status { display: flex; align-items: center; gap: 6px; margin-top: 10px; color: var(--green); font-size: 10px; font-weight: 700; }
+    .status-dot { width: 7px; height: 7px; background: var(--green); border-radius: 50%; }
+
+    .user-card {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      padding: 12px 7px 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .avatar {
+      width: 37px;
+      height: 37px;
+      background: #E4F0FF;
+      color: var(--blue);
+      display: grid;
+      place-items: center;
+      border-radius: 12px;
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+
+    .user-name { font-size: 12px; font-weight: 800; }
+    .user-role { font-size: 10px; color: var(--muted); margin-top: 4px; }
+
+    .main { min-width: 0; flex: 1; }
+
+    .topbar {
+      height: 77px;
+      background: rgba(255,255,255,.94);
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 34px;
+      gap: 16px;
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(15px);
+    }
+
+    .top-left { display: flex; align-items: center; gap: 13px; min-width: 0; }
+    .menu-toggle { display: none; border: 0; background: #F2F6FC; padding: 9px 12px; border-radius: 10px; font-size: 18px; }
+    .breadcrumb { color: var(--muted); font-size: 11px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .breadcrumb strong { color: var(--ink); }
+    .top-actions { display: flex; align-items: center; gap: 12px; }
+
+    .date-chip {
+      background: #F6F8FC;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 10px 12px;
+      color: #66758B;
+      font-size: 11px;
+      white-space: nowrap;
+    }
+
+    .icon-button {
+      position: relative;
+      width: 37px;
+      height: 37px;
+      border: 1px solid var(--line);
+      border-radius: 11px;
+      background: white;
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+
+    .icon-button .notification-dot {
+      position: absolute;
+      right: 8px;
+      top: 7px;
+      height: 6px;
+      width: 6px;
+      background: #FFBA32;
+      border-radius: 50%;
+      border: 1px solid white;
+    }
+
+    .content { padding: 30px 34px 42px; max-width: 1700px; margin: 0 auto; }
+
+    .page { display: none; animation: fadeIn .25s ease; }
+    .page.active { display: block; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+
+    .page-heading {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 20px;
+      margin-bottom: 25px;
+    }
+
+    .eyebrow {
+      font-size: 10px;
+      color: var(--blue);
+      letter-spacing: 1.4px;
+      font-weight: 800;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+    }
+
+    h1, h2, h3, p { margin-top: 0; }
+
+    h1 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: clamp(21px, 2.2vw, 31px);
+      letter-spacing: -1.1px;
+      margin-bottom: 9px;
+      line-height: 1.25;
+    }
+
+    .page-description { color: var(--muted); font-size: 12px; line-height: 1.7; margin: 0; }
+    .heading-actions { display: flex; gap: 9px; flex-wrap: wrap; }
+
+    .btn {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid transparent;
+      padding: 11px 15px;
+      border-radius: 10px;
+      font-weight: 800;
+      font-size: 11px;
+      transition: .2s;
+      white-space: nowrap;
+    }
+
+    .btn-primary { background: var(--blue); color: white; box-shadow: 0 5px 12px #0875E122; }
+    .btn-primary:hover { background: var(--blue-dark); transform: translateY(-1px); }
+    .btn-secondary { background: white; border-color: var(--line); color: #58677E; }
+    .btn-secondary:hover { background: #F7F9FD; border-color: #CCD9EA; }
+    .btn-yellow { background: var(--yellow); color: #433600; }
+    .btn-yellow:hover { background: #F5C900; }
+    .btn-small { padding: 7px 10px; font-size: 10px; }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(110deg, #0758C2 0%, #0879E7 64%, #1689F4 100%);
+      border-radius: 22px;
+      color: white;
+      padding: 27px 29px;
+      display: flex;
+      justify-content: space-between;
+      gap: 25px;
+      align-items: center;
+      margin-bottom: 22px;
+      box-shadow: 0 12px 30px #0875E120;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      right: 14%;
+      top: -125px;
+      width: 290px;
+      height: 290px;
+      border: 1px solid #FFFFFF1E;
+      border-radius: 50%;
+      box-shadow: 0 0 0 34px #FFFFFF09, 0 0 0 68px #FFFFFF08;
+    }
+
+    .hero-content { position: relative; z-index: 1; max-width: 590px; }
+    .hero-label { color: #D9EBFF; font-size: 10px; font-weight: 800; letter-spacing: 1.2px; margin-bottom: 12px; }
+    .hero h2 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: clamp(20px, 2.3vw, 28px); letter-spacing: -.8px; line-height: 1.35; margin-bottom: 10px; }
+    .hero p { color: #E0EDFF; font-size: 12px; line-height: 1.8; margin-bottom: 18px; max-width: 530px; }
+    .hero .btn-primary { background: var(--yellow); color: #3C3200; box-shadow: none; }
+    .hero .btn-primary:hover { background: #FFE16A; }
+    .hero-stat { position: relative; z-index: 1; min-width: 160px; padding: 20px; background: #FFFFFF13; border: 1px solid #FFFFFF2B; border-radius: 17px; backdrop-filter: blur(10px); }
+    .hero-stat-label { color: #D6E8FF; font-size: 10px; margin-bottom: 12px; }
+    .hero-stat-value { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 32px; font-weight: 800; letter-spacing: -1px; }
+    .hero-stat-foot { margin-top: 8px; color: #D8E9FF; font-size: 10px; }
+
+    .section-heading { display: flex; align-items: center; justify-content: space-between; gap: 15px; margin-bottom: 16px; }
+    .section-heading h2 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 15px; letter-spacing: -.3px; margin: 0; }
+    .section-sub { color: var(--muted); font-size: 11px; margin-top: 5px; }
+
+    .kpi-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 15px; margin-bottom: 26px; }
+    .kpi-card { background: white; border: 1px solid var(--line); border-radius: var(--radius); padding: 19px; box-shadow: var(--shadow); min-width: 0; }
+    .kpi-top { display: flex; justify-content: space-between; gap: 8px; align-items: center; }
+    .kpi-label { color: #718096; font-size: 11px; font-weight: 600; line-height: 1.5; }
+    .kpi-icon { width: 38px; height: 38px; border-radius: 12px; display: grid; place-items: center; font-size: 17px; flex-shrink: 0; }
+    .ki-blue { background: var(--blue-light); color: var(--blue); }
+    .ki-yellow { background: var(--yellow-light); color: #A98500; }
+    .ki-green { background: var(--green-light); color: var(--green); }
+    .ki-purple { background: #F0ECFF; color: var(--purple); }
+    .kpi-value { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 29px; font-weight: 800; letter-spacing: -1px; margin: 13px 0 8px; }
+    .kpi-foot { display: flex; align-items: center; gap: 5px; color: var(--muted); font-size: 10px; line-height: 1.5; }
+
+    .grid-main { display: grid; grid-template-columns: minmax(0, 1.65fr) minmax(270px, .95fr); gap: 19px; margin-bottom: 25px; }
+    .panel { background: white; border: 1px solid var(--line); border-radius: var(--radius); padding: 21px; box-shadow: var(--shadow); min-width: 0; position: relative; }
+    .panel-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 21px; }
+    .panel-title { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; font-size: 13px; margin-bottom: 6px; }
+    .panel-description { color: var(--muted); font-size: 10px; line-height: 1.6; }
+
+    .chart-legend { display: flex; flex-wrap: wrap; gap: 13px; margin-bottom: 17px; }
+    .legend-item { display: flex; align-items: center; gap: 6px; font-size: 10px; color: #748198; }
+    .legend-dot { width: 8px; height: 8px; border-radius: 3px; }
+
+    /* STYLES INTERAKTIF GRAPH CHART & ANIMASI */
+    .chart-container { position: relative; width: 100%; }
+    .chart { width: 100%; height: 205px; display: block; overflow: visible; }
+    .chart text { fill: #97A3B5; font-family: 'DM Sans', sans-serif; font-size: 10px; }
+    .chart .gridline { stroke: #EDF1F6; stroke-dasharray: 3 4; }
+    .chart .line-blue { stroke: var(--blue); stroke-width: 3; fill: none; stroke-linecap: round; stroke-linejoin: round; transition: all 0.3s ease; }
+    .chart .line-yellow { stroke: #E9B900; stroke-width: 2.5; fill: none; stroke-linecap: round; stroke-linejoin: round; transition: all 0.3s ease; }
+    .chart .area-blue { fill: url(#blueArea); transition: all 0.3s ease; }
+
+    /* Interactive Dot Styles */
+    .chart-dot { cursor: pointer; transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275), r 0.25s ease, fill 0.2s ease; }
+    .chart-dot:hover { r: 6.5; }
+    .chart-dot.active { r: 8; fill: #FFD52E !important; stroke: #0875E1; stroke-width: 3px; animation: pulseHalo 1.5s infinite; }
+
+    @keyframes pulseHalo {
+      0% { filter: drop-shadow(0 0 0px rgba(8, 117, 225, 0.8)); }
+      50% { filter: drop-shadow(0 0 8px rgba(8, 117, 225, 0.9)); }
+      100% { filter: drop-shadow(0 0 0px rgba(8, 117, 225, 0.8)); }
+    }
+
+    /* Interactive Hover Line */
+    .chart-hover-line { stroke: #0875E1; stroke-width: 1.5; stroke-dasharray: 4 4; opacity: 0; transition: opacity 0.2s ease, x1 0.2s ease, x2 0.2s ease; pointer-events: none; }
+    .chart-hover-line.active { opacity: 0.6; }
+
+    /* Floating Tooltip */
+    .chart-tooltip {
+      position: absolute;
+      top: 0;
+      left: 0;
+      background: rgba(23, 38, 60, 0.95);
+      color: white;
+      padding: 8px 12px;
+      border-radius: 10px;
+      font-size: 11px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.18);
+      pointer-events: none;
+      opacity: 0;
+      transform: translate(-50%, -115%) scale(0.9);
+      transition: opacity 0.2s ease, transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      z-index: 10;
+      white-space: nowrap;
+      backdrop-filter: blur(4px);
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .chart-tooltip.show { opacity: 1; transform: translate(-50%, -125%) scale(1); }
+    .chart-tooltip::after {
+      content: "";
+      position: absolute;
+      bottom: -5px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-width: 5px 5px 0;
+      border-style: solid;
+      border-color: rgba(23, 38, 60, 0.95) transparent;
+    }
+    .tooltip-month { font-weight: 800; color: #A7D2FF; margin-bottom: 3px; font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .tooltip-val { display: flex; align-items: center; gap: 8px; margin-top: 2px; }
+    .tooltip-dot { width: 6px; height: 6px; border-radius: 50%; display: inline-block; }
+
+    .funnel { display: flex; flex-direction: column; gap: 15px; }
+    .funnel-item { display: grid; grid-template-columns: 93px minmax(0, 1fr) 28px; align-items: center; gap: 10px; }
+    .funnel-label { font-size: 10px; color: #65748A; }
+    .funnel-track { height: 10px; background: #F0F3F8; border-radius: 8px; overflow: hidden; }
+    .funnel-fill { height: 100%; border-radius: 8px; transition: width .4s ease; }
+    .funnel-num { text-align: right; font-size: 11px; font-weight: 800; }
+    .funnel-note { background: #F3F8FF; border-radius: 11px; padding: 12px; margin-top: 21px; font-size: 10px; color: #56708E; line-height: 1.7; }
+    .funnel-note strong { color: var(--blue); }
+
+    /* REAL GMAPS CONTAINER & OVERLAY PIN STYLES */
+    .map-container {
+      background: #EAF1F9;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      height: 360px;
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 18px;
+    }
+    .map-container iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      border-radius: 16px;
+    }
+    .map-pins-overlay {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 5;
+    }
+    .map-pin {
+      position: absolute;
+      transform: translate(-50%, -100%);
+      cursor: pointer;
+      pointer-events: auto;
+      transition: transform .2s ease;
+    }
+    .map-pin:hover { transform: translate(-50%, -108%) scale(1.08); z-index: 10; }
+    .pin-head {
+      background: var(--blue);
+      color: white;
+      padding: 5px 9px;
+      border-radius: 10px;
+      font-size: 10px;
+      font-weight: 800;
+      box-shadow: 0 4px 12px rgba(8, 117, 225, 0.35);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      white-space: nowrap;
+      border: 1.5px solid white;
+    }
+    .pin-head.visited { background: var(--green); }
+    .pin-stem { width: 2px; height: 10px; background: var(--ink); margin: 0 auto; }
+
+    /* UPLOAD FOTO STYLES */
+    .photo-upload-box {
+      border: 2px dashed #CBD6E2;
+      background: #FBFCFE;
+      border-radius: 12px;
+      padding: 16px;
+      text-align: center;
+      cursor: pointer;
+      transition: .2s;
+    }
+    .photo-upload-box:hover { border-color: var(--blue); background: #F0F6FF; }
+    .photo-preview {
+      width: 100%;
+      max-height: 170px;
+      object-fit: cover;
+      border-radius: 10px;
+      display: none;
+      margin-top: 10px;
+    }
+
+    .table-panel { margin-bottom: 25px; }
+    .table-tools { display: flex; flex-wrap: wrap; align-items: center; gap: 9px; margin-bottom: 18px; }
+    .search-box { position: relative; flex: 1; min-width: 170px; }
+    .search-box span { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: #97A3B5; font-size: 15px; }
+    .search-box input { width: 100%; padding: 10px 12px 10px 34px; border: 1px solid var(--line); background: #FAFBFD; border-radius: 10px; outline: none; }
+    .search-box input:focus { border-color: #91C4FF; background: white; }
+    .filter-select { border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; background: white; color: #5C6B81; min-width: 135px; outline: none; }
+    .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    table { border-collapse: collapse; width: 100%; white-space: nowrap; }
+    th { background: #F8FAFD; color: #8A97AA; font-size: 9px; letter-spacing: .5px; text-transform: uppercase; font-weight: 800; padding: 13px 14px; text-align: left; border-bottom: 1px solid var(--line); }
+    td { padding: 14px; border-bottom: 1px solid #F0F3F8; font-size: 11px; color: #526178; }
+    tbody tr:hover { background: #FAFCFF; }
+    tbody tr:last-child td { border-bottom: none; }
+    .merchant-cell { display: flex; align-items: center; gap: 10px; }
+    .merchant-avatar { width: 34px; height: 34px; border-radius: 11px; display: grid; place-items: center; font-size: 14px; font-weight: 800; flex-shrink: 0; }
+    .merchant-name { color: var(--ink); font-weight: 800; font-size: 11px; }
+    .merchant-category { color: #9AA5B5; font-size: 10px; margin-top: 4px; }
+    .pill { display: inline-flex; align-items: center; gap: 5px; padding: 6px 8px; border-radius: 7px; font-size: 9px; font-weight: 800; }
+    .pill-blue { background: #EAF4FF; color: #0875D9; }
+    .pill-green { background: #E4F7EF; color: #13845F; }
+    .pill-yellow { background: #FFF6D6; color: #927000; }
+    .pill-red { background: #FFF0F1; color: #C34A59; }
+    .pill-gray { background: #F0F2F6; color: #6D7A8D; }
+    .table-action { border: 1px solid var(--line); background: white; padding: 7px 10px; border-radius: 8px; font-size: 10px; font-weight: 800; color: var(--blue); }
+    .table-action:hover { background: var(--blue-light); }
+    .table-footer { display: flex; justify-content: space-between; gap: 12px; align-items: center; color: var(--muted); font-size: 10px; padding-top: 17px; }
+
+    .bottom-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 19px; }
+    .activity-list { display: flex; flex-direction: column; }
+    .activity-item { display: flex; gap: 11px; padding: 13px 0; border-bottom: 1px solid #F0F3F8; }
+    .activity-item:last-child { border-bottom: none; }
+    .activity-icon { width: 35px; height: 35px; display: grid; place-items: center; background: #F1F6FF; border-radius: 11px; flex-shrink: 0; }
+    .activity-title { font-size: 11px; font-weight: 800; margin: 2px 0 5px; }
+    .activity-desc { font-size: 10px; color: var(--muted); line-height: 1.6; }
+
+    /* Discovery page */
+    .form-layout { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(270px, .75fr); gap: 20px; align-items: start; }
+    .form-panel { background: white; border: 1px solid var(--line); border-radius: var(--radius); padding: 23px; margin-bottom: 18px; box-shadow: var(--shadow); }
+    .form-section-title { display: flex; align-items: center; gap: 11px; margin-bottom: 21px; }
+    .number-badge { width: 30px; height: 30px; border-radius: 10px; display: grid; place-items: center; background: var(--blue-light); color: var(--blue); font-weight: 800; }
+    .form-section-title h3 { margin: 0 0 4px; font-size: 13px; font-weight: 800; }
+    .form-section-title p { color: var(--muted); font-size: 10px; margin: 0; }
+    .form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 17px; }
+    .field { min-width: 0; }
+    .field.full { grid-column: 1 / -1; }
+    .field label { display: block; color: #4D5C71; font-size: 11px; font-weight: 800; margin-bottom: 8px; }
+    .field label .required { color: var(--red); }
+    .field input, .field select, .field textarea { width: 100%; border: 1px solid #E0E7F0; border-radius: 10px; padding: 11px 12px; background: #FBFCFE; outline: none; color: var(--ink); }
+    .field textarea { min-height: 85px; resize: vertical; line-height: 1.6; }
+    .choice-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+    .choice { position: relative; }
+    .choice input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+    .choice label { display: flex; gap: 10px; align-items: flex-start; border: 1px solid #E4EAF2; padding: 13px; border-radius: 12px; cursor: pointer; min-height: 68px; }
+    .choice label:hover { border-color: #A9D1FF; }
+    .choice input:checked + label { border-color: var(--blue); background: #F1F8FF; box-shadow: inset 0 0 0 1px var(--blue); }
+    .choice-emoji { font-size: 19px; }
+    .choice-title { font-size: 11px; font-weight: 800; margin-bottom: 5px; }
+    .choice-sub { font-size: 10px; color: var(--muted); line-height: 1.5; }
+    .form-actions { display: flex; justify-content: flex-end; gap: 10px; flex-wrap: wrap; margin-top: 18px; }
+    .side-info { background: linear-gradient(145deg, #075BC7, #087CEB); border-radius: 17px; padding: 21px; color: white; margin-bottom: 18px; }
+    .side-info h3 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 15px; margin-bottom: 10px; }
+    .side-info p { color: #D9EAFE; font-size: 11px; line-height: 1.8; }
+    .side-info .mini-step { display: flex; gap: 10px; align-items: flex-start; margin-top: 16px; }
+    .mini-step-num { width: 25px; height: 25px; display: grid; place-items: center; flex-shrink: 0; background: #FFFFFF1D; border-radius: 8px; font-weight: 800; }
+    .mini-step strong { display: block; font-size: 11px; margin-bottom: 4px; }
+    .mini-step span { display: block; color: #D8E9FF; font-size: 10px; line-height: 1.6; }
+    .tip-panel { background: var(--yellow-light); border: 1px solid #F4E9B8; border-radius: 15px; padding: 16px; }
+
+    /* Recommendations */
+    .recommend-hero { background: linear-gradient(120deg, #075BC7, #1686F0); border-radius: 21px; padding: 27px; color: white; margin-bottom: 20px; }
+    .recommend-hero h2 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 24px; letter-spacing: -.6px; margin-bottom: 9px; }
+    .recommend-hero p { color: #E0EDFF; font-size: 12px; line-height: 1.8; max-width: 650px; margin-bottom: 0; }
+    .recommend-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, .8fr); gap: 20px; align-items: start; }
+    .product-card { border: 1px solid var(--line); border-radius: 16px; padding: 19px; margin-bottom: 13px; background: white; }
+    .product-card.recommended { border-color: #9BCBFF; box-shadow: 0 5px 20px #0875E10B; }
+    .product-top { display: flex; align-items: center; gap: 13px; margin-bottom: 13px; }
+    .product-icon { width: 48px; height: 48px; display: grid; place-items: center; border-radius: 14px; background: var(--blue-light); font-size: 23px; }
+    .product-title { font-size: 13px; font-weight: 800; margin-bottom: 5px; }
+    .product-subtitle { font-size: 10px; color: var(--muted); }
+    .product-desc { font-size: 11px; color: #718096; line-height: 1.8; margin-bottom: 15px; }
+
+    /* Analytics */
+    .analytics-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 19px; }
+    .metric-list { display: flex; flex-direction: column; gap: 17px; }
+
+    .empty-state { text-align: center; color: var(--muted); padding: 30px 12px; font-size: 11px; }
+    .empty-state div { font-size: 25px; margin-bottom: 9px; }
+    .footer { color: #A3ADBB; font-size: 10px; text-align: center; padding: 25px 0 0; }
+
+    /* Modal */
+    .modal-backdrop { display: none; position: fixed; inset: 0; background: #12233D80; z-index: 100; align-items: center; justify-content: center; padding: 20px; backdrop-filter: blur(4px); }
+    .modal-backdrop.show { display: flex; }
+    .modal { background: white; width: min(620px, 100%); max-height: 90vh; overflow-y: auto; border-radius: 20px; box-shadow: 0 25px 80px #0002; padding: 25px; animation: fadeIn .2s ease; }
+    .modal-header { display: flex; justify-content: space-between; gap: 15px; align-items: flex-start; margin-bottom: 20px; }
+    .modal-header h2 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 19px; margin-bottom: 6px; }
+    .modal-header p { font-size: 11px; color: var(--muted); margin: 0; }
+    .close-modal { border: 1px solid var(--line); background: white; border-radius: 9px; width: 33px; height: 33px; font-size: 18px; }
+    .toast { position: fixed; bottom: 24px; right: 24px; z-index: 200; background: #17324F; color: white; padding: 14px 19px; border-radius: 12px; box-shadow: 0 10px 35px #0002; font-size: 12px; display: none; max-width: calc(100vw - 40px); }
+    .toast.show { display: block; animation: fadeIn .2s ease; }
+
+    /* MEDIA QUERIES UNTUK TAMPILAN DESKTOP & MOBILE RESPONSIVE */
+    @media (max-width: 1180px) {
+      .sidebar { width: 220px; }
+      .content { padding: 25px 23px 35px; }
+      .topbar { padding: 0 23px; }
+      .kpi-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .grid-main { grid-template-columns: minmax(0, 1.3fr) minmax(250px, .9fr); }
+    }
+
+    @media (max-width: 850px) {
+      .sidebar { position: fixed; inset: 0 auto 0 0; height: 100dvh; transform: translateX(-105%); box-shadow: 12px 0 30px #12233D0B; }
+      .sidebar.open { transform: translateX(0); }
+      .menu-toggle { display: block; }
+      .topbar { height: 64px; padding: 0 16px; }
+      .content { padding: 18px 15px 30px; }
+      .grid-main, .form-layout, .recommend-grid, .bottom-grid, .analytics-grid { grid-template-columns: 1fr; gap: 15px; }
+      
+      .page-heading { flex-direction: column; align-items: stretch; gap: 12px; margin-bottom: 18px; }
+      .heading-actions { width: 100%; justify-content: flex-start; }
+      .heading-actions .btn { flex: 1; text-align: center; }
+
+      .hero { flex-direction: column; align-items: stretch; padding: 20px; gap: 18px; }
+      .hero-stat { min-width: 100%; }
+
+      .form-grid { grid-template-columns: 1fr; }
+      .choice-grid { grid-template-columns: 1fr; }
+
+      .date-chip { display: none; }
+      .table-tools { flex-direction: column; align-items: stretch; }
+      .search-box, .filter-select { width: 100%; }
+
+      .map-container { height: 260px; }
+      .btn { width: 100%; justify-content: center; }
+    }
+  </style>
+</head>
+
+<body>
+<div class="app">
+  <!-- OVERLAY BACKDROP MOBILE -->
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">
+      <div class="brand-mark">M</div>
+      <div>
+        <div class="brand-name">MERCHANT HUB</div>
+        <div class="brand-sub">Opportunity & Conversion</div>
+      </div>
+    </div>
+
+    <!-- MODE SWITCHER UNTUK USER (OFFICER vs BRANCH MANAGER) -->
+    <div class="role-switcher">
+      <button class="role-btn active" id="roleOfficerBtn">Pegawai Mode</button>
+      <button class="role-btn" id="roleManagerBtn">BM Tracking Mode</button>
+    </div>
+
+    <div class="nav-label">WORKSPACE</div>
+    <button class="nav-item active" data-page="dashboard"><span class="nav-icon">▦</span> Overview</button>
+    <button class="nav-item" data-page="gmaps"><span class="nav-icon">📍</span> GMaps Prospecting</button>
+    <button class="nav-item" data-page="discovery"><span class="nav-icon">⌕</span> Merchant Discovery</button>
+    <button class="nav-item" data-page="recommendation"><span class="nav-icon">✧</span> Product Recommendation</button>
+    <button class="nav-item" data-page="prospects"><span class="nav-icon">▤</span> Prospect Management <span class="nav-count" id="navProspectCount">6</span></button>
+
+    <div class="nav-label">PERFORMANCE & SUPERVISI</div>
+    <button class="nav-item" data-page="analytics"><span class="nav-icon">◷</span> Conversion Analytics</button>
+    <button class="nav-item" data-page="bm-tracking" id="bmNavBtn" style="display:none;"><span class="nav-icon">👁</span> BM Officer Audit</button>
+
+    <div class="sidebar-bottom">
+      <div class="branch-card">
+        <div class="branch-label">ACTIVE BRANCH</div>
+        <div class="branch-name">KCP Cibubur<br>Lapangan Tembak</div>
+        <div class="branch-status"><span class="status-dot"></span> Live Field Tracking</div>
+      </div>
+      <div class="user-card">
+        <div class="avatar" id="userAvatar">A</div>
+        <div>
+          <div class="user-name" id="userName">Pegawai A</div>
+          <div class="user-role" id="userRole">Merchant Acquisition</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <div class="top-left">
+        <button class="menu-toggle" id="menuToggle" aria-label="Buka menu">☰</button>
+        <div class="breadcrumb">Workspace <span style="margin:0 4px;color:#B0BAC8">/</span> <strong id="breadcrumbTitle">Overview</strong></div>
+      </div>
+      <div class="top-actions">
+        <div class="date-chip" id="currentDate">◷ Memuat tanggal...</div>
+        <button class="icon-button" id="notificationButton" aria-label="Notifikasi">♧<span class="notification-dot"></span></button>
+      </div>
+    </header>
+
+    <div class="content">
+
+      <!-- DASHBOARD -->
+      <section class="page active" id="page-dashboard">
+        <div class="page-heading">
+          <div>
+            <div class="eyebrow">MERCHANT GROWTH WORKSPACE</div>
+            <h1>Good morning, <span id="welcomeUserName">Pegawai A</span>! <span style="font-size:23px">✦</span></h1>
+            <p class="page-description">Temukan peluang merchant berdasarkan kebutuhan nyata dan pantaus progres akuisisi.</p>
+          </div>
+          <div class="heading-actions">
+            <button class="btn btn-secondary" id="exportButton">↓ Export CSV</button>
+            <button class="btn btn-primary" data-go="gmaps">📍 GMaps Discovery</button>
+          </div>
+        </div>
+
+        <div class="hero">
+          <div class="hero-content">
+            <div class="hero-label">✦ &nbsp; LOCATION-BASED FIELD OUTREACH</div>
+            <h2>Discover nearby merchants.<br>Deliver the right solution.</h2>
+            <p>Cari calon merchant terdekat lewat Google Maps, lakukan kunjungan (*visit*), upload bukti foto lokasi, lalu tentukan solusi produk yang tepat.</p>
+            <button class="btn btn-primary" data-go="gmaps">Cari Merchant Terdekat (GMaps) <span>→</span></button>
+          </div>
+          <div class="hero-stat">
+            <div class="hero-stat-label">Prospek terdata</div>
+            <div class="hero-stat-value" id="heroProspects">6</div>
+            <div class="hero-stat-foot">Data simulasi prototype</div>
+          </div>
+        </div>
+
+        <div class="kpi-grid">
+          <div class="kpi-card">
+            <div class="kpi-top"><div class="kpi-label">Total Prospek</div><div class="kpi-icon ki-blue">♧</div></div>
+            <div class="kpi-value" id="kpiProspects">06</div>
+            <div class="kpi-foot">Merchant dalam pipeline</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-top"><div class="kpi-label">Visited / Discovery</div><div class="kpi-icon ki-yellow">⌕</div></div>
+            <div class="kpi-value" id="kpiNeeds">04</div>
+            <div class="kpi-foot">Kunjungan fisik selesai</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-top"><div class="kpi-label">Tertarik / Follow-up</div><div class="kpi-icon ki-purple">↗</div></div>
+            <div class="kpi-value" id="kpiFollow">03</div>
+            <div class="kpi-foot">Perlu tindak lanjut</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-top"><div class="kpi-label">Merchant Aktif</div><div class="kpi-icon ki-green">✓</div></div>
+            <div class="kpi-value" id="kpiActive">01</div>
+            <div class="kpi-foot">Status aktivasi tercatat</div>
+          </div>
+        </div>
+
+        <div class="grid-main">
+          <div class="panel">
+            <div class="panel-header">
+              <div>
+                <div class="panel-title">Acquisition Performance</div>
+                <div class="panel-description">Klik pada titik bulan untuk melihat detail performa</div>
+              </div>
+              <span class="pill pill-blue">SIMULASI</span>
+            </div>
+            <div class="chart-legend">
+              <div class="legend-item"><span class="legend-dot" style="background:#0875E1"></span>Prospek</div>
+              <div class="legend-item"><span class="legend-dot" style="background:#FFD52E"></span>Penawaran</div>
+            </div>
+            
+            <!-- CONTAINER CHART INTERAKTIF DENGAN TOOLTIP DYNAMIC -->
+            <div class="chart-container" id="chartContainer">
+              <div class="chart-tooltip" id="chartTooltip">
+                <div class="tooltip-month" id="tooltipMonth">MEI</div>
+                <div class="tooltip-val"><span class="tooltip-dot" style="background:#0875E1"></span> Prospek: <strong id="tooltipProspek">0</strong></div>
+                <div class="tooltip-val"><span class="tooltip-dot" style="background:#FFD52E"></span> Penawaran: <strong id="tooltipPenawaran">0</strong></div>
+              </div>
+              <svg class="chart" viewBox="0 0 560 220" preserveAspectRatio="none" role="img" aria-label="Grafik ilustrasi prospek dan penawaran">
+                <defs>
+                  <linearGradient id="blueArea" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#0875E1" stop-opacity=".18"/>
+                    <stop offset="100%" stop-color="#0875E1" stop-opacity="0"/>
+                  </linearGradient>
+                </defs>
+                <line class="gridline" x1="42" y1="25" x2="545" y2="25"/>
+                <line class="gridline" x1="42" y1="65" x2="545" y2="65"/>
+                <line class="gridline" x1="42" y1="105" x2="545" y2="105"/>
+                <line class="gridline" x1="42" y1="145" x2="545" y2="145"/>
+                <line class="gridline" x1="42" y1="185" x2="545" y2="185"/>
+                <text x="8" y="29">100</text><text x="15" y="69">75</text><text x="15" y="109">50</text><text x="15" y="149">25</text><text x="22" y="189">0</text>
+
+                <!-- Interactive Guide Line -->
+                <line class="chart-hover-line" id="chartHoverLine" x1="50" y1="25" x2="50" y2="185"/>
+
+                <path class="area-blue" d="M50 135 L145 112 L240 120 L335 82 L430 91 L525 43 L525 185 L50 185 Z"/>
+                <path class="line-blue" d="M50 135 L145 112 L240 120 L335 82 L430 91 L525 43"/>
+                <path class="line-yellow" d="M50 160 L145 145 L240 151 L335 123 L430 132 L525 99"/>
+                
+                <!-- Titik Grafik Interaktif dengan Event Handler -->
+                <g id="chartPoints">
+                  <circle class="chart-dot" data-index="0" cx="50" cy="135" r="4.5" fill="#0875E1"/>
+                  <circle class="chart-dot" data-index="1" cx="145" cy="112" r="4.5" fill="#0875E1"/>
+                  <circle class="chart-dot" data-index="2" cx="240" cy="120" r="4.5" fill="#0875E1"/>
+                  <circle class="chart-dot" data-index="3" cx="335" cy="82" r="4.5" fill="#0875E1"/>
+                  <circle class="chart-dot" data-index="4" cx="430" cy="91" r="4.5" fill="#0875E1"/>
+                  <circle class="chart-dot" data-index="5" cx="525" cy="43" r="4.5" fill="#0875E1"/>
+                </g>
+
+                <text x="50" y="208" text-anchor="middle">Mei</text>
+                <text x="145" y="208" text-anchor="middle">Jun</text>
+                <text x="240" y="208" text-anchor="middle">Jul</text>
+                <text x="335" y="208" text-anchor="middle">Agu</text>
+                <text x="430" y="208" text-anchor="middle">Sep</text>
+                <text x="525" y="208" text-anchor="middle">Okt</text>
+              </svg>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-header">
+              <div>
+                <div class="panel-title">Conversion Funnel</div>
+                <div class="panel-description">Tahapan akuisisi merchant</div>
+              </div>
+              <span class="pill pill-yellow">PILOT</span>
+            </div>
+            <div class="funnel" id="funnelContainer"></div>
+            <div class="funnel-note"><strong>Fokus utama:</strong> pahami alasan merchant belum tertarik dan tindak lanjuti peluang yang memang sesuai kebutuhannya.</div>
+          </div>
+        </div>
+
+        <div class="panel table-panel">
+          <div class="section-heading">
+            <div><h2>Recent Merchant Prospects</h2><div class="section-sub">Pantau peluang merchant dan langkah selanjutnya</div></div>
+            <button class="btn btn-secondary btn-small" data-go="prospects">Lihat Semua →</button>
+          </div>
+          <div class="table-tools">
+            <div class="search-box"><span>⌕</span><input id="dashboardSearch" type="search" placeholder="Cari nama merchant..."></div>
+            <select class="filter-select" id="dashboardFilter" aria-label="Filter status">
+              <option value="">Semua status</option>
+              <option value="Visited / Discovery">Visited / Discovery</option>
+              <option value="Follow-up">Follow-up</option>
+              <option value="Pengajuan">Pengajuan</option>
+              <option value="Aktif">Aktif</option>
+              <option value="Belum Sesuai">Belum Sesuai</option>
+            </select>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Merchant</th><th>Pegawai Field</th><th>Foto Bukti</th><th>Metode Saat Ini</th><th>Rekomendasi</th><th>Status</th><th>Aksi</th></tr></thead>
+              <tbody id="dashboardTable"></tbody>
+            </table>
+          </div>
+          <div class="table-footer"><span id="dashboardTableInfo">Menampilkan prospek</span><button class="btn btn-secondary btn-small" data-go="prospects">Kelola Pipeline</button></div>
+        </div>
+
+        <div class="bottom-grid">
+          <div class="panel">
+            <div class="panel-header"><div><div class="panel-title">Latest Activities</div><div class="panel-description">Aktivitas terbaru dalam prototype</div></div></div>
+            <div class="activity-list" id="activityList"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-header"><div><div class="panel-title">Priority Opportunities</div><div class="panel-description">Prospek yang perlu ditindaklanjuti</div></div><span class="pill pill-yellow">PRIORITAS</span></div>
+            <div id="priorityList"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PAGE: GMAPS PROSPECTING (GOOGLE MAPS REAL EMBED WITH INTERACTIVE PINS) -->
+      <section class="page" id="page-gmaps">
+        <div class="page-heading">
+          <div>
+            <div class="eyebrow">STEP 00 / GMAPS RADIUS PROSPECTING</div>
+            <h1>Nearby Merchant Prospecting</h1>
+            <p class="page-description">Dapatkan lokasi calon merchant dari Google Maps. Klik pin pada peta atau tombol di tabel untuk langsung isi Discovery.</p>
+          </div>
+          <div class="heading-actions"><button class="btn btn-primary" data-go="discovery">＋ Visit Merchant Baru</button></div>
+        </div>
+
+        <div class="panel" style="margin-bottom:20px;">
+          <div class="table-tools">
+            <div class="search-box"><span>📍</span><input type="text" id="gmapsLocation" value="Cibubur, Lapangan Tembak" placeholder="Pusat Lokasi KCP..."></div>
+            <select class="filter-select" id="radiusSelect">
+              <option value="1">Radius 1 KM</option>
+              <option value="3" selected>Radius 3 KM</option>
+              <option value="5">Radius 5 KM</option>
+              <option value="10">Radius 10 KM</option>
+            </select>
+            <select class="filter-select" id="gmapsCategory">
+              <option value="">Semua Kategori</option>
+              <option>Restoran / Kuliner</option>
+              <option>Retail / Minimarket</option>
+              <option>Fashion</option>
+              <option>Kesehatan / Apotek</option>
+            </select>
+            <button class="btn btn-secondary" id="refreshMapBtn">🔄 Filter GMaps</button>
+          </div>
+
+          <!-- CONTAINER EMBED GOOGLE MAPS DENGAN OVERLAY PIN INTERAKTIF -->
+          <div class="map-container">
+            <iframe id="gmapsIframe" loading="lazy" allowfullscreen src="https://maps.google.com/maps?q=Cibubur,%20Lapangan%20Tembak&t=&z=14&ie=UTF8&iwloc=&output=embed"></iframe>
+            <div class="map-pins-overlay" id="mapPinsOverlay"></div>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--muted);flex-wrap:wrap;gap:8px;">
+            <span>💡 <strong>Klik Pin pada peta</strong> untuk otomatis membuka & mengisi form Merchant Discovery.</span>
+            <span>Terdeteksi: <strong id="gmapsCountText" style="color:var(--ink)">0 Merchant</strong></span>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-header"><div><div class="panel-title">Daftar Merchant Terdekat Siap Dikunjungi</div><div class="panel-description">Rekomendasi sasaran kunjungan tim outreach dari Google Maps</div></div></div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Nama Usaha</th><th>Jarak</th><th>Kategori</th><th>Metode Pembayaran GMaps</th><th>Status Visit</th><th>Aksi</th></tr></thead>
+              <tbody id="gmapsTable"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- MERCHANT DISCOVERY -->
+      <section class="page" id="page-discovery">
+        <div class="page-heading">
+          <div>
+            <div class="eyebrow">STEP 01 / FIELD VISIT & DISCOVERY</div>
+            <h1>Merchant Discovery</h1>
+            <p class="page-description">Kenali kondisi pembayaran, unggah bukti foto lokasi, dan identifikasi kebutuhan merchant.</p>
+          </div>
+          <div class="heading-actions"><button class="btn btn-secondary" data-go="prospects">← Kembali ke Prospek</button></div>
+        </div>
+
+        <div class="form-layout">
+          <div>
+            <form id="discoveryForm">
+              <div class="form-panel">
+                <div class="form-section-title"><div class="number-badge">01</div><div><h3>Informasi Merchant & Bukti Visit</h3><p>Catat identitas usaha dan lampirkan foto kunjungan</p></div></div>
+                <div class="form-grid">
+                  <div class="field"><label for="merchantName">Nama Merchant <span class="required">*</span></label><input id="merchantName" name="merchantName" placeholder="Contoh: Kedai Kopi Nusantara" required></div>
+                  <div class="field"><label for="merchantCategory">Kategori Usaha <span class="required">*</span></label><select id="merchantCategory" name="merchantCategory" required><option value="">Pilih kategori</option><option>Restoran / Kuliner</option><option>Retail / Minimarket</option><option>Fashion</option><option>Kesehatan / Apotek</option><option>Jasa</option><option>Pendidikan</option><option>Lainnya</option></select></div>
+                  <div class="field"><label for="merchantArea">Area / Jarak Radius</label><input id="merchantArea" name="merchantArea" placeholder="Contoh: Cibubur (0.5 KM)"></div>
+                  <div class="field"><label for="decisionMaker">Pengambil Keputusan <span class="required">*</span></label><select id="decisionMaker" name="decisionMaker" required><option value="">Pilih kondisi</option><option>Pemilik / Pengambil Keputusan</option><option>Manajer</option><option>Karyawan</option><option>Belum Diketahui</option></select></div>
+                  
+                  <!-- ATTACH FOTO BUKTI -->
+                  <div class="field full">
+                    <label>Lampirkan Foto Bukti Kunjungan (Spanduk / Area Kasir) <span class="required">*</span></label>
+                    <div class="photo-upload-box" id="uploadBox">
+                      <span style="font-size:24px;">📷</span>
+                      <div style="font-size:11px;font-weight:700;margin-top:4px;">Klik untuk Unggah Foto Bukti Kunjungan</div>
+                      <div style="font-size:10px;color:var(--muted)">Format JPG/PNG, Maksimal 5MB</div>
+                      <input type="file" id="photoInput" accept="image/*" capture="environment" style="display:none;">
+                    </div>
+                    <img id="photoPreview" class="photo-preview" alt="Preview Foto Bukti Kunjungan">
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-panel">
+                <div class="form-section-title"><div class="number-badge">02</div><div><h3>Kondisi Pembayaran Saat Ini</h3><p>Pahami metode yang sudah digunakan merchant</p></div></div>
+                <div class="form-grid">
+                  <div class="field"><label for="currentPayment">Metode Pembayaran <span class="required">*</span></label><select id="currentPayment" name="currentPayment" required><option value="">Pilih metode</option><option>EDC Kompetitor</option><option>QRIS Kompetitor</option><option>EDC dan QRIS Kompetitor</option><option>Cash / Transfer</option><option>Sudah menggunakan Mandiri</option><option>Belum menggunakan pembayaran digital</option></select></div>
+                  <div class="field"><label for="currentProvider">Penyedia Saat Ini</label><select id="currentProvider" name="currentProvider"><option value="">Tidak diketahui / tidak disebutkan</option><option>BCA</option><option>BRI</option><option>BNI</option><option>Bank lain</option><option>Penyedia QRIS nonbank</option><option>Mandiri</option><option>Lainnya</option></select></div>
+                  <div class="field full"><label>Kebutuhan Utama Merchant <span class="required">*</span></label>
+                    <div class="choice-grid">
+                      <div class="choice"><input type="checkbox" id="needCard" name="needs" value="Penerimaan kartu"><label for="needCard"><span class="choice-emoji">💳</span><span><span class="choice-title">Penerimaan Kartu</span><span class="choice-sub">Membutuhkan pembayaran kartu debit/kredit</span></span></label></div>
+                      <div class="choice"><input type="checkbox" id="needQR" name="needs" value="QRIS"><label for="needQR"><span class="choice-emoji">▦</span><span><span class="choice-title">QRIS</span><span class="choice-sub">Membutuhkan penerimaan pembayaran QR</span></span></label></div>
+                      <div class="choice"><input type="checkbox" id="needReport" name="needs" value="Monitoring transaksi"><label for="needReport"><span class="choice-emoji">📊</span><span><span class="choice-title">Monitoring Transaksi</span><span class="choice-sub">Membutuhkan pencatatan dan pemantauan transaksi</span></span></label></div>
+                      <div class="choice"><input type="checkbox" id="needBackup" name="needs" value="Alternatif pembayaran"><label for="needBackup"><span class="choice-emoji">↗</span><span><span class="choice-title">Alternatif Pembayaran</span><span class="choice-sub">Mencari opsi tambahan atau cadangan</span></span></label></div>
+                    </div>
+                  </div>
+                  <div class="field full"><label for="painPoint">Kendala / Kebutuhan Spesifik</label><textarea id="painPoint" name="painPoint" placeholder="Contoh: pemilik ingin memisahkan pencatatan transaksi dari kanal pembayaran yang sudah ada."></textarea></div>
+                </div>
+              </div>
+
+              <div class="form-panel">
+                <div class="form-section-title"><div class="number-badge">03</div><div><h3>Opportunity & Follow-up</h3><p>Tentukan kecocokan produk dan tindak lanjut</p></div></div>
+                <div class="form-grid">
+                  <div class="field"><label for="merchantInterest">Respons Merchant <span class="required">*</span></label><select id="merchantInterest" name="merchantInterest" required><option value="">Pilih respons</option><option>Tertarik</option><option>Perlu Penjelasan</option><option>Belum Tertarik</option><option>Belum Bertemu Pengambil Keputusan</option></select></div>
+                  <div class="field"><label for="objection">Alasan Keberatan</label><select id="objection" name="objection"><option value="">Belum ada / tidak diketahui</option><option>Nyaman dengan penyedia saat ini</option><option>Belum melihat manfaat tambahan</option><option>Biaya atau ketentuan perlu diklarifikasi</option><option>Proses pendaftaran dianggap rumit</option><option>Pengambil keputusan tidak tersedia</option><option>Kebutuhan belum sesuai</option><option>Lainnya</option></select></div>
+                  <div class="field"><label for="productInterest">Produk yang Dipertimbangkan</label><select id="productInterest" name="productInterest"><option value="Otomatis">Rekomendasi otomatis</option><option>EDC Mandiri</option><option>Livin’ Merchant</option><option>Keduanya</option><option>Belum sesuai saat ini</option></select></div>
+                  <div class="field"><label for="followupDate">Tanggal Follow-up</label><input type="date" id="followupDate" name="followupDate"></div>
+                  <div class="field full"><label for="nextAction">Rencana Tindak Lanjut</label><textarea id="nextAction" name="nextAction" placeholder="Contoh: jadwalkan demo dengan pemilik dan verifikasi informasi biaya serta persyaratan resmi."></textarea></div>
+                </div>
+                <div class="form-actions">
+                  <button type="reset" class="btn btn-secondary">Reset Form</button>
+                  <button type="submit" class="btn btn-primary">Simpan Visit & Lihat Rekomendasi →</button>
+                </div>
+              </div>
+            </form>
+          </div>
+
+          <div>
+            <div class="side-info">
+              <div class="eyebrow" style="color:#D6E8FF">FIELD PLAYBOOK</div>
+              <h3>Discovery before selling.</h3>
+              <p>Jangan langsung meminta merchant mengganti penyedia pembayaran. Temukan kebutuhan yang belum terpenuhi terlebih dahulu.</p>
+              <div class="mini-step"><div class="mini-step-num">1</div><div><strong>Foto Bukti</strong><span>Pastikan foto spanduk atau kasir terlampir jernih.</span></div></div>
+              <div class="mini-step"><div class="mini-step-num">2</div><div><strong>Ask & Understand</strong><span>Tanyakan kendala dan kenali pengambil keputusan.</span></div></div>
+              <div class="mini-step"><div class="mini-step-num">3</div><div><strong>Match & Follow-up</strong><span>Sesuai produk dan jadwalkan tindak lanjut.</span></div></div>
+            </div>
+            <div class="tip-panel">
+              <h3 style="font-size:12px;margin-bottom:8px;">💡 Prinsip Penting</h3>
+              <p style="font-size:10px;color:#7F6B23;line-height:1.8;margin:0;">Foto lokasi wajib dilampirkan agar Branch Manager dapat memverifikasi keabsahan kunjungan dan menyetujui pengajuan.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- RECOMMENDATION -->
+      <section class="page" id="page-recommendation">
+        <div class="page-heading">
+          <div>
+            <div class="eyebrow">STEP 02 / MATCH</div>
+            <h1>Product Recommendation</h1>
+            <p class="page-description">Rekomendasi awal berdasarkan informasi dan kebutuhan merchant yang dicatat.</p>
+          </div>
+          <div class="heading-actions"><button class="btn btn-primary" data-go="discovery">＋ Discovery Merchant</button></div>
+        </div>
+
+        <div class="recommend-hero">
+          <div class="eyebrow" style="color:#D6E8FF">NEEDS-BASED PRODUCT MATCHING</div>
+          <h2>Right product. Relevant value.</h2>
+          <p>Gunakan rekomendasi sebagai panduan percakapan, bukan keputusan otomatis. Officer tetap perlu memverifikasi kecocokan kebutuhan, fitur resmi, biaya, persyaratan, dan kelayakan merchant.</p>
+        </div>
+
+        <div class="recommend-grid">
+          <div>
+            <div class="panel" style="margin-bottom:19px">
+              <div class="panel-header"><div><div class="panel-title">Hasil Rekomendasi Terakhir</div><div class="panel-description" id="recommendMerchantName">Pilih merchant untuk melihat hasil rekomendasi</div></div><span class="pill pill-blue">RULE-BASED</span></div>
+              <div id="recommendResult">
+                <div class="empty-state"><div>✧</div>Belum ada rekomendasi merchant.<br>Isi form Merchant Discovery terlebih dahulu.</div>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div class="product-card recommended">
+              <div class="product-top"><div class="product-icon">💳</div><div><div class="product-title">EDC Mandiri</div><div class="product-subtitle">Solusi penerimaan pembayaran kartu</div></div></div>
+              <div class="product-desc">Pertimbangkan untuk usaha yang membutuhkan penerimaan pembayaran menggunakan kartu atau memerlukan opsi pembayaran tambahan.</div>
+              <button class="btn btn-secondary" style="width:100%" data-go="discovery">Evaluasi Kebutuhan Merchant</button>
+            </div>
+            <div class="product-card">
+              <div class="product-top"><div class="product-icon" style="background:#FFF7D8">▦</div><div><div class="product-title">Livin’ Merchant</div><div class="product-subtitle">Solusi digital untuk merchant</div></div></div>
+              <div class="product-desc">Pertimbangkan untuk usaha yang membutuhkan penerimaan QRIS serta pengelolaan transaksi digital.</div>
+              <button class="btn btn-secondary" style="width:100%" data-go="discovery">Evaluasi Kebutuhan Merchant</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PROSPECT MANAGEMENT -->
+      <section class="page" id="page-prospects">
+        <div class="page-heading">
+          <div>
+            <div class="eyebrow">PIPELINE MANAGEMENT</div>
+            <h1>Prospect Management</h1>
+            <p class="page-description">Kelola seluruh prospek, status penawaran, alasan keberatan, dan foto bukti kunjungan.</p>
+          </div>
+          <div class="heading-actions">
+            <button class="btn btn-secondary" id="prospectExportButton">↓ Export CSV</button>
+            <button class="btn btn-primary" data-go="discovery">＋ Tambah Prospek</button>
+          </div>
+        </div>
+
+        <div class="panel table-panel">
+          <div class="table-tools">
+            <div class="search-box"><span>⌕</span><input id="prospectSearch" type="search" placeholder="Cari nama, pegawai, atau kebutuhan..."></div>
+            <select id="prospectStatusFilter" class="filter-select"><option value="">Semua status</option><option>Visited / Discovery</option><option>Follow-up</option><option>Pengajuan</option><option>Aktif</option><option>Belum Sesuai</option></select>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Merchant</th><th>Pegawai Field</th><th>Foto Bukti</th><th>Metode Saat Ini</th><th>Rekomendasi</th><th>Status</th><th>Follow-up</th><th>Aksi</th></tr></thead>
+              <tbody id="prospectTable"></tbody>
+            </table>
+          </div>
+          <div class="table-footer"><span id="prospectTableInfo"></span><button class="btn btn-secondary btn-small" id="clearFilters">Reset Filter</button></div>
+        </div>
+      </section>
+
+      <!-- ANALYTICS -->
+      <section class="page" id="page-analytics">
+        <div class="page-heading">
+          <div>
+            <div class="eyebrow">PERFORMANCE INTELLIGENCE</div>
+            <h1>Conversion Analytics</h1>
+            <p class="page-description">Evaluasi kualitas discovery, alasan penolakan, dan efektivitas tindak lanjut.</p>
+          </div>
+        </div>
+        <div class="analytics-grid">
+          <div class="panel">
+            <div class="panel-header"><div><div class="panel-title">Prospect Status Distribution</div><div class="panel-description">Jumlah merchant berdasarkan status saat ini</div></div></div>
+            <div class="metric-list" id="statusMetrics"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-header"><div><div class="panel-title">Merchant Objection Insights</div><div class="panel-description">Alasan keberatan yang dicatat pegawai</div></div></div>
+            <div class="metric-list" id="objectionMetrics"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- BRANCH MANAGER TRACKING -->
+      <section class="page" id="page-bm-tracking">
+        <div class="page-heading">
+          <div>
+            <div class="eyebrow">BRANCH MANAGER SUPERVISION</div>
+            <h1>Branch Manager Field Tracking</h1>
+            <p class="page-description">Pantau performa Pegawai A, B, C dalam mengatut akuisisi merchant, foto bukti kunjungan, dan progres status.</p>
+          </div>
+          <div class="heading-actions"><span class="pill pill-green" style="font-size:11px;">SUPERVISION ACTIVE</span></div>
+        </div>
+
+        <div class="kpi-grid">
+          <div class="kpi-card"><div class="kpi-top"><div class="kpi-label">Total Field Visit</div><div class="kpi-icon ki-blue">📍</div></div><div class="kpi-value" id="bmTotalVisits">06</div><div class="kpi-foot">Kunjungan fisik tercatat</div></div>
+          <div class="kpi-card"><div class="kpi-top"><div class="kpi-label">Bukti Foto Valid</div><div class="kpi-icon ki-green">📷</div></div><div class="kpi-value" id="bmPhotoValid">06</div><div class="kpi-foot">Terverifikasi sistem</div></div>
+          <div class="kpi-card"><div class="kpi-top"><div class="kpi-label">Follow-up Aktif</div><div class="kpi-icon ki-yellow">◷</div></div><div class="kpi-value" id="bmFollowActive">03</div><div class="kpi-foot">Sedang diproses pegawai</div></div>
+          <div class="kpi-card"><div class="kpi-top"><div class="kpi-label">Conversion Rate</div><div class="kpi-icon ki-purple">✓</div></div><div class="kpi-value" id="bmConvRate">17%</div><div class="kpi-foot">Visited ke Merchant Aktif</div></div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-header"><div><div class="panel-title">Audit Kinerja Akuisisi Pegawai Cabang</div><div class="panel-description">Tracking progres tiap pegawai (Pegawai A, Pegawai B, dst.) dan verifikasi foto visit</div></div></div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Nama Merchant</th><th>Pegawai Outreach</th><th>Tanggal Visit</th><th>Foto Bukti</th><th>Rekomendasi</th><th>Status Progress</th><th>Audit Supervisi</th></tr></thead>
+              <tbody id="bmTrackingTable"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <div class="footer">MERCHANT OPPORTUNITY & CONVERSION HUB · BRANCH PILOT PROTOTYPE</div>
+    </div>
+  </main>
+</div>
+
+<!-- MODAL DETAIL -->
+<div class="modal-backdrop" id="detailModal">
+  <div class="modal">
+    <div class="modal-header"><div><h2 id="detailTitle">Detail Merchant</h2><p>Informasi prospek, foto kunjungan, dan progres status</p></div><button class="close-modal" data-close-modal>×</button></div>
+    <div id="detailContent"></div>
+    <div class="form-actions"><button class="btn btn-secondary" data-close-modal>Tutup</button><button class="btn btn-primary" id="detailEditButton">Simpan Perubahan</button></div>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+  // DATA INTERAKTIF UNTUK GRAFIK (PER BULAN)
+  const chartData = [
+    { month: "Mei", prospek: 30, penawaran: 15, cx: 50 },
+    { month: "Juni", prospek: 45, penawaran: 24, cx: 145 },
+    { month: "Juli", prospek: 40, penawaran: 20, cx: 240 },
+    { month: "Agustus", prospek: 64, penawaran: 38, cx: 335 },
+    { month: "September", prospek: 58, penawaran: 32, cx: 430 },
+    { month: "Oktober", prospek: 88, penawaran: 53, cx: 525 }
+  ];
+
+  // DATA SIMULASI GMAPS & PROSPEK
+  let gmapsMerchants = [
+    {id:101, name:"Kopi Kenangan Cibubur", category:"Restoran / Kuliner", distance:"0.3 KM", payment:"EDC dan QRIS Kompetitor", provider:"BCA", status:"Belum Visited", top: 42, left: 45},
+    {id:102, name:"Minimarket Buana", category:"Retail / Minimarket", distance:"0.8 KM", payment:"QRIS Kompetitor", provider:"Gopay", status:"Belum Visited", top: 32, left: 62},
+    {id:103, name:"Apotek Kimia Farma Link", category:"Kesehatan / Apotek", distance:"1.2 KM", payment:"EDC Kompetitor", provider:"BRI", status:"Belum Visited", top: 65, left: 35},
+    {id:104, name:"Boutique Style", category:"Fashion", distance:"2.5 KM", payment:"Cash / Transfer", provider:"Tidak ada", status:"Belum Visited", top: 22, left: 25}
+  ];
+
+  let prospects = [
+    {id:1, name:"Kedai Kopi Nusantara", category:"Restoran / Kuliner", area:"Cibubur (0.5 KM)", payment:"EDC Kompetitor", provider:"BCA", needs:["Monitoring transaksi","Alternatif pembayaran"], pain:"Ingin mengevaluasi opsi tambahan untuk operasional.", decision:"Pemilik / Pengambil Keputusan", interest:"Perlu Penjelasan", objection:"Nyaman dengan penyedia saat ini", product:"EDC Mandiri", status:"Follow-up", followup:"2026-10-21", action:"Jadwalkan diskusi dengan pemilik.", date:"2026-10-16", officer:"Pegawai A", photo:"https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=400&q=80"},
+    {id:2, name:"Fresh Mart Cibubur", category:"Retail / Minimarket", area:"Cibubur (1.1 KM)", payment:"EDC dan QRIS Kompetitor", provider:"BRI", needs:["Penerimaan kartu","QRIS"], pain:"Ingin membandingkan pilihan metode pembayaran.", decision:"Manajer", interest:"Tertarik", objection:"", product:"Keduanya", status:"Pengajuan", followup:"2026-10-20", action:"Konfirmasi persyaratan dan proses resmi.", date:"2026-10-15", officer:"Pegawai B", photo:"https://images.unsplash.com/photo-1578916171728-46686eac8d58?auto=format&fit=crop&w=400&q=80"},
+    {id:3, name:"Dapur Rasa", category:"Restoran / Kuliner", area:"Cibubur (1.8 KM)", payment:"QRIS Kompetitor", provider:"Penyedia QRIS nonbank", needs:["QRIS"], pain:"Mencari opsi QRIS yang sesuai kebutuhan usaha.", decision:"Pemilik / Pengambil Keputusan", interest:"Perlu Penjelasan", objection:"Belum melihat manfaat tambahan", product:"Livin’ Merchant", status:"Follow-up", followup:"2026-10-22", action:"Jelaskan fitur yang telah diverifikasi.", date:"2026-10-14", officer:"Pegawai A", photo:"https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=400&q=80"},
+    {id:4, name:"Apotek Sehat", category:"Kesehatan / Apotek", area:"Cibubur (2.1 KM)", payment:"EDC Kompetitor", provider:"BNI", needs:["Penerimaan kartu"], pain:"Membutuhkan opsi penerimaan pembayaran kartu.", decision:"Pemilik / Pengambil Keputusan", interest:"Tertarik", objection:"", product:"EDC Mandiri", status:"Aktif", followup:"", action:"Catat hasil aktivasi setelah terverifikasi.", date:"2026-10-13", officer:"Pegawai B", photo:"https://images.unsplash.com/photo-1586015555751-63bb77f4322a?auto=format&fit=crop&w=400&q=80"},
+    {id:5, name:"Urban Fashion", category:"Fashion", area:"Cibubur (2.8 KM)", payment:"Cash / Transfer", provider:"", needs:["Alternatif pembayaran"], pain:"Sedang mengevaluasi opsi pembayaran digital.", decision:"Karyawan", interest:"Belum Bertemu Pengambil Keputusan", objection:"Pengambil keputusan tidak tersedia", product:"Livin’ Merchant", status:"Visited / Discovery", followup:"2026-10-24", action:"Atur pertemuan dengan pemilik.", date:"2026-10-12", officer:"Pegawai A", photo:"https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=400&q=80"},
+    {id:6, name:"Bengkel Prima", category:"Jasa", area:"Cibubur (3.2 KM)", payment:"EDC Kompetitor", provider:"BCA", needs:[], pain:"Belum menemukan kebutuhan tambahan yang jelas.", decision:"Pemilik / Pengambil Keputusan", interest:"Belum Tertarik", objection:"Kebutuhan belum sesuai", product:"Belum sesuai", status:"Belum Sesuai", followup:"", action:"Tidak memaksakan penawaran.", date:"2026-10-11", officer:"Pegawai C", photo:"https://images.unsplash.com/photo-1617814076367-b759c7d7e738?auto=format&fit=crop&w=400&q=80"}
+  ];
+
+  let nextId = 7;
+  let selectedDetailId = null;
+  let tempUploadedPhoto = "";
+  let currentRole = "officer";
+
+  const $ = id => document.getElementById(id);
+  const esc = value => String(value ?? "").replace(/[&<>"']/g, ch => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"})[ch]);
+
+  function formatDate(d) {
+    if (!d) return "Belum dijadwalkan";
+    const date = new Date(d + "T00:00:00");
+    return Number.isNaN(date.getTime()) ? d : date.toLocaleDateString("id-ID", {day:"numeric", month:"short", year:"numeric"});
+  }
+
+  function todayString() {
+    const d = new Date();
+    return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+  }
+
+  function avatarFor(cat) {
+    const map = {"Restoran / Kuliner":["☕","#FFF0DF","#B66C19"],"Retail / Minimarket":["▣","#E8F2FF","#2875D5"],"Fashion":["✦","#F2EAFF","#7B5CD5"],"Kesehatan / Apotek":["✚","#E5F8EF","#1B946C"],"Jasa":["⚙","#EDF0F5","#62738B"]};
+    return map[cat] || ["♧","#E8F2FF","#2875D5"];
+  }
+
+  function statusClass(st) {
+    return ({"Visited / Discovery":"pill-blue","Follow-up":"pill-yellow","Pengajuan":"pill-blue","Aktif":"pill-green","Belum Sesuai":"pill-gray"})[st] || "pill-gray";
+  }
+
+  function recommendationFor(p) {
+    const needs = p.needs || [];
+    let product = "Belum sesuai";
+    if (needs.includes("Penerimaan kartu") && needs.includes("QRIS")) product = "Keduanya";
+    else if (needs.includes("Penerimaan kartu")) product = "EDC Mandiri";
+    else if (needs.includes("QRIS") || needs.includes("Monitoring transaksi")) product = "Livin’ Merchant";
+    else if (needs.includes("Alternatif pembayaran")) product = "Livin’ Merchant";
+    return {product};
+  }
+
+  // EVENT INTERAKTIF CHART LOGIC (HOVER & CLICK ANIMATION)
+  function initChartInteractivity() {
+    const dots = document.querySelectorAll('.chart-dot');
+    const tooltip = $('chartTooltip');
+    const hoverLine = $('chartHoverLine');
+    const container = $('chartContainer');
+
+    dots.forEach(dot => {
+      dot.addEventListener('mouseenter', (e) => {
+        const idx = e.target.getAttribute('data-index');
+        const data = chartData[idx];
+        
+        // Show Hover Line
+        hoverLine.setAttribute('x1', data.cx);
+        hoverLine.setAttribute('x2', data.cx);
+        hoverLine.classList.add('active');
+
+        // Update Tooltip Content
+        $('tooltipMonth').textContent = data.month;
+        $('tooltipProspek').textContent = data.prospek;
+        $('tooltipPenawaran').textContent = data.penawaran;
+
+        // Position Tooltip dynamically relative to container
+        const containerRect = container.getBoundingClientRect();
+        const dotRect = e.target.getBoundingClientRect();
+        const relativeX = dotRect.left - containerRect.left + (dotRect.width / 2);
+        const relativeY = dotRect.top - containerRect.top;
+
+        tooltip.style.left = `${relativeX}px`;
+        tooltip.style.top = `${relativeY}px`;
+        tooltip.classList.add('show');
+      });
+
+      dot.addEventListener('mouseleave', () => {
+        tooltip.classList.remove('show');
+        hoverLine.classList.remove('active');
+      });
+
+      dot.addEventListener('click', (e) => {
+        dots.forEach(d => d.classList.remove('active'));
+        e.target.classList.add('active');
+        
+        const idx = e.target.getAttribute('data-index');
+        const data = chartData[idx];
+        
+        showToast(`📊 Performa ${data.month}: ${data.prospek} Prospek & ${data.penawaran} Penawaran.`);
+      });
+    });
+  }
+
+  // RENDER REAL GOOGLE MAPS EMBED, INTERACTIVE PINS, & TABLE
+  function renderGMaps() {
+    const locationVal = $("gmapsLocation").value.trim() || "Cibubur, Lapangan Tembak";
+    const radius = parseFloat($("radiusSelect").value);
+    const cat = $("gmapsCategory").value;
+
+    const mapUrl = `https://maps.google.com/maps?q=${encodeURIComponent(locationVal)}&t=&z=${16 - Math.floor(radius/3)}&ie=UTF8&iwloc=&output=embed`;
+    $("gmapsIframe").src = mapUrl;
+
+    const filtered = gmapsMerchants.filter(m => {
+      const dist = parseFloat(m.distance);
+      return dist <= radius && (!cat || m.category === cat);
+    });
+
+    $("gmapsCountText").textContent = filtered.length + " Merchant";
+
+    $("mapPinsOverlay").innerHTML = filtered.map(m => `
+      <div class="map-pin" style="top:${m.top}%; left:${m.left}%;" onclick="visitFromMap('${esc(m.name)}','${esc(m.category)}','${esc(m.distance)}','${esc(m.payment)}','${esc(m.provider)}')">
+        <div class="pin-head ${m.status==='Visited'?'visited':''}">📍 ${esc(m.name)}</div>
+        <div class="pin-stem"></div>
+      </div>
+    `).join("");
+
+    $("gmapsTable").innerHTML = filtered.map(m => `
+      <tr>
+        <td><strong>${esc(m.name)}</strong></td>
+        <td><span class="pill pill-blue">📍 ${m.distance}</span></td>
+        <td>${esc(m.category)}</td>
+        <td>${esc(m.payment)}</td>
+        <td><span class="pill ${m.status==='Visited'?'pill-green':'pill-gray'}">${m.status}</span></td>
+        <td><button class="table-action" onclick="visitFromMap('${esc(m.name)}','${esc(m.category)}','${esc(m.distance)}','${esc(m.payment)}','${esc(m.provider)}')">⚡ Visit & Discovery</button></td>
+      </tr>
+    `).join("");
+  }
+
+  function visitFromMap(name, cat, dist, pay, prov) {
+    $("merchantName").value = name;
+    $("merchantCategory").value = cat;
+    $("merchantArea").value = "Cibubur (" + dist + ")";
+    $("currentPayment").value = pay;
+    $("currentProvider").value = prov || "";
+    closeSidebar();
+    navigate("discovery");
+    showToast("Merchant " + name + " dimuat ke Form Discovery!");
+  }
+
+  function renderTableRows(list) {
+    if (!list.length) return `<tr><td colspan="8"><div class="empty-state"><div>⌕</div>Tidak ada prospek yang cocok.</div></td></tr>`;
+    return list.map(p => {
+      const [emoji, bg, color] = avatarFor(p.category);
+      const rec = recommendationFor(p).product;
+      return `<tr>
+        <td><div class="merchant-cell"><div class="merchant-avatar" style="background:${bg};color:${color}">${emoji}</div><div><div class="merchant-name">${esc(p.name)}</div><div class="merchant-category">${esc(p.category)} · ${esc(p.area)}</div></div></div></td>
+        <td><strong>${esc(p.officer || "Pegawai A")}</strong></td>
+        <td>${p.photo ? `<img src="${p.photo}" style="width:36px;height:36px;border-radius:6px;object-fit:cover;" title="Foto Visit">` : '<span style="color:#aaa">Tanpa foto</span>'}</td>
+        <td>${esc(p.payment)}</td>
+        <td>${esc(rec)}</td>
+        <td><span class="pill ${statusClass(p.status)}">${esc(p.status)}</span></td>
+        <td>${esc(formatDate(p.followup))}</td>
+        <td><button class="table-action" data-detail="${p.id}">Detail / Update ↗</button></td>
+      </tr>`;
+    }).join("");
+  }
+
+  function renderDashboardTable() {
+    const q = ($("dashboardSearch").value || "").toLowerCase().trim();
+    const st = $("dashboardFilter").value;
+    const list = prospects.filter(p => `${p.name} ${p.officer||''} ${p.category}`.toLowerCase().includes(q) && (!st || p.status === st)).slice(0, 6);
+    $("dashboardTable").innerHTML = renderTableRows(list);
+    $("dashboardTableInfo").textContent = `Menampilkan ${list.length} prospek terbaru`;
+  }
+
+  function renderProspectTable() {
+    const q = ($("prospectSearch").value || "").toLowerCase().trim();
+    const st = $("prospectStatusFilter").value;
+    const list = prospects.filter(p => `${p.name} ${p.officer||''} ${p.category}`.toLowerCase().includes(q) && (!st || p.status === st));
+    $("prospectTable").innerHTML = renderTableRows(list);
+    $("prospectTableInfo").textContent = `${list.length} prospek ditampilkan`;
+  }
+
+  function renderBMTrackingTable() {
+    $("bmTrackingTable").innerHTML = prospects.map(p => `
+      <tr>
+        <td><strong>${esc(p.name)}</strong><div style="font-size:10px;color:var(--muted)">${esc(p.category)}</div></td>
+        <td><span class="pill pill-blue">${esc(p.officer || "Pegawai A")}</span></td>
+        <td>${esc(p.date)}</td>
+        <td>${p.photo ? `<img src="${p.photo}" style="width:45px;height:35px;border-radius:6px;object-fit:cover;border:1px solid #DCE5F2;">` : '<em>No photo</em>'}</td>
+        <td>${esc(recommendationFor(p).product)}</td>
+        <td><span class="pill ${statusClass(p.status)}">${esc(p.status)}</span></td>
+        <td><button class="table-action" onclick="openDetail(${p.id})">👁 Audit Progress</button></td>
+      </tr>
+    `).join("");
+  }
+
+  function renderFunnel() {
+    const total = prospects.length;
+    const stages = [
+      {label:"Total Prospek", value:total, color:"#0875E1"},
+      {label:"Visited", value:prospects.filter(p => p.status !== "Belum Sesuai").length, color:"#4B9BF1"},
+      {label:"Follow-up", value:prospects.filter(p => ["Follow-up","Pengajuan"].includes(p.status)).length, color:"#FFD52E"},
+      {label:"Pengajuan", value:prospects.filter(p => p.status === "Pengajuan").length, color:"#8A78E5"},
+      {label:"Aktif", value:prospects.filter(p => p.status === "Aktif").length, color:"#1AA879"}
+    ];
+    $("funnelContainer").innerHTML = stages.map(s => `
+      <div class="funnel-item"><div class="funnel-label">${s.label}</div><div class="funnel-track"><div class="funnel-fill" style="width:${total?(s.value/total*100):0}%;background:${s.color}"></div></div><div class="funnel-num">${s.value}</div></div>
+    `).join("");
+  }
+
+  function renderDashboardKPIs() {
+    const total = prospects.length;
+    const visited = prospects.filter(p => p.status !== "Prospek Baru").length;
+    const follow = prospects.filter(p => ["Follow-up","Pengajuan"].includes(p.status)).length;
+    const active = prospects.filter(p => p.status === "Aktif").length;
+
+    $("heroProspects").textContent = total;
+    $("kpiProspects").textContent = String(total).padStart(2,"0");
+    $("kpiNeeds").textContent = String(visited).padStart(2,"0");
+    $("kpiFollow").textContent = String(follow).padStart(2,"0");
+    $("kpiActive").textContent = String(active).padStart(2,"0");
+    $("navProspectCount").textContent = total;
+  }
+
+  function renderAll() {
+    renderDashboardKPIs();
+    renderDashboardTable();
+    renderProspectTable();
+    renderGMaps();
+    renderFunnel();
+    initChartInteractivity();
+    if (currentRole === "manager") renderBMTrackingTable();
+  }
+
+  function showToast(msg) {
+    const t = $("toast"); t.textContent = msg; t.classList.add("show");
+    clearTimeout(showToast.timer);
+    showToast.timer = setTimeout(() => t.classList.remove("show"), 3000);
+  }
+
+  function closeSidebar() {
+    $("sidebar").classList.remove("open");
+    $("sidebarOverlay").classList.remove("show");
+  }
+
+  function toggleSidebar() {
+    $("sidebar").classList.toggle("open");
+    $("sidebarOverlay").classList.toggle("show");
+  }
+
+  function navigate(pageName) {
+    document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+    $("page-"+pageName).classList.add("active");
+    document.querySelectorAll(".nav-item").forEach(b => b.classList.toggle("active", b.dataset.page === pageName));
+    const titleMap = {dashboard:"Overview",gmaps:"GMaps Prospecting",discovery:"Merchant Discovery",recommendation:"Product Recommendation",prospects:"Prospect Management",analytics:"Conversion Analytics","bm-tracking":"BM Field Tracking"};
+    $("breadcrumbTitle").textContent = titleMap[pageName] || "Workspace";
+    closeSidebar();
+    window.scrollTo({top:0, behavior:"smooth"});
+  }
+
+  function openDetail(id) {
+    const p = prospects.find(x => x.id === Number(id));
+    if (!p) return;
+    selectedDetailId = p.id;
+    $("detailTitle").textContent = p.name;
+    $("detailContent").innerHTML = `
+      <div class="form-grid">
+        <div class="field"><label>Pegawai Outreach</label><div><strong>${esc(p.officer||"Pegawai A")}</strong></div></div>
+        <div class="field"><label>Area / Jarak</label><div>${esc(p.area||"Cibubur")}</div></div>
+        <div class="field"><label>Pembayaran Saat Ini</label><div>${esc(p.payment)} (${esc(p.provider||"N/A")})</div></div>
+        <div class="field"><label>Rekomendasi Product</label><div><strong>${esc(recommendationFor(p).product)}</strong></div></div>
+        <div class="field full"><label>Foto Bukti Kunjungan</label>
+          ${p.photo ? `<img src="${p.photo}" style="width:100%;max-height:200px;object-fit:cover;border-radius:10px;margin-top:6px;">` : '<em>Tidak ada lampiran foto</em>'}
+        </div>
+        <div class="field"><label>Status Progress</label>
+          <select id="detailStatusSelect">
+            ${["Visited / Discovery","Follow-up","Pengajuan","Aktif","Belum Sesuai"].map(s=>`<option ${p.status===s?"selected":""}>${s}</option>`).join("")}
+          </select>
+        </div>
+        <div class="field"><label>Tanggal Follow-up</label><input type="date" id="detailFollowup" value="${esc(p.followup||"")}"></div>
+        <div class="field full"><label>Catatan Progress / Action Plan</label><textarea id="detailAction">${esc(p.action||"")}</textarea></div>
+      </div>
+    `;
+    $("detailModal").classList.add("show");
+  }
+
+  // EVENT LISTENERS
+  document.querySelectorAll("[data-page]").forEach(b => b.addEventListener("click", () => navigate(b.dataset.page)));
+  document.querySelectorAll("[data-go]").forEach(b => b.addEventListener("click", () => navigate(b.dataset.go)));
+  $("menuToggle").addEventListener("click", toggleSidebar);
+  $("sidebarOverlay").addEventListener("click", closeSidebar);
+
+  // UPLOAD FOTO PROSESSING
+  $("uploadBox").addEventListener("click", () => $("photoInput").click());
+  $("photoInput").addEventListener("change", e => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = evt => {
+        tempUploadedPhoto = evt.target.result;
+        $("photoPreview").src = tempUploadedPhoto;
+        $("photoPreview").style.display = "block";
+      };
+      reader.readAsDataURL(file);
+    }
+  });
+
+  // ROLE SWITCHER (PEGAWAI A vs BM)
+  $("roleOfficerBtn").addEventListener("click", () => {
+    currentRole = "officer";
+    $("roleOfficerBtn").classList.add("active");
+    $("roleManagerBtn").classList.remove("active");
+    $("bmNavBtn").style.display = "none";
+    $("userAvatar").textContent = "A";
+    $("userName").textContent = "Pegawai A";
+    $("welcomeUserName").textContent = "Pegawai A";
+    showToast("Mode Pegawai Aktif");
+    navigate("dashboard");
+  });
+
+  $("roleManagerBtn").addEventListener("click", () => {
+    currentRole = "manager";
+    $("roleManagerBtn").classList.add("active");
+    $("roleOfficerBtn").classList.remove("active");
+    $("bmNavBtn").style.display = "flex";
+    $("userAvatar").textContent = "BM";
+    $("userName").textContent = "Branch Manager";
+    $("welcomeUserName").textContent = "Branch Manager";
+    showToast("Mode BM Tracking Supervisi Aktif");
+    renderBMTrackingTable();
+    navigate("bm-tracking");
+  });
+
+  // SUBMIT DISCOVERY
+  $("discoveryForm").addEventListener("submit", e => {
+    e.preventDefault();
+    const data = new FormData(e.currentTarget);
+    const needs = [...e.currentTarget.querySelectorAll('input[name="needs"]:checked')].map(i => i.value);
+
+    let product = "Livin’ Merchant";
+    if (needs.includes("Penerimaan kartu")) product = "EDC Mandiri";
+    if (needs.includes("Penerimaan kartu") && needs.includes("QRIS")) product = "Keduanya";
+
+    const p = {
+      id: nextId++,
+      name: String(data.get("merchantName")).trim(),
+      category: data.get("merchantCategory"),
+      area: String(data.get("merchantArea")||"Cibubur").trim(),
+      payment: data.get("currentPayment"),
+      provider: data.get("currentProvider") || "",
+      needs,
+      pain: String(data.get("painPoint")||"").trim(),
+      decision: data.get("decisionMaker"),
+      interest: data.get("merchantInterest"),
+      objection: data.get("objection") || "",
+      product,
+      status: "Visited / Discovery",
+      followup: data.get("followupDate") || "",
+      action: String(data.get("nextAction")||"").trim(),
+      date: todayString(),
+      officer: "Pegawai A",
+      photo: tempUploadedPhoto || "https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=400&q=80"
+    };
+
+    prospects.unshift(p);
+    renderAll();
+    e.currentTarget.reset();
+    $("photoPreview").style.display = "none";
+    tempUploadedPhoto = "";
+    showToast("Kunjungan Merchant & Foto Bukti Berhasil Dicatat!");
+    
+    $("recommendMerchantName").textContent = p.name + " · " + p.category;
+    $("recommendResult").innerHTML = `
+      <div class="product-card recommended" style="margin-bottom:0">
+        <div class="product-top"><div class="product-icon">✧</div><div><div class="product-title">${product}</div><div class="product-subtitle">Rekomendasi awal berdasarkan kunjungan</div></div></div>
+        <p class="product-desc">Kunjungan fisik oleh <strong>Pegawai A</strong> telah tercatat beserta bukti foto lokasi.</p>
+        <button class="btn btn-primary" onclick="navigate('prospects')">Lihat Pipeline Prospek →</button>
+      </div>`;
+    navigate("recommendation");
+  });
+
+  // DETAIL EDIT
+  $("detailEditButton").addEventListener("click", () => {
+    const p = prospects.find(x => x.id === selectedDetailId);
+    if (p) {
+      p.status = $("detailStatusSelect").value;
+      p.followup = $("detailFollowup").value;
+      p.action = $("detailAction").value;
+      renderAll();
+      $("detailModal").classList.remove("show");
+      showToast("Progres data merchant berhasil diperbarui!");
+    }
+  });
+
+  document.addEventListener("click", e => {
+    const dBtn = e.target.closest("[data-detail]");
+    if (dBtn) openDetail(dBtn.dataset.detail);
+    if (e.target.closest("[data-close-modal]") || e.target === $("detailModal")) $("detailModal").classList.remove("show");
+  });
+
+  $("radiusSelect").addEventListener("change", renderGMaps);
+  $("gmapsCategory").addEventListener("change", renderGMaps);
+  $("refreshMapBtn").addEventListener("click", renderGMaps);
+  $("dashboardSearch").addEventListener("input", renderDashboardTable);
+  $("dashboardFilter").addEventListener("change", renderDashboardTable);
+  $("prospectSearch").addEventListener("input", renderProspectTable);
+  $("prospectStatusFilter").addEventListener("change", renderProspectTable);
+
+  // INIT PAGE
+  $("currentDate").textContent = "◷ " + new Date().toLocaleDateString("id-ID", {day:"numeric", month:"long", year:"numeric"});
+  renderAll();
+</script>
+</body>
+</html>

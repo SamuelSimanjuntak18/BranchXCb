@@ -1675,6 +1675,10 @@ tbody tr{transition:background .15s;}
 .an-kpi-foot{font-size:13px;font-weight:600;color:#13845F;}
 .an-kpi .kpi-meter-bar i{width:var(--w);animation:anGrow .9s ease backwards;}
 @keyframes anGrow{from{width:0}}
+
+.map-container{background:#E5E3DF;}
+.map-open-link{position:absolute;right:12px;bottom:12px;z-index:6;padding:7px 12px;border-radius:8px;background:#fff;border:1px solid var(--line);box-shadow:0 1px 3px rgba(16,24,40,.12);color:#1D6FE0;font-size:12px;font-weight:700;text-decoration:none;}
+.map-open-link:hover{background:#F8FAFC;}
   </style>
 </head>
 
@@ -2007,8 +2011,9 @@ tbody tr{transition:background .15s;}
 
           <!-- CONTAINER EMBED GOOGLE MAPS DENGAN OVERLAY PIN INTERAKTIF -->
           <div class="map-container">
-            <iframe id="gmapsIframe" loading="lazy" allowfullscreen src="https://maps.google.com/maps?q=Cibubur,%20Lapangan%20Tembak&t=&z=14&ie=UTF8&iwloc=&output=embed"></iframe>
+            <iframe id="gmapsIframe" title="Peta Google Maps" allowfullscreen referrerpolicy="no-referrer-when-downgrade"></iframe>
             <div class="map-pins-overlay" id="mapPinsOverlay"></div>
+            <a class="map-open-link" id="mapOpenLink" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Cibubur%20Lapangan%20Tembak">Buka di Google Maps ↗</a>
           </div>
           <div style="display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--muted);flex-wrap:wrap;gap:8px;">
             <span>💡 <strong>Klik Pin pada peta</strong> untuk otomatis membuka & mengisi form Merchant Discovery.</span>
@@ -2217,7 +2222,7 @@ tbody tr{transition:background .15s;}
           <div>
             <div class="eyebrow">PERFORMANCE INTELLIGENCE</div>
             <h1>Conversion Analytics</h1>
-            <!-- <p class="page-description">Evaluasi kualitas discovery, alasan penolakan, dan efektivitas tindak lanjut.</p> -->
+            <p class="page-description">Evaluasi kualitas discovery, alasan penolakan, dan efektivitas tindak lanjut.</p>
           </div>
         </div>
         <div id="analyticsRoot"></div>
@@ -2386,6 +2391,13 @@ tbody tr{transition:background .15s;}
     });
   }
 
+  // PETA: iframe dimuat hanya saat halaman GMaps tampil (ukuran valid) dan hanya jika URL berubah
+  let gmapsUrl = "https://maps.google.com/maps?q=Cibubur,%20Lapangan%20Tembak&t=&z=14&ie=UTF8&iwloc=&output=embed";
+  function loadGmapsFrame() {
+    const f = $("gmapsIframe");
+    if (gmapsUrl && f.dataset.loaded !== gmapsUrl) { f.dataset.loaded = gmapsUrl; f.src = gmapsUrl; }
+  }
+
   // RENDER REAL GOOGLE MAPS EMBED, INTERACTIVE PINS, & TABLE
   function renderGMaps() {
     const locationVal = $("gmapsLocation").value.trim() || "Cibubur, Lapangan Tembak";
@@ -2393,7 +2405,9 @@ tbody tr{transition:background .15s;}
     const cat = $("gmapsCategory").value;
 
     const mapUrl = `https://maps.google.com/maps?q=${encodeURIComponent(locationVal)}&t=&z=${16 - Math.floor(radius/3)}&ie=UTF8&iwloc=&output=embed`;
-    $("gmapsIframe").src = mapUrl;
+    gmapsUrl = mapUrl;
+    $("mapOpenLink").href = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(locationVal);
+    if ($("page-gmaps").classList.contains("active")) loadGmapsFrame();
 
     const filtered = gmapsMerchants.filter(m => {
       const dist = parseFloat(m.distance);
@@ -3274,6 +3288,8 @@ if (document.readyState === "loading") {
     document.addEventListener("keydown", e => { if (e.key === "Escape" && !panel.hidden) { setOpen(false); btn.focus(); } });
 
     // perbarui badge saat data atau peran berubah
+    const _navMap = navigate;
+    navigate = function (pg) { _navMap(pg); if (pg === "gmaps") setTimeout(loadGmapsFrame, 60); };
     const _renderAllN = renderAll;
     renderAll = function () { _renderAllN(); render(); };
     $("roleOfficerBtn").addEventListener("click", render);

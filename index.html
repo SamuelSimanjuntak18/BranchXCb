@@ -1679,6 +1679,76 @@ tbody tr{transition:background .15s;}
 .map-container{background:#E5E3DF;}
 .map-open-link{position:absolute;right:12px;bottom:12px;z-index:6;padding:7px 12px;border-radius:8px;background:#fff;border:1px solid var(--line);box-shadow:0 1px 3px rgba(16,24,40,.12);color:#1D6FE0;font-size:12px;font-weight:700;text-decoration:none;}
 .map-open-link:hover{background:#F8FAFC;}
+
+/* =========================================
+   TABEL DATA — tampilan profesional
+   ========================================= */
+.search-box .search-ico{display:grid;place-items:center;left:12px;color:#98A2B3;}
+.search-box .search-ico svg{width:16px;height:16px;}
+.table-wrap{border:1px solid var(--line);border-radius:12px;background:#fff;}
+table{border-collapse:separate;border-spacing:0;}
+th{background:#F8FAFC;color:#667085;font-size:11px;font-weight:700;letter-spacing:.06em;padding:12px 16px;border-bottom:1px solid var(--line);position:sticky;top:0;}
+td{padding:14px 16px;font-size:13px;color:#475467;border-bottom:1px solid #EEF1F6;vertical-align:middle;}
+tbody tr{transition:background .12s;}
+tbody tr:hover{background:#F8FAFF;}
+tbody tr:last-child td{border-bottom:0;}
+.merchant-cell{gap:12px;}
+.merchant-avatar{width:40px;height:40px;border-radius:10px;}
+.merchant-avatar svg{width:20px;height:20px;}
+.merchant-name{font-size:14px;font-weight:700;color:var(--ink);}
+.merchant-category{font-size:12px;color:#667085;margin-top:2px;}
+.officer-cell{display:flex;align-items:center;gap:10px;font-weight:600;color:var(--ink);}
+.officer-av{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:800;flex-shrink:0;}
+.proof-thumb{width:40px;height:40px;border-radius:8px;object-fit:cover;display:block;border:1px solid var(--line);box-shadow:0 1px 2px rgba(16,24,40,.08);}
+.rec-cell{font-weight:600;color:var(--ink);}
+.cell-muted{color:#98A2B3;font-size:12px;}
+td .pill{gap:6px;font-size:12px;font-weight:700;padding:4px 10px 4px 8px;border-radius:999px;}
+td .pill::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor;flex-shrink:0;}
+.due-date{font-weight:600;color:var(--ink);}
+.due{display:inline-block;margin-top:3px;font-size:11px;font-weight:700;}
+.due.late{color:#B42318;}
+.due.today{color:#B54708;}
+.table-action{display:inline-flex;align-items:center;gap:4px;font-size:12px;font-weight:700;padding:7px 10px 7px 12px;border-radius:8px;color:#1D5FD0;border-color:#D0D5DD;}
+.table-action svg{width:14px;height:14px;transition:transform .15s;}
+.table-action:hover{background:#EEF4FF;border-color:#BBD3FA;}
+.table-action:hover svg{transform:translateX(2px);}
+.table-footer{padding-top:14px;}
+
+/* =========================================
+   LATEST ACTIVITIES & PRIORITY OPPORTUNITIES
+   ========================================= */
+.pill.dot{gap:6px;font-size:11px;font-weight:700;padding:3px 9px 3px 8px;border-radius:999px;}
+.pill.dot::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor;flex-shrink:0;}
+.bottom-grid .panel-header{margin-bottom:16px;}
+
+.tl-item{position:relative;display:flex;gap:14px;padding-bottom:20px;}
+.tl-item:last-child{padding-bottom:2px;}
+.tl-item:not(:last-child)::before{content:"";position:absolute;left:19px;top:44px;bottom:2px;width:2px;border-radius:2px;background:#EAECF0;}
+.tl-icon{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;flex-shrink:0;box-shadow:0 0 0 4px #fff;position:relative;z-index:1;}
+.tl-icon svg{width:19px;height:19px;}
+.tl-body{min-width:0;padding-top:2px;}
+.tl-title{font-size:14px;line-height:1.45;color:#475467;}
+.tl-title strong{color:var(--ink);font-weight:700;}
+.tl-meta{display:flex;align-items:center;gap:10px;margin-top:6px;font-size:12px;color:var(--muted);flex-wrap:wrap;}
+
+.prio-item{display:flex;align-items:center;gap:12px;position:relative;margin-bottom:10px;padding:14px 16px 14px 20px;border:1px solid var(--line);border-radius:12px;background:#fff;cursor:pointer;overflow:hidden;transition:border-color .15s,box-shadow .15s,background .15s;}
+.prio-item:last-child{margin-bottom:0;}
+.prio-item::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:#1D6FE0;}
+.prio-item.late::before{background:#F04438;}
+.prio-item.today::before{background:#F79009;}
+.prio-item:hover,.prio-item:focus-visible{border-color:#BBD3FA;background:#FAFCFF;box-shadow:0 4px 12px -6px rgba(16,24,40,.14);outline:none;}
+.prio-main{flex:1;min-width:0;}
+.prio-top{display:flex;align-items:center;justify-content:space-between;gap:10px;}
+.prio-name{font-size:14px;font-weight:700;color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.prio-top .pill{flex-shrink:0;}
+.prio-action{margin-top:4px;font-size:13px;color:#475467;line-height:1.5;}
+.prio-meta{display:flex;align-items:center;gap:14px;margin-top:10px;font-size:12px;color:var(--muted);flex-wrap:wrap;}
+.officer-cell.sm{gap:6px;font-size:12px;font-weight:600;color:#475467;}
+.officer-cell.sm .officer-av{width:22px;height:22px;font-size:10px;}
+.prio-date{display:inline-flex;align-items:center;gap:5px;}
+.prio-date svg{width:13px;height:13px;}
+.prio-go{width:18px;height:18px;color:#98A2B3;flex-shrink:0;transition:transform .15s,color .15s;}
+.prio-item:hover .prio-go{transform:translateX(3px);color:#1D6FE0;}
   </style>
 </head>
 
@@ -1948,7 +2018,7 @@ tbody tr{transition:background .15s;}
             <button class="btn btn-secondary btn-small" data-go="prospects">Lihat Semua →</button>
           </div>
           <div class="table-tools">
-            <div class="search-box"><span>⌕</span><input id="dashboardSearch" type="search" placeholder="Cari nama merchant..."></div>
+            <div class="search-box"><span class="search-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></span><input id="dashboardSearch" type="search" placeholder="Cari nama merchant..."></div>
             <select class="filter-select" id="dashboardFilter" aria-label="Filter status">
               <option value="">Semua status</option>
               <option value="Visited / Discovery">Visited / Discovery</option>
@@ -1960,7 +2030,7 @@ tbody tr{transition:background .15s;}
           </div>
           <div class="table-wrap">
             <table>
-              <thead><tr><th>Merchant</th><th>Pegawai Field</th><th>Foto Bukti</th><th>Metode Saat Ini</th><th>Rekomendasi</th><th>Status</th><th>Aksi</th></tr></thead>
+              <thead><tr><th>Merchant</th><th>Pegawai Field</th><th>Foto Bukti</th><th>Metode Saat Ini</th><th>Rekomendasi</th><th>Status</th><th>Follow-up</th><th>Aksi</th></tr></thead>
               <tbody id="dashboardTable"></tbody>
             </table>
           </div>
@@ -2203,7 +2273,7 @@ tbody tr{transition:background .15s;}
 
         <div class="panel table-panel">
           <div class="table-tools">
-            <div class="search-box"><span>⌕</span><input id="prospectSearch" type="search" placeholder="Cari nama, pegawai, atau kebutuhan..."></div>
+            <div class="search-box"><span class="search-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></span><input id="prospectSearch" type="search" placeholder="Cari nama, pegawai, atau kebutuhan..."></div>
             <select id="prospectStatusFilter" class="filter-select"><option value="">Semua status</option><option>Visited / Discovery</option><option>Follow-up</option><option>Pengajuan</option><option>Aktif</option><option>Belum Sesuai</option></select>
           </div>
           <div class="table-wrap">
@@ -2446,20 +2516,46 @@ tbody tr{transition:background .15s;}
     showToast("Merchant " + name + " dimuat ke Form Discovery!");
   }
 
+  function catIcon(cat) {
+    const m = {
+      "Restoran / Kuliner": '<path d="M10 2v2M14 2v2M6 2v2"/><path d="M16 8h1a4 4 0 1 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"/>',
+      "Retail / Minimarket": '<path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/>',
+      "Fashion": '<path d="M20.38 3.46 16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z"/>',
+      "Kesehatan / Apotek": '<path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/><path d="M3.22 12H9.5l.5-1 2 4.5 2-7 1.5 3.5h5.27"/>',
+      "Jasa": '<path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>'
+    };
+    return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">${m[cat] || '<path d="M3 9l1-5h16l1 5"/><path d="M4 9v11h16V9"/><path d="M9 20v-6h6v6"/>'}</svg>`;
+  }
+  function officerTone(name) {
+    const t = {Samuel:["#E8F1FF","#1D5FD0"], Sofi:["#FDE7F0","#C23A74"], Rafli:["#DFF5EC","#0E7A58"], Dewi:["#F1EDFF","#5B43D6"], Bagas:["#FFF1D6","#A8700A"]};
+    return t[name] || ["#EEF2F7","#475467"];
+  }
+  function followCell(p) {
+    if (!p.followup) return '<span class="cell-muted">Belum dijadwalkan</span>';
+    const d = Math.round((new Date(todayString() + "T00:00:00") - new Date(p.followup + "T00:00:00")) / 864e5);
+    let tag = "";
+    if (["Follow-up", "Pengajuan", "Visited / Discovery"].includes(p.status)) {
+      if (d > 0) tag = `<span class="due late">Terlambat ${d} hari</span>`;
+      else if (d === 0) tag = '<span class="due today">Hari ini</span>';
+    }
+    return `<div class="due-date">${esc(formatDate(p.followup))}</div>${tag}`;
+  }
+
   function renderTableRows(list) {
     if (!list.length) return `<tr><td colspan="8"><div class="empty-state"><div>⌕</div>Tidak ada prospek yang cocok.</div></td></tr>`;
     return list.map(p => {
-      const [emoji, bg, color] = avatarFor(p.category);
+      const [, bg, color] = avatarFor(p.category);
       const rec = recommendationFor(p).product;
+      const off = p.officer || "Samuel", [obg, ocol] = officerTone(off);
       return `<tr>
-        <td><div class="merchant-cell"><div class="merchant-avatar" style="background:${bg};color:${color}">${emoji}</div><div><div class="merchant-name">${esc(p.name)}</div><div class="merchant-category">${esc(p.category)} · ${esc(p.area)}</div></div></div></td>
-        <td><strong>${esc(p.officer || "Samuel")}</strong></td>
-        <td>${p.photo ? `<img src="${p.photo}" style="width:36px;height:36px;border-radius:6px;object-fit:cover;" title="Foto Visit">` : '<span style="color:#aaa">Tanpa foto</span>'}</td>
+        <td><div class="merchant-cell"><div class="merchant-avatar" style="background:${bg};color:${color}">${catIcon(p.category)}</div><div><div class="merchant-name">${esc(p.name)}</div><div class="merchant-category">${esc(p.category)} · ${esc(p.area)}</div></div></div></td>
+        <td><div class="officer-cell"><span class="officer-av" style="background:${obg};color:${ocol}">${esc(off.slice(0, 1).toUpperCase())}</span><span>${esc(off)}</span></div></td>
+        <td>${p.photo ? `<img class="proof-thumb" src="${p.photo}" alt="Foto bukti kunjungan ${esc(p.name)}" title="Foto Visit">` : '<span class="cell-muted">Tanpa foto</span>'}</td>
         <td>${esc(p.payment)}</td>
-        <td>${esc(rec)}</td>
+        <td><span class="rec-cell">${esc(rec)}</span></td>
         <td><span class="pill ${statusClass(p.status)}">${esc(p.status)}</span></td>
-        <td>${esc(formatDate(p.followup))}</td>
-        <td><button class="table-action" data-detail="${p.id}">Detail / Update ↗</button></td>
+        <td>${followCell(p)}</td>
+        <td><button class="table-action" data-detail="${p.id}">Detail <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button></td>
       </tr>`;
     }).join("");
   }
@@ -3083,28 +3179,47 @@ if (document.readyState === "loading") {
 
   // OVERVIEW — AKTIVITAS & PRIORITAS
   function renderDashLists() {
-    const icon = {"Aktif":"✅","Pengajuan":"📝","Follow-up":"📞","Visited / Discovery":"📍","Belum Sesuai":"⏸"};
+    const sv = d => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">${d}</svg>`;
+    const act = {
+      "Aktif": [sv('<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>'), "#DFF5EC", "#0E7A58"],
+      "Pengajuan": [sv('<path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5z"/><path d="M14 2v6h6M8 13h8M8 17h8"/>'), "#E8F1FF", "#1D5FD0"],
+      "Follow-up": [sv('<path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/>'), "#FFF1D6", "#B07D00"],
+      "Visited / Discovery": [sv('<path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/>'), "#F1EDFF", "#5B43D6"],
+      "Belum Sesuai": [sv('<circle cx="12" cy="12" r="10"/><path d="M10 15V9M14 15V9"/>'), "#EEF2F7", "#667085"]
+    };
     const verb = {"Aktif":"mengaktifkan","Pengajuan":"mengajukan","Follow-up":"menindaklanjuti","Visited / Discovery":"mengunjungi","Belum Sesuai":"mencatat belum sesuai untuk"};
     const recent = [...prospects].sort((a, b) => String(b.date).localeCompare(String(a.date))).slice(0, 4);
-    $("activityList").innerHTML = recent.map(p => `
-      <div class="activity-item">
-        <div class="activity-icon">${icon[p.status] || "📍"}</div>
-        <div><div class="activity-title">${esc(p.officer || "Samuel")} ${verb[p.status] || "mengunjungi"} ${esc(p.name)}</div>
-        <div class="activity-desc">${esc(formatDate(p.date))} · ${esc(p.status)}</div></div>
-      </div>`).join("") || `<div class="empty-state"><div>◷</div>Belum ada aktivitas.</div>`;
+    $("activityList").innerHTML = recent.map(p => {
+      const [ico, bg, fg] = act[p.status] || act["Visited / Discovery"];
+      return `
+      <div class="tl-item">
+        <div class="tl-icon" style="background:${bg};color:${fg}">${ico}</div>
+        <div class="tl-body">
+          <div class="tl-title"><strong>${esc(p.officer || "Samuel")}</strong> ${verb[p.status] || "mengunjungi"} <strong>${esc(p.name)}</strong></div>
+          <div class="tl-meta"><span class="pill ${statusClass(p.status)} dot">${esc(p.status)}</span><span>${esc(formatDate(p.date))}</span></div>
+        </div>
+      </div>`;
+    }).join("") || `<div class="empty-state"><div>◷</div>Belum ada aktivitas.</div>`;
 
     const today = todayString();
     const prio = prospects.filter(p => ["Follow-up", "Pengajuan"].includes(p.status))
       .sort((a, b) => String(a.followup || "9999").localeCompare(String(b.followup || "9999"))).slice(0, 4);
     $("priorityList").innerHTML = prio.map(p => {
-      let tag = ["pill-blue", "Dijadwalkan"];
-      if (p.followup && p.followup < today) tag = ["pill-red", "Terlambat"];
-      else if (p.followup === today) tag = ["pill-yellow", "Hari ini"];
-      return `<div class="activity-item dash-list-item" onclick="openDetail(${p.id})">
-        <div class="activity-icon">🔔</div>
-        <div><div class="activity-title">${esc(p.name)}</div>
-        <div class="activity-desc">${esc(formatDate(p.followup))} · ${esc(p.action || "Tentukan langkah berikutnya")}</div></div>
-        <span class="pill ${tag[0]}">${tag[1]}</span>
+      let tag = ["pill-blue", "Dijadwalkan"], tone = "ok";
+      const d = p.followup ? Math.round((new Date(today + "T00:00:00") - new Date(p.followup + "T00:00:00")) / 864e5) : null;
+      if (d !== null && d > 0) { tag = ["pill-red", `Terlambat ${d} hari`]; tone = "late"; }
+      else if (d === 0) { tag = ["pill-yellow", "Hari ini"]; tone = "today"; }
+      const off = p.officer || "Samuel", [obg, ocol] = officerTone(off);
+      return `<div class="prio-item ${tone}" onclick="openDetail(${p.id})" role="button" tabindex="0" onkeydown="if(event.key==='Enter')openDetail(${p.id})">
+        <div class="prio-main">
+          <div class="prio-top"><span class="prio-name">${esc(p.name)}</span><span class="pill ${tag[0]} dot">${tag[1]}</span></div>
+          <div class="prio-action">${esc(p.action || "Tentukan langkah berikutnya")}</div>
+          <div class="prio-meta">
+            <span class="officer-cell sm"><span class="officer-av" style="background:${obg};color:${ocol}">${esc(off.slice(0, 1).toUpperCase())}</span>${esc(off)}</span>
+            <span class="prio-date"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>${esc(formatDate(p.followup))}</span>
+          </div>
+        </div>
+        <svg class="prio-go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
       </div>`;
     }).join("") || `<div class="empty-state"><div>✓</div>Tidak ada prospek yang perlu ditindaklanjuti.</div>`;
   }

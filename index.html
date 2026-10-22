@@ -1749,6 +1749,14 @@ td .pill::before{content:"";width:6px;height:6px;border-radius:50%;background:cu
 .prio-date svg{width:13px;height:13px;}
 .prio-go{width:18px;height:18px;color:#98A2B3;flex-shrink:0;transition:transform .15s,color .15s;}
 .prio-item:hover .prio-go{transform:translateX(3px);color:#1D6FE0;}
+
+#activityList,#priorityList{max-height:440px;overflow-y:auto;padding-right:4px;}
+
+/* GMaps — pin & daftar */
+.pin-head{display:flex;align-items:center;max-width:190px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.pin-head .pin-dot{display:inline-block;flex-shrink:0;width:7px;height:7px;border-radius:50%;background:#FFD52E;margin-right:6px;box-shadow:0 0 0 2px rgba(255,255,255,.35);}
+.pin-head.visited .pin-dot{background:#fff;}
+.table-wrap:has(#gmapsTable){max-height:560px;overflow-y:auto;}
   </style>
 </head>
 
@@ -2075,13 +2083,14 @@ td .pill::before{content:"";width:6px;height:6px;border-radius:50%;background:cu
               <option>Retail / Minimarket</option>
               <option>Fashion</option>
               <option>Kesehatan / Apotek</option>
+              <option>Jasa</option>
             </select>
             <button class="btn btn-secondary" id="refreshMapBtn">🔄 Filter GMaps</button>
           </div>
 
           <!-- CONTAINER EMBED GOOGLE MAPS DENGAN OVERLAY PIN INTERAKTIF -->
           <div class="map-container">
-            <iframe id="gmapsIframe" title="Peta Google Maps" allowfullscreen referrerpolicy="no-referrer-when-downgrade"></iframe>
+            <iframe id="gmapsIframe" title="Peta Google Maps" src="https://maps.google.com/maps?q=Cibubur,%20Lapangan%20Tembak&t=&z=15&ie=UTF8&iwloc=&output=embed" allowfullscreen referrerpolicy="no-referrer-when-downgrade"></iframe>
             <div class="map-pins-overlay" id="mapPinsOverlay"></div>
             <a class="map-open-link" id="mapOpenLink" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Cibubur%20Lapangan%20Tembak">Buka di Google Maps ↗</a>
           </div>
@@ -2356,10 +2365,26 @@ td .pill::before{content:"";width:6px;height:6px;border-radius:50%;background:cu
 
   // DATA SIMULASI GMAPS & PROSPEK
   let gmapsMerchants = [
-    {id:101, name:"Kopi Kenangan Cibubur", category:"Restoran / Kuliner", distance:"0.3 KM", payment:"EDC dan QRIS Kompetitor", provider:"BCA", status:"Belum Visited", top: 42, left: 45},
-    {id:102, name:"Minimarket Buana", category:"Retail / Minimarket", distance:"0.8 KM", payment:"QRIS Kompetitor", provider:"Gopay", status:"Belum Visited", top: 32, left: 62},
-    {id:103, name:"Apotek Kimia Farma Link", category:"Kesehatan / Apotek", distance:"1.2 KM", payment:"EDC Kompetitor", provider:"BRI", status:"Belum Visited", top: 65, left: 35},
-    {id:104, name:"Boutique Style", category:"Fashion", distance:"2.5 KM", payment:"Cash / Transfer", provider:"Tidak ada", status:"Belum Visited", top: 22, left: 25}
+    {id:101, name:"Kopi Kenangan Cibubur", category:"Restoran / Kuliner", distance:"0.3 KM", payment:"EDC dan QRIS Kompetitor", provider:"BCA", status:"Belum Visited", top: 66, left: 45},
+    {id:102, name:"Minimarket Buana", category:"Retail / Minimarket", distance:"0.8 KM", payment:"QRIS Kompetitor", provider:"Gopay", status:"Belum Visited", top: 48, left: 48},
+    {id:103, name:"Apotek Kimia Farma Link", category:"Kesehatan / Apotek", distance:"1.2 KM", payment:"EDC Kompetitor", provider:"BRI", status:"Belum Visited", top: 64, left: 27},
+    {id:104, name:"Boutique Style", category:"Fashion", distance:"2.5 KM", payment:"Cash / Transfer", provider:"Tidak ada", status:"Belum Visited", top: 67, left: 60.5},
+    {id:105, name:"Warung Bakso Pak Jono", category:"Restoran / Kuliner", distance:"0.4 KM", payment:"QRIS Kompetitor", provider:"Gopay", status:"Belum Visited", top: 45, left: 29.5},
+    {id:106, name:"Toko Sembako Berkah", category:"Retail / Minimarket", distance:"0.6 KM", payment:"Cash / Transfer", provider:"Tidak ada", status:"Belum Visited", top: 46, left: 62.5},
+    {id:107, name:"Salon Cantik Alami", category:"Jasa", distance:"0.7 KM", payment:"QRIS Kompetitor", provider:"OVO", status:"Belum Visited", top: 68, left: 10},
+    {id:108, name:"Bakery Roti Manis", category:"Restoran / Kuliner", distance:"0.9 KM", payment:"EDC Kompetitor", provider:"BNI", status:"Visited", top: 64, left: 77},
+    {id:109, name:"Apotek Cibubur Sehat", category:"Kesehatan / Apotek", distance:"1.0 KM", payment:"EDC dan QRIS Kompetitor", provider:"BCA", status:"Belum Visited", top: 47, left: 8},
+    {id:110, name:"Laundry Kilat Bersih", category:"Jasa", distance:"1.4 KM", payment:"Cash / Transfer", provider:"Tidak ada", status:"Belum Visited", top: 45, left: 82},
+    {id:111, name:"Toko Baju Anak Ceria", category:"Fashion", distance:"1.6 KM", payment:"QRIS Kompetitor", provider:"Dana", status:"Belum Visited", top: 84, left: 45},
+    {id:112, name:"Ayam Geprek Juara", category:"Restoran / Kuliner", distance:"1.9 KM", payment:"QRIS Kompetitor", provider:"ShopeePay", status:"Visited", top: 86, left: 30.5},
+    {id:113, name:"Klinik Pratama Sentosa", category:"Kesehatan / Apotek", distance:"2.1 KM", payment:"EDC Kompetitor", provider:"BRI", status:"Belum Visited", top: 82, left: 59.5},
+    {id:114, name:"Mini Mart Sejahtera", category:"Retail / Minimarket", distance:"2.3 KM", payment:"EDC Kompetitor", provider:"BCA", status:"Belum Visited", top: 27, left: 43},
+    {id:115, name:"Distro Urban Wear", category:"Fashion", distance:"2.7 KM", payment:"Cash / Transfer", provider:"Tidak ada", status:"Belum Visited", top: 83, left: 12},
+    {id:116, name:"Bengkel Motor Maju Jaya", category:"Jasa", distance:"2.9 KM", payment:"Cash / Transfer", provider:"Tidak ada", status:"Belum Visited", top: 84, left: 80},
+    {id:117, name:"Resto Sunda Saung Bambu", category:"Restoran / Kuliner", distance:"3.8 KM", payment:"EDC Kompetitor", provider:"BCA", status:"Belum Visited", top: 28, left: 30.5},
+    {id:118, name:"Toko Elektronik Sinar Jaya", category:"Retail / Minimarket", distance:"4.4 KM", payment:"QRIS Kompetitor", provider:"Dana", status:"Belum Visited", top: 24, left: 59.5},
+    {id:119, name:"Apotek Medika Farma", category:"Kesehatan / Apotek", distance:"5.6 KM", payment:"EDC Kompetitor", provider:"BNI", status:"Belum Visited", top: 27, left: 8},
+    {id:120, name:"Butik Muslimah Annisa", category:"Fashion", distance:"7.2 KM", payment:"QRIS Kompetitor", provider:"OVO", status:"Belum Visited", top: 25, left: 82}
   ];
 
   let prospects = [
@@ -2462,10 +2487,17 @@ td .pill::before{content:"";width:6px;height:6px;border-radius:50%;background:cu
   }
 
   // PETA: iframe dimuat hanya saat halaman GMaps tampil (ukuran valid) dan hanya jika URL berubah
-  let gmapsUrl = "https://maps.google.com/maps?q=Cibubur,%20Lapangan%20Tembak&t=&z=14&ie=UTF8&iwloc=&output=embed";
+  // PETA GOOGLE MAPS (iframe embed). src sudah ada di HTML; dimuat ulang sekali saat halaman peta pertama tampil
+  let gmapsUrl = "https://maps.google.com/maps?q=Cibubur,%20Lapangan%20Tembak&t=&z=15&ie=UTF8&iwloc=&output=embed";
+  let gmapsShown = false;
   function loadGmapsFrame() {
     const f = $("gmapsIframe");
-    if (gmapsUrl && f.dataset.loaded !== gmapsUrl) { f.dataset.loaded = gmapsUrl; f.src = gmapsUrl; }
+    if (!f) return;
+    if (!gmapsShown || f.dataset.loaded !== gmapsUrl) {
+      gmapsShown = true;
+      f.dataset.loaded = gmapsUrl;
+      f.src = gmapsUrl;
+    }
   }
 
   // RENDER REAL GOOGLE MAPS EMBED, INTERACTIVE PINS, & TABLE
@@ -2474,8 +2506,7 @@ td .pill::before{content:"";width:6px;height:6px;border-radius:50%;background:cu
     const radius = parseFloat($("radiusSelect").value);
     const cat = $("gmapsCategory").value;
 
-    const mapUrl = `https://maps.google.com/maps?q=${encodeURIComponent(locationVal)}&t=&z=${16 - Math.floor(radius/3)}&ie=UTF8&iwloc=&output=embed`;
-    gmapsUrl = mapUrl;
+    gmapsUrl = `https://maps.google.com/maps?q=${encodeURIComponent(locationVal)}&t=&z=${16 - Math.floor(radius/3)}&ie=UTF8&iwloc=&output=embed`;
     $("mapOpenLink").href = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(locationVal);
     if ($("page-gmaps").classList.contains("active")) loadGmapsFrame();
 
@@ -2486,21 +2517,25 @@ td .pill::before{content:"";width:6px;height:6px;border-radius:50%;background:cu
 
     $("gmapsCountText").textContent = filtered.length + " Merchant";
 
-    $("mapPinsOverlay").innerHTML = filtered.map(m => `
-      <div class="map-pin" style="top:${m.top}%; left:${m.left}%;" onclick="visitFromMap('${esc(m.name)}','${esc(m.category)}','${esc(m.distance)}','${esc(m.payment)}','${esc(m.provider)}')">
-        <div class="pin-head ${m.status==='Visited'?'visited':''}">📍 ${esc(m.name)}</div>
+    $("mapPinsOverlay").innerHTML = filtered.map((m, i) => `
+      <div class="map-pin" data-i="${i}" style="top:${m.top}%; left:${m.left}%;">
+        <div class="pin-head ${m.status==='Visited'?'visited':''}"><span class="pin-dot"></span>${esc(m.name)}</div>
         <div class="pin-stem"></div>
       </div>
     `).join("");
+    $("mapPinsOverlay").querySelectorAll(".map-pin").forEach(el => {
+      const m = filtered[el.dataset.i];
+      el.addEventListener("click", () => visitFromMap(m.name, m.category, m.distance, m.payment, m.provider));
+    });
 
     $("gmapsTable").innerHTML = filtered.map(m => `
       <tr>
         <td><strong>${esc(m.name)}</strong></td>
-        <td><span class="pill pill-blue">📍 ${m.distance}</span></td>
+        <td><span class="pill pill-blue dot">${m.distance}</span></td>
         <td>${esc(m.category)}</td>
         <td>${esc(m.payment)}</td>
-        <td><span class="pill ${m.status==='Visited'?'pill-green':'pill-gray'}">${m.status}</span></td>
-        <td><button class="table-action" onclick="visitFromMap('${esc(m.name)}','${esc(m.category)}','${esc(m.distance)}','${esc(m.payment)}','${esc(m.provider)}')">⚡ Visit & Discovery</button></td>
+        <td><span class="pill ${m.status==='Visited'?'pill-green':'pill-gray'} dot">${m.status}</span></td>
+        <td><button class="table-action" onclick="visitFromMap('${esc(m.name)}','${esc(m.category)}','${esc(m.distance)}','${esc(m.payment)}','${esc(m.provider)}')">Visit & Discovery <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button></td>
       </tr>
     `).join("");
   }
@@ -3188,7 +3223,7 @@ if (document.readyState === "loading") {
       "Belum Sesuai": [sv('<circle cx="12" cy="12" r="10"/><path d="M10 15V9M14 15V9"/>'), "#EEF2F7", "#667085"]
     };
     const verb = {"Aktif":"mengaktifkan","Pengajuan":"mengajukan","Follow-up":"menindaklanjuti","Visited / Discovery":"mengunjungi","Belum Sesuai":"mencatat belum sesuai untuk"};
-    const recent = [...prospects].sort((a, b) => String(b.date).localeCompare(String(a.date))).slice(0, 4);
+    const recent = [...prospects].sort((a, b) => String(b.date).localeCompare(String(a.date))).slice(0, 8);
     $("activityList").innerHTML = recent.map(p => {
       const [ico, bg, fg] = act[p.status] || act["Visited / Discovery"];
       return `
@@ -3202,8 +3237,8 @@ if (document.readyState === "loading") {
     }).join("") || `<div class="empty-state"><div>◷</div>Belum ada aktivitas.</div>`;
 
     const today = todayString();
-    const prio = prospects.filter(p => ["Follow-up", "Pengajuan"].includes(p.status))
-      .sort((a, b) => String(a.followup || "9999").localeCompare(String(b.followup || "9999"))).slice(0, 4);
+    const prio = prospects.filter(p => ["Follow-up", "Pengajuan", "Visited / Discovery"].includes(p.status) && p.followup)
+      .sort((a, b) => String(a.followup || "9999").localeCompare(String(b.followup || "9999"))).slice(0, 8);
     $("priorityList").innerHTML = prio.map(p => {
       let tag = ["pill-blue", "Dijadwalkan"], tone = "ok";
       const d = p.followup ? Math.round((new Date(today + "T00:00:00") - new Date(p.followup + "T00:00:00")) / 864e5) : null;

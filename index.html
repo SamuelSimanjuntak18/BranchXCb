@@ -1512,6 +1512,169 @@ tbody tr{transition:background .15s;}
 .dash-list-item .pill{margin-left:auto;align-self:center;flex-shrink:0;}
 .dash-list-item>div:nth-child(2){min-width:0;}
 @media (prefers-reduced-motion:reduce){.dash-anim *,.hero::before,.notification-dot{animation:none !important;}}
+
+/* =========================================
+   POLISH V2 — topbar, hero, KPI
+   ========================================= */
+.topbar{height:64px;background:#fff;border-bottom:1px solid var(--line);}
+.breadcrumb{display:flex;align-items:center;gap:8px;font-size:13px;color:#667085;}
+.breadcrumb strong{font-weight:700;color:var(--ink);}
+.crumb-sep{color:#CBD5E1;}
+.top-actions{gap:10px;}
+.date-chip{display:inline-flex;align-items:center;gap:8px;height:38px;padding:0 14px;border-radius:10px;background:#F8FAFC;border:1px solid var(--line);color:#475467;font-size:13px;font-weight:600;letter-spacing:0;}
+.date-chip svg{width:16px;height:16px;color:#667085;flex-shrink:0;}
+.icon-button{display:grid;place-items:center;width:38px;height:38px;border-radius:10px;color:#475467;font-size:0;transition:background .15s,border-color .15s,color .15s;}
+.icon-button svg{width:18px;height:18px;}
+.icon-button:hover{background:#F8FAFC;border-color:#CBD5E1;color:var(--navy);}
+.icon-button .notification-dot{right:8px;top:8px;width:11px;height:11px;box-sizing:border-box;background:#F04438;border:2px solid #fff;}
+
+.page-heading{border-bottom:0;padding-bottom:0;margin-bottom:20px;}
+
+.hero{padding:32px 36px;border-radius:16px;background:linear-gradient(115deg,#0A2A5E 0%,#0B4290 55%,#0E56B8 100%);box-shadow:0 1px 2px rgba(16,24,40,.08),0 12px 28px -12px rgba(10,42,94,.45);margin-bottom:20px;}
+.hero::before{opacity:1;right:-60px;top:-140px;width:420px;height:420px;border:0;background:radial-gradient(circle,rgba(255,255,255,.14) 0%,rgba(255,255,255,0) 68%);box-shadow:none;}
+.hero-content{max-width:620px;}
+.hero-label{display:inline-flex;align-items:center;gap:8px;padding:6px 12px;margin-bottom:16px;border-radius:999px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);color:#E3EEFF;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;}
+.hero-label svg{width:12px;height:12px;fill:currentColor;stroke:none;color:#FFD52E;}
+.hero h2{font-size:clamp(22px,2.4vw,30px);font-weight:700;line-height:1.25;letter-spacing:-.015em;word-spacing:.05em;margin-bottom:12px;}
+.hero p{font-size:14px;line-height:1.7;letter-spacing:0;word-spacing:.04em;color:#D5E3F8;margin-bottom:22px;max-width:560px;}
+.hero p em{font-style:italic;color:#fff;}
+.hero .btn-primary{display:inline-flex;align-items:center;gap:10px;padding:12px 20px;border-radius:10px;font-weight:700;background:#FFD52E;color:#3C3200;box-shadow:0 1px 2px rgba(0,0,0,.15);transition:background .15s,transform .15s;}
+.hero .btn-primary:hover{background:#FFE16A;}
+.hero .btn-arrow{width:16px;height:16px;transition:transform .15s;}
+.hero .btn-primary:hover .btn-arrow{transform:translateX(3px);}
+.hero-stat{min-width:210px;padding:22px 24px;border-radius:14px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);backdrop-filter:blur(8px);}
+.hero-stat-label{margin-bottom:10px;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#C9DCF7;}
+.hero-stat-value{font-size:48px;line-height:1;font-weight:800;letter-spacing:-.03em;font-variant-numeric:tabular-nums;}
+.hero-stat-foot{margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,.16);font-size:12px;color:#C9DCF7;}
+
+.kpi-grid{gap:16px;margin-bottom:24px;}
+.kpi-card{padding:20px 22px;border-radius:14px;border:1px solid var(--line);background:#fff;box-shadow:0 1px 2px rgba(16,24,40,.04);}
+.kpi-card::before{display:none;}
+.kpi-top{align-items:center;}
+.kpi-label{font-size:13px;font-weight:600;color:#475467;}
+.kpi-icon{width:40px;height:40px;border-radius:10px;font-size:0;}
+.kpi-icon svg{width:20px;height:20px;}
+.ki-blue{background:#EAF2FF;color:#1D6FE0;}
+.ki-yellow{background:#FFF5D6;color:#B07D00;}
+.ki-purple{background:#F1EDFF;color:#6D54D6;}
+.ki-green{background:#E3F6EE;color:#12906A;}
+.kpi-value{margin:18px 0 6px;font-size:34px;font-weight:800;letter-spacing:-.02em;line-height:1.1;font-variant-numeric:tabular-nums;}
+.kpi-foot{font-size:13px;color:var(--muted);}
+.kpi-card:hover{transform:translateY(-2px);box-shadow:0 8px 20px -8px rgba(16,24,40,.14);}
+.kpi-card:hover .kpi-icon{transform:none;}
+
+@media (max-width:850px){
+  .hero{padding:24px 22px;}
+  .hero-stat{min-width:100%;}
+  .hero-stat-value{font-size:40px;}
+}
+
+/* =========================================
+   POLISH V3 — ikon & visualisasi
+   ========================================= */
+/* Sidebar icons */
+.sidebar .nav-icon{width:24px;height:24px;flex:0 0 24px;}
+.sidebar .nav-icon svg{width:19px;height:19px;stroke-width:1.8;}
+
+/* Hero: ilustrasi peta */
+.hero-map{position:absolute;top:0;right:0;height:100%;width:68%;z-index:0;pointer-events:none;
+  -webkit-mask-image:linear-gradient(to right,transparent 0%,#000 55%);mask-image:linear-gradient(to right,transparent 0%,#000 55%);}
+.hero-map .hm-route{animation:hmDash 1.6s linear infinite;}
+.hero-map .hm-pulse{transform-box:fill-box;transform-origin:center;opacity:0;animation:hmPulse 2.6s ease-out infinite;}
+.hero-map .hm-pulse.d2{animation-delay:.8s;}
+.hero-map .hm-pulse.d3{animation-delay:1.6s;}
+@keyframes hmPulse{0%{transform:scale(.5);opacity:.55}100%{transform:scale(2.4);opacity:0}}
+@keyframes hmDash{to{stroke-dashoffset:-20}}
+@media (prefers-reduced-motion:reduce){.hero-map .hm-route,.hero-map .hm-pulse{animation:none !important;}}
+@media (max-width:850px){.hero-map{width:100%;opacity:.45;}}
+
+/* KPI: ikon gradient + meter */
+.kpi-card{--acc:#1D6FE0;--acc-soft:rgba(29,111,224,.10);}
+.kpi-card:has(.ki-yellow){--acc:#E49A00;--acc-soft:rgba(228,154,0,.12);}
+.kpi-card:has(.ki-purple){--acc:#6D54D6;--acc-soft:rgba(109,84,214,.10);}
+.kpi-card:has(.ki-green){--acc:#12906A;--acc-soft:rgba(18,144,106,.10);}
+.kpi-card::after{content:"";position:absolute;right:-36px;top:-36px;width:130px;height:130px;border-radius:50%;background:radial-gradient(circle,var(--acc-soft),transparent 70%);pointer-events:none;}
+.kpi-top,.kpi-value,.kpi-foot,.kpi-meter{position:relative;z-index:1;}
+.kpi-icon{width:44px;height:44px;border-radius:12px;color:#fff;border:0;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.35),0 8px 16px -6px var(--acc);}
+.kpi-icon svg{width:22px;height:22px;stroke-width:1.9;}
+.ki-blue{background:linear-gradient(145deg,#4C9BFA,#1D5FD0);color:#fff;}
+.ki-yellow{background:linear-gradient(145deg,#FFCB45,#E49A00);color:#fff;}
+.ki-purple{background:linear-gradient(145deg,#9A87FF,#5B43D6);color:#fff;}
+.ki-green{background:linear-gradient(145deg,#34C896,#0E8A64);color:#fff;}
+.kpi-meter{display:flex;align-items:center;gap:8px;margin-top:16px;padding-top:14px;border-top:1px dashed var(--line);font-size:12px;color:var(--muted);}
+.kpi-meter-bar{flex:1;height:6px;border-radius:999px;background:#EEF2F7;overflow:hidden;}
+.kpi-meter-bar i{display:block;height:100%;width:0;border-radius:inherit;background:linear-gradient(90deg,var(--acc),color-mix(in srgb,var(--acc) 60%,#fff));transition:width .6s ease;}
+.kpi-meter b{color:var(--ink);font-weight:800;font-variant-numeric:tabular-nums;min-width:34px;text-align:right;}
+.kpi-meter span{white-space:nowrap;}
+
+/* Topbar: tombol & chip lebih halus */
+.icon-button,.date-chip{box-shadow:0 1px 2px rgba(16,24,40,.04);}
+.icon-button svg{stroke-width:1.8;}
+
+/* =========================================
+   NOTIFIKASI
+   ========================================= */
+.notif-wrap{position:relative;}
+.icon-button .notification-dot{display:grid;place-items:center;width:auto;min-width:17px;height:17px;padding:0 4px;right:-5px;top:-5px;border-radius:999px;background:#F04438;border:2px solid #fff;color:#fff;font-size:10px;font-weight:800;line-height:1;box-sizing:content-box;animation:none;}
+.icon-button .notification-dot.is-empty{display:none;}
+.icon-button[aria-expanded="true"]{background:#EEF4FF;border-color:#BBD3FA;color:#0B4290;}
+.notif-panel{position:absolute;right:0;top:calc(100% + 10px);width:392px;max-width:calc(100vw - 24px);background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:0 20px 40px -12px rgba(16,24,40,.22),0 4px 8px -4px rgba(16,24,40,.08);z-index:60;overflow:hidden;animation:notifIn .16s ease;}
+.notif-panel[hidden]{display:none;}
+@keyframes notifIn{from{opacity:0;transform:translateY(-6px) scale(.98)}to{opacity:1;transform:none}}
+.notif-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;padding:16px 18px 12px;border-bottom:1px solid var(--line);}
+.notif-title{font-weight:800;font-size:15px;color:var(--ink);}
+.notif-sub{font-size:12px;color:var(--muted);margin-top:2px;}
+.notif-markall{border:0;background:none;color:#1D6FE0;font-size:12px;font-weight:700;padding:4px 0;cursor:pointer;white-space:nowrap;}
+.notif-markall:hover{text-decoration:underline;}
+.notif-list{max-height:min(460px,60vh);overflow-y:auto;}
+.notif-item{position:relative;display:flex;gap:12px;padding:14px 18px;border-bottom:1px solid #F0F3F8;}
+.notif-item:last-child{border-bottom:0;}
+.notif-item.unread{background:#F5F9FF;}
+.notif-item.unread::before{content:"";position:absolute;left:7px;top:24px;width:6px;height:6px;border-radius:50%;background:#1D6FE0;}
+.notif-item.urgent.unread{background:#FFF7F5;}
+.notif-item.urgent.unread::before{background:#F04438;}
+.notif-av{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;flex-shrink:0;font-size:12px;font-weight:800;color:#fff;background:linear-gradient(145deg,#4C9BFA,#1D5FD0);}
+.notif-av.bm{background:linear-gradient(145deg,#12356F,#0A2A5E);}
+.notif-av.sofi{background:linear-gradient(145deg,#F27AA5,#D1457C);}
+.notif-av.rafli{background:linear-gradient(145deg,#34C896,#0E8A64);}
+.notif-body{min-width:0;flex:1;}
+.notif-line1{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:13px;color:var(--ink);}
+.notif-line1 strong{font-weight:800;}
+.notif-tag{font-size:10px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;padding:2px 7px;border-radius:999px;background:#FEE4E2;color:#B42318;}
+.notif-tag.info{background:#E8F1FF;color:#1D5FD0;}
+.notif-tag.ok{background:#DCF5EA;color:#0E7A58;}
+.notif-time{margin-left:auto;font-size:11px;color:var(--muted);white-space:nowrap;}
+.notif-msg{margin:5px 0 0;font-size:13px;line-height:1.55;color:#475467;}
+.notif-msg b{color:var(--ink);}
+.notif-meta{display:flex;align-items:center;gap:6px;margin-top:8px;font-size:12px;color:#667085;}
+.notif-meta svg{width:14px;height:14px;flex-shrink:0;}
+.notif-meta.late{color:#B42318;font-weight:700;}
+.notif-actions{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap;}
+.notif-btn{border:1px solid var(--line);background:#fff;color:#344054;font-size:12px;font-weight:700;padding:7px 12px;border-radius:8px;cursor:pointer;transition:background .15s;}
+.notif-btn:hover{background:#F8FAFC;}
+.notif-btn.primary{background:#0B4290;border-color:#0B4290;color:#fff;}
+.notif-btn.primary:hover{background:#0A3A7E;}
+.notif-done{margin-top:10px;font-size:12px;font-weight:700;color:#0E7A58;display:flex;align-items:center;gap:6px;}
+.notif-done svg{width:14px;height:14px;}
+.notif-empty{padding:34px 18px;text-align:center;color:var(--muted);font-size:13px;}
+.notif-foot{padding:10px 18px;border-top:1px solid var(--line);background:#FAFBFD;text-align:center;}
+.notif-foot button{border:0;background:none;color:#1D6FE0;font-size:12px;font-weight:700;cursor:pointer;}
+@media (max-width:640px){
+  .notif-panel{position:fixed;left:12px;right:12px;top:72px;width:auto;max-width:none;}
+}
+
+/* Conversion Analytics KPI — selaras dengan Overview */
+.an-kpi{position:relative;overflow:hidden;border:1px solid var(--line);border-top:1px solid var(--line);border-radius:14px;padding:20px 22px;box-shadow:0 1px 2px rgba(16,24,40,.04);transition:transform .2s ease,box-shadow .2s ease;}
+.an-kpi::after{content:"";position:absolute;right:-36px;top:-36px;width:130px;height:130px;border-radius:50%;background:radial-gradient(circle,var(--acc-soft),transparent 70%);pointer-events:none;}
+.an-kpi:hover{transform:translateY(-2px);box-shadow:0 8px 20px -8px rgba(16,24,40,.14);}
+.an-kpi>*{position:relative;z-index:1;}
+.an-kpi-top{display:flex;justify-content:space-between;align-items:center;gap:8px;}
+.an-kpi-label{font-size:13px;font-weight:600;color:#475467;}
+.an-kpi-value{font-size:34px;font-weight:800;letter-spacing:-.02em;line-height:1.1;margin:18px 0 6px;font-variant-numeric:tabular-nums;}
+.an-kpi-foot{font-size:13px;font-weight:600;color:#13845F;}
+.an-kpi .kpi-meter-bar i{width:var(--w);animation:anGrow .9s ease backwards;}
+@keyframes anGrow{from{width:0}}
   </style>
 </head>
 
@@ -1550,30 +1713,30 @@ tbody tr{transition:background .15s;}
   <div class="nav-label">WORKSPACE</div>
 
   <button class="nav-item active" data-page="dashboard">
-    <span class="nav-icon">▦</span> Overview
+    <span class="nav-icon"><svg class="" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg></span> Overview
   </button>
 
   <button class="nav-item" data-page="gmaps">
-    <span class="nav-icon">📍</span> GMaps Prospecting
+    <span class="nav-icon"><svg class="" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/><line x1="9" x2="9" y1="3" y2="18"/><line x1="15" x2="15" y1="6" y2="21"/></svg></span> GMaps Prospecting
   </button>
 
   <button class="nav-item" data-page="discovery">
-    <span class="nav-icon">⌕</span> Merchant Discovery
+    <span class="nav-icon"><svg class="" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></span> Merchant Discovery
   </button>
 
   <button class="nav-item" data-page="recommendation">
-    <span class="nav-icon">✧</span> Product Recommendation
+    <span class="nav-icon"><svg class="" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3z"/></svg></span> Product Recommendation
   </button>
 
   <button class="nav-item" data-page="prospects">
-    <span class="nav-icon">▤</span> Prospect Management
+    <span class="nav-icon"><svg class="" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11h4M12 16h4M8 11h.01M8 16h.01"/></svg></span> Prospect Management
     <span class="nav-count" id="navProspectCount">6</span>
   </button>
 
   <div class="nav-label">PERFORMANCE & SUPERVISI</div>
 
   <button class="nav-item" data-page="analytics">
-    <span class="nav-icon">◷</span> Conversion Analytics
+    <span class="nav-icon"><svg class="" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="M18 17V9M13 17V5M8 17v-3"/></svg></span> Conversion Analytics
   </button>
 
   <button
@@ -1582,7 +1745,7 @@ tbody tr{transition:background .15s;}
     id="bmNavBtn"
     style="display: none;"
   >
-    <span class="nav-icon">👁</span> BM Officer Audit
+    <span class="nav-icon"><svg class="" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></span> BM Officer Audit
   </button>
 
   <!-- SIDEBAR BOTTOM -->
@@ -1613,11 +1776,21 @@ tbody tr{transition:background .15s;}
     <header class="topbar">
       <div class="top-left">
         <button class="menu-toggle" id="menuToggle" aria-label="Buka menu">☰</button>
-        <div class="breadcrumb">Workspace <span style="margin:0 4px;color:#B0BAC8">/</span> <strong id="breadcrumbTitle">Overview</strong></div>
+        <div class="breadcrumb">Workspace <span class="crumb-sep">/</span> <strong id="breadcrumbTitle">Overview</strong></div>
       </div>
       <div class="top-actions">
-        <div class="date-chip" id="currentDate">◷ Memuat tanggal...</div>
-        <button class="icon-button" id="notificationButton" aria-label="Notifikasi">♧<span class="notification-dot"></span></button>
+        <div class="date-chip"><svg class="" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg><span id="currentDate">Memuat tanggal...</span></div>
+        <div class="notif-wrap">
+          <button class="icon-button" id="notificationButton" aria-label="Notifikasi" aria-haspopup="true" aria-expanded="false"><svg class="" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg><span class="notification-dot"></span></button>
+          <div class="notif-panel" id="notifPanel" role="dialog" aria-label="Notifikasi" hidden>
+            <div class="notif-head">
+              <div><div class="notif-title">Notifikasi</div><div class="notif-sub" id="notifSub"></div></div>
+              <button type="button" class="notif-markall" id="notifMarkAll">Tandai semua dibaca</button>
+            </div>
+            <div class="notif-list" id="notifList"></div>
+            <div class="notif-foot"><button type="button" id="notifGoProspects">Buka Prospect Management <span aria-hidden="true">→</span></button></div>
+          </div>
+        </div>
       </div>
     </header>
 
@@ -1628,8 +1801,8 @@ tbody tr{transition:background .15s;}
         <div class="page-heading">
           <div>
             <div class="eyebrow">MERCHANT GROWTH WORKSPACE</div>
-            <h1>Good morning, <span id="welcomeUserName">Samuel</span>! <span style="font-size:23px"></span></h1>
-            <p class="page-description">Temukan peluang merchant berdasarkan kebutuhan nyata dan pantaus progres akuisisi.</p>
+            <h1>Good Day, <span id="welcomeUserName">Samuel</span>! <span style="font-size:23px"></span></h1>
+            <!-- <p class="page-description">Temukan peluang merchant berdasarkan kebutuhan nyata dan pantaus progres akuisisi.</p> -->
           </div>
           <div class="heading-actions">
             <button class="btn btn-secondary" id="exportButton">↓ Export CSV</button>
@@ -1638,11 +1811,27 @@ tbody tr{transition:background .15s;}
         </div>
 
         <div class="hero">
+          <svg class="hero-map" viewBox="0 0 640 300" preserveAspectRatio="xMaxYMid slice" aria-hidden="true">
+            <defs><pattern id="hmGrid" width="32" height="32" patternUnits="userSpaceOnUse"><path d="M32 0H0V32" fill="none" stroke="#fff" stroke-opacity=".07"/></pattern></defs>
+            <rect width="640" height="300" fill="url(#hmGrid)"/>
+            <g fill="none" stroke="#fff" stroke-linecap="round">
+              <path d="M-10 220C120 190 200 250 320 200S520 120 660 150" stroke-opacity=".16" stroke-width="10"/>
+              <path d="M120-10C150 90 230 120 260 310" stroke-opacity=".12" stroke-width="8"/>
+              <path d="M380-10C400 80 470 110 520 310" stroke-opacity=".1" stroke-width="6"/>
+              <path d="M-10 90C100 70 200 110 330 80S560 40 660 70" stroke-opacity=".08" stroke-width="5"/>
+            </g>
+            <path class="hm-route" d="M300 205C360 170 410 175 450 130S520 110 575 75" fill="none" stroke="#FFD52E" stroke-width="2.5" stroke-dasharray="2 8" stroke-linecap="round"/>
+            <g transform="translate(300 205)"><circle class="hm-pulse" r="14" fill="#FFD52E"/><circle r="6" fill="#FFD52E" stroke="#fff" stroke-width="2.5"/></g>
+            <g transform="translate(450 130)"><circle class="hm-pulse d2" r="14" fill="#FFD52E"/><circle r="6" fill="#FFD52E" stroke="#fff" stroke-width="2.5"/></g>
+            <g transform="translate(575 75)"><circle class="hm-pulse d3" r="14" fill="#FFD52E"/><circle r="6" fill="#FFD52E" stroke="#fff" stroke-width="2.5"/></g>
+            <g transform="translate(210 150)"><circle r="5" fill="#fff" fill-opacity=".55"/></g>
+            <g transform="translate(500 220)"><circle r="5" fill="#fff" fill-opacity=".55"/></g>
+          </svg>
           <div class="hero-content">
-            <div class="hero-label">✦ &nbsp; LOCATION-BASED FIELD OUTREACH</div>
+            <div class="hero-label"><svg class="" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2l2.4 7.6L22 12l-7.6 2.4L12 22l-2.4-7.6L2 12l7.6-2.4z"/></svg><span>Location-Based Field Outreach</span></div>
             <h2>Discover nearby merchants.<br>Deliver the right solution.</h2>
-            <p>Cari calon merchant terdekat lewat Google Maps, lakukan kunjungan (*visit*), upload bukti foto lokasi, lalu tentukan solusi produk yang tepat.</p>
-            <button class="btn btn-primary" data-go="gmaps">Cari Merchant Terdekat (GMaps) <span>→</span></button>
+            <p>Cari calon merchant terdekat lewat Google Maps, lakukan kunjungan (<em>visit</em>), upload bukti foto lokasi, lalu tentukan solusi produk yang tepat.</p>
+            <button class="btn btn-primary" data-go="gmaps">Cari Merchant Terdekat (GMaps) <svg class="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></button>
           </div>
           <div class="hero-stat">
             <div class="hero-stat-label">Prospek terdata</div>
@@ -1653,24 +1842,24 @@ tbody tr{transition:background .15s;}
 
         <div class="kpi-grid">
           <div class="kpi-card">
-            <div class="kpi-top"><div class="kpi-label">Total Prospek</div><div class="kpi-icon ki-blue">♧</div></div>
+            <div class="kpi-top"><div class="kpi-label">Total Prospek</div><div class="kpi-icon ki-blue"><svg class="" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div></div>
             <div class="kpi-value" id="kpiProspects">06</div>
-            <div class="kpi-foot">Merchant dalam pipeline</div>
+            <div class="kpi-foot">Merchant dalam pipeline</div><div class="kpi-meter"><div class="kpi-meter-bar"><i></i></div><b>0%</b><span>dari total</span></div>
           </div>
           <div class="kpi-card">
-            <div class="kpi-top"><div class="kpi-label">Visited / Discovery</div><div class="kpi-icon ki-yellow">⌕</div></div>
+            <div class="kpi-top"><div class="kpi-label">Visited / Discovery</div><div class="kpi-icon ki-yellow"><svg class="" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg></div></div>
             <div class="kpi-value" id="kpiNeeds">04</div>
-            <div class="kpi-foot">Kunjungan fisik selesai</div>
+            <div class="kpi-foot">Kunjungan fisik selesai</div><div class="kpi-meter"><div class="kpi-meter-bar"><i></i></div><b>0%</b><span>dari total</span></div>
           </div>
           <div class="kpi-card">
-            <div class="kpi-top"><div class="kpi-label">Tertarik / Follow-up</div><div class="kpi-icon ki-purple">↗</div></div>
+            <div class="kpi-top"><div class="kpi-label">Tertarik / Follow-up</div><div class="kpi-icon ki-purple"><svg class="" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg></div></div>
             <div class="kpi-value" id="kpiFollow">03</div>
-            <div class="kpi-foot">Perlu tindak lanjut</div>
+            <div class="kpi-foot">Perlu tindak lanjut</div><div class="kpi-meter"><div class="kpi-meter-bar"><i></i></div><b>0%</b><span>dari total</span></div>
           </div>
           <div class="kpi-card">
-            <div class="kpi-top"><div class="kpi-label">Merchant Aktif</div><div class="kpi-icon ki-green">✓</div></div>
+            <div class="kpi-top"><div class="kpi-label">Merchant Aktif</div><div class="kpi-icon ki-green"><svg class="" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div></div>
             <div class="kpi-value" id="kpiActive">01</div>
-            <div class="kpi-foot">Status aktivasi tercatat</div>
+            <div class="kpi-foot">Status aktivasi tercatat</div><div class="kpi-meter"><div class="kpi-meter-bar"><i></i></div><b>0%</b><span>dari total</span></div>
           </div>
         </div>
 
@@ -2028,7 +2217,7 @@ tbody tr{transition:background .15s;}
           <div>
             <div class="eyebrow">PERFORMANCE INTELLIGENCE</div>
             <h1>Conversion Analytics</h1>
-            <p class="page-description">Evaluasi kualitas discovery, alasan penolakan, dan efektivitas tindak lanjut.</p>
+            <!-- <p class="page-description">Evaluasi kualitas discovery, alasan penolakan, dan efektivitas tindak lanjut.</p> -->
           </div>
         </div>
         <div id="analyticsRoot"></div>
@@ -2040,20 +2229,20 @@ tbody tr{transition:background .15s;}
           <div>
             <div class="eyebrow">BRANCH MANAGER SUPERVISION</div>
             <h1>Branch Manager Field Tracking</h1>
-            <p class="page-description">Pantau performa Pegawai A, B, C dalam mengatut akuisisi merchant, foto bukti kunjungan, dan progres status.</p>
+            <!-- <p class="page-description">Pantau performa Samuel, Sofi, Rafli dalam mengatut akuisisi merchant, foto bukti kunjungan, dan progres status.</p> -->
           </div>
           <div class="heading-actions"><span class="pill pill-green" style="font-size:11px;">SUPERVISION ACTIVE</span></div>
         </div>
 
         <div class="kpi-grid">
-          <div class="kpi-card"><div class="kpi-top"><div class="kpi-label">Total Field Visit</div><div class="kpi-icon ki-blue">📍</div></div><div class="kpi-value" id="bmTotalVisits">06</div><div class="kpi-foot">Kunjungan fisik tercatat</div></div>
-          <div class="kpi-card"><div class="kpi-top"><div class="kpi-label">Bukti Foto Valid</div><div class="kpi-icon ki-green">📷</div></div><div class="kpi-value" id="bmPhotoValid">06</div><div class="kpi-foot">Terverifikasi sistem</div></div>
-          <div class="kpi-card"><div class="kpi-top"><div class="kpi-label">Follow-up Aktif</div><div class="kpi-icon ki-yellow">◷</div></div><div class="kpi-value" id="bmFollowActive">03</div><div class="kpi-foot">Sedang diproses pegawai</div></div>
-          <div class="kpi-card"><div class="kpi-top"><div class="kpi-label">Conversion Rate</div><div class="kpi-icon ki-purple">✓</div></div><div class="kpi-value" id="bmConvRate">17%</div><div class="kpi-foot">Visited ke Merchant Aktif</div></div>
+          <div class="kpi-card"><div class="kpi-top"><div class="kpi-label">Total Field Visit</div><div class="kpi-icon ki-blue"><svg class="" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg></div></div><div class="kpi-value" id="bmTotalVisits">06</div><div class="kpi-foot">Kunjungan fisik tercatat</div></div>
+          <div class="kpi-card"><div class="kpi-top"><div class="kpi-label">Bukti Foto Valid</div><div class="kpi-icon ki-green"><svg class="" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3z"/><circle cx="12" cy="13" r="3"/></svg></div></div><div class="kpi-value" id="bmPhotoValid">06</div><div class="kpi-foot">Terverifikasi sistem</div></div>
+          <div class="kpi-card"><div class="kpi-top"><div class="kpi-label">Follow-up Aktif</div><div class="kpi-icon ki-yellow"><svg class="" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div></div><div class="kpi-value" id="bmFollowActive">03</div><div class="kpi-foot">Sedang diproses pegawai</div></div>
+          <div class="kpi-card"><div class="kpi-top"><div class="kpi-label">Conversion Rate</div><div class="kpi-icon ki-purple"><svg class="" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div></div><div class="kpi-value" id="bmConvRate">17%</div><div class="kpi-foot">Visited ke Merchant Aktif</div></div>
         </div>
 
         <div class="panel">
-          <div class="panel-header"><div><div class="panel-title">Audit Kinerja Akuisisi Pegawai Cabang</div><div class="panel-description">Tracking progres tiap pegawai (Pegawai A, Pegawai B, dst.) dan verifikasi foto visit</div></div></div>
+          <!-- <div class="panel-header"><div><div class="panel-title">Audit Kinerja Akuisisi Pegawai Cabang</div><div class="panel-description">Tracking progres tiap pegawai (Pegawai A, Pegawai B, dst.) dan verifikasi foto visit</div></div></div> -->
           <div class="table-wrap">
             <table>
               <thead><tr><th>Nama Merchant</th><th>Pegawai Outreach</th><th>Tanggal Visit</th><th>Foto Bukti</th><th>Rekomendasi</th><th>Status Progress</th><th>Audit Supervisi</th></tr></thead>
@@ -2099,12 +2288,12 @@ tbody tr{transition:background .15s;}
   ];
 
   let prospects = [
-    {id:1, name:"Kedai Kopi Nusantara", category:"Restoran / Kuliner", area:"Cibubur (0.5 KM)", payment:"EDC Kompetitor", provider:"BCA", needs:["Monitoring transaksi","Alternatif pembayaran"], pain:"Ingin mengevaluasi opsi tambahan untuk operasional.", decision:"Pemilik / Pengambil Keputusan", interest:"Perlu Penjelasan", objection:"Nyaman dengan penyedia saat ini", product:"EDC Mandiri", status:"Follow-up", followup:"2026-10-21", action:"Jadwalkan diskusi dengan pemilik.", date:"2026-10-16", officer:"Pegawai A", photo:"https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=400&q=80"},
-    {id:2, name:"Fresh Mart Cibubur", category:"Retail / Minimarket", area:"Cibubur (1.1 KM)", payment:"EDC dan QRIS Kompetitor", provider:"BRI", needs:["Penerimaan kartu","QRIS"], pain:"Ingin membandingkan pilihan metode pembayaran.", decision:"Manajer", interest:"Tertarik", objection:"", product:"Keduanya", status:"Pengajuan", followup:"2026-10-20", action:"Konfirmasi persyaratan dan proses resmi.", date:"2026-10-15", officer:"Pegawai B", photo:"https://images.unsplash.com/photo-1578916171728-46686eac8d58?auto=format&fit=crop&w=400&q=80"},
-    {id:3, name:"Dapur Rasa", category:"Restoran / Kuliner", area:"Cibubur (1.8 KM)", payment:"QRIS Kompetitor", provider:"Penyedia QRIS nonbank", needs:["QRIS"], pain:"Mencari opsi QRIS yang sesuai kebutuhan usaha.", decision:"Pemilik / Pengambil Keputusan", interest:"Perlu Penjelasan", objection:"Belum melihat manfaat tambahan", product:"Livin’ Merchant", status:"Follow-up", followup:"2026-10-22", action:"Jelaskan fitur yang telah diverifikasi.", date:"2026-10-14", officer:"Pegawai A", photo:"https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=400&q=80"},
-    {id:4, name:"Apotek Sehat", category:"Kesehatan / Apotek", area:"Cibubur (2.1 KM)", payment:"EDC Kompetitor", provider:"BNI", needs:["Penerimaan kartu"], pain:"Membutuhkan opsi penerimaan pembayaran kartu.", decision:"Pemilik / Pengambil Keputusan", interest:"Tertarik", objection:"", product:"EDC Mandiri", status:"Aktif", followup:"", action:"Catat hasil aktivasi setelah terverifikasi.", date:"2026-10-13", officer:"Pegawai B", photo:"https://images.unsplash.com/photo-1586015555751-63bb77f4322a?auto=format&fit=crop&w=400&q=80"},
-    {id:5, name:"Urban Fashion", category:"Fashion", area:"Cibubur (2.8 KM)", payment:"Cash / Transfer", provider:"", needs:["Alternatif pembayaran"], pain:"Sedang mengevaluasi opsi pembayaran digital.", decision:"Karyawan", interest:"Belum Bertemu Pengambil Keputusan", objection:"Pengambil keputusan tidak tersedia", product:"Livin’ Merchant", status:"Visited / Discovery", followup:"2026-10-24", action:"Atur pertemuan dengan pemilik.", date:"2026-10-12", officer:"Pegawai A", photo:"https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=400&q=80"},
-    {id:6, name:"Bengkel Prima", category:"Jasa", area:"Cibubur (3.2 KM)", payment:"EDC Kompetitor", provider:"BCA", needs:[], pain:"Belum menemukan kebutuhan tambahan yang jelas.", decision:"Pemilik / Pengambil Keputusan", interest:"Belum Tertarik", objection:"Kebutuhan belum sesuai", product:"Belum sesuai", status:"Belum Sesuai", followup:"", action:"Tidak memaksakan penawaran.", date:"2026-10-11", officer:"Pegawai C", photo:"https://images.unsplash.com/photo-1617814076367-b759c7d7e738?auto=format&fit=crop&w=400&q=80"}
+    {id:1, name:"Kedai Kopi Nusantara", category:"Restoran / Kuliner", area:"Cibubur (0.5 KM)", payment:"EDC Kompetitor", provider:"BCA", needs:["Monitoring transaksi","Alternatif pembayaran"], pain:"Ingin mengevaluasi opsi tambahan untuk operasional.", decision:"Pemilik / Pengambil Keputusan", interest:"Perlu Penjelasan", objection:"Nyaman dengan penyedia saat ini", product:"EDC Mandiri", status:"Follow-up", followup:"2026-10-21", action:"Jadwalkan diskusi dengan pemilik.", date:"2026-10-16", officer:"Samuel", photo:"https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=400&q=80"},
+    {id:2, name:"Fresh Mart Cibubur", category:"Retail / Minimarket", area:"Cibubur (1.1 KM)", payment:"EDC dan QRIS Kompetitor", provider:"BRI", needs:["Penerimaan kartu","QRIS"], pain:"Ingin membandingkan pilihan metode pembayaran.", decision:"Manajer", interest:"Tertarik", objection:"", product:"Keduanya", status:"Pengajuan", followup:"2026-10-20", action:"Konfirmasi persyaratan dan proses resmi.", date:"2026-10-15", officer:"Sofi", photo:"https://images.unsplash.com/photo-1578916171728-46686eac8d58?auto=format&fit=crop&w=400&q=80"},
+    {id:3, name:"Dapur Rasa", category:"Restoran / Kuliner", area:"Cibubur (1.8 KM)", payment:"QRIS Kompetitor", provider:"Penyedia QRIS nonbank", needs:["QRIS"], pain:"Mencari opsi QRIS yang sesuai kebutuhan usaha.", decision:"Pemilik / Pengambil Keputusan", interest:"Perlu Penjelasan", objection:"Belum melihat manfaat tambahan", product:"Livin’ Merchant", status:"Follow-up", followup:"2026-10-22", action:"Jelaskan fitur yang telah diverifikasi.", date:"2026-10-14", officer:"Rafli", photo:"https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=400&q=80"},
+    {id:4, name:"Apotek Sehat", category:"Kesehatan / Apotek", area:"Cibubur (2.1 KM)", payment:"EDC Kompetitor", provider:"BNI", needs:["Penerimaan kartu"], pain:"Membutuhkan opsi penerimaan pembayaran kartu.", decision:"Pemilik / Pengambil Keputusan", interest:"Tertarik", objection:"", product:"EDC Mandiri", status:"Aktif", followup:"", action:"Catat hasil aktivasi setelah terverifikasi.", date:"2026-10-13", officer:"Dewi", photo:"https://images.unsplash.com/photo-1586015555751-63bb77f4322a?auto=format&fit=crop&w=400&q=80"},
+    {id:5, name:"Urban Fashion", category:"Fashion", area:"Cibubur (2.8 KM)", payment:"Cash / Transfer", provider:"", needs:["Alternatif pembayaran"], pain:"Sedang mengevaluasi opsi pembayaran digital.", decision:"Karyawan", interest:"Belum Bertemu Pengambil Keputusan", objection:"Pengambil keputusan tidak tersedia", product:"Livin’ Merchant", status:"Visited / Discovery", followup:"2026-10-24", action:"Atur pertemuan dengan pemilik.", date:"2026-10-12", officer:"Samuel", photo:"https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=400&q=80"},
+    {id:6, name:"Bengkel Prima", category:"Jasa", area:"Cibubur (3.2 KM)", payment:"EDC Kompetitor", provider:"BCA", needs:[], pain:"Belum menemukan kebutuhan tambahan yang jelas.", decision:"Pemilik / Pengambil Keputusan", interest:"Belum Tertarik", objection:"Kebutuhan belum sesuai", product:"Belum sesuai", status:"Belum Sesuai", followup:"", action:"Tidak memaksakan penawaran.", date:"2026-10-11", officer:"Bagas", photo:"https://images.unsplash.com/photo-1617814076367-b759c7d7e738?auto=format&fit=crop&w=400&q=80"}
   ];
 
   let nextId = 7;
@@ -2250,7 +2439,7 @@ tbody tr{transition:background .15s;}
       const rec = recommendationFor(p).product;
       return `<tr>
         <td><div class="merchant-cell"><div class="merchant-avatar" style="background:${bg};color:${color}">${emoji}</div><div><div class="merchant-name">${esc(p.name)}</div><div class="merchant-category">${esc(p.category)} · ${esc(p.area)}</div></div></div></td>
-        <td><strong>${esc(p.officer || "Pegawai A")}</strong></td>
+        <td><strong>${esc(p.officer || "Samuel")}</strong></td>
         <td>${p.photo ? `<img src="${p.photo}" style="width:36px;height:36px;border-radius:6px;object-fit:cover;" title="Foto Visit">` : '<span style="color:#aaa">Tanpa foto</span>'}</td>
         <td>${esc(p.payment)}</td>
         <td>${esc(rec)}</td>
@@ -2281,7 +2470,7 @@ tbody tr{transition:background .15s;}
     $("bmTrackingTable").innerHTML = prospects.map(p => `
       <tr>
         <td><strong>${esc(p.name)}</strong><div style="font-size:10px;color:var(--muted)">${esc(p.category)}</div></td>
-        <td><span class="pill pill-blue">${esc(p.officer || "Pegawai A")}</span></td>
+        <td><span class="pill pill-blue">${esc(p.officer || "Samuel")}</span></td>
         <td>${esc(p.date)}</td>
         <td>${p.photo ? `<img src="${p.photo}" style="width:45px;height:35px;border-radius:6px;object-fit:cover;border:1px solid #DCE5F2;">` : '<em>No photo</em>'}</td>
         <td>${esc(recommendationFor(p).product)}</td>
@@ -2364,7 +2553,7 @@ tbody tr{transition:background .15s;}
     $("detailTitle").textContent = p.name;
     $("detailContent").innerHTML = `
       <div class="form-grid">
-        <div class="field"><label>Pegawai Outreach</label><div><strong>${esc(p.officer||"Pegawai A")}</strong></div></div>
+        <div class="field"><label>Pegawai Outreach</label><div><strong>${esc(p.officer||"Samuel")}</strong></div></div>
         <div class="field"><label>Area / Jarak</label><div>${esc(p.area||"Cibubur")}</div></div>
         <div class="field"><label>Pembayaran Saat Ini</label><div>${esc(p.payment)} (${esc(p.provider||"N/A")})</div></div>
         <div class="field"><label>Rekomendasi Product</label><div><strong>${esc(recommendationFor(p).product)}</strong></div></div>
@@ -2404,15 +2593,15 @@ tbody tr{transition:background .15s;}
     }
   });
 
-  // ROLE SWITCHER (PEGAWAI A vs BM)
+  // ROLE SWITCHER (PEGAWAI vs BM)
   $("roleOfficerBtn").addEventListener("click", () => {
     currentRole = "officer";
     $("roleOfficerBtn").classList.add("active");
     $("roleManagerBtn").classList.remove("active");
     $("bmNavBtn").style.display = "none";
-    $("userAvatar").textContent = "A";
-    $("userName").textContent = "Pegawai A";
-    $("welcomeUserName").textContent = "Pegawai A";
+    $("userAvatar").textContent = "S";
+    $("userName").textContent = "Pegawai Samuel";
+    $("welcomeUserName").textContent = "Samuel";
     showToast("Mode Pegawai Aktif");
     navigate("dashboard");
   });
@@ -2600,7 +2789,7 @@ if (document.readyState === "loading") {
       followup: data.get("followupDate") || "",
       action: String(data.get("nextAction")||"").trim(),
       date: todayString(),
-      officer: "Pegawai A",
+      officer: "Samuel",
       photo: tempUploadedPhoto || "https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=400&q=80"
     };
 
@@ -2615,7 +2804,7 @@ if (document.readyState === "loading") {
     $("recommendResult").innerHTML = `
       <div class="product-card recommended" style="margin-bottom:0">
         <div class="product-top"><div class="product-icon">✧</div><div><div class="product-title">${product}</div><div class="product-subtitle">Rekomendasi awal berdasarkan kunjungan</div></div></div>
-        <p class="product-desc">Kunjungan fisik oleh <strong>Pegawai A</strong> telah tercatat beserta bukti foto lokasi.</p>
+        <p class="product-desc">Kunjungan fisik oleh <strong>Samuel</strong> telah tercatat beserta bukti foto lokasi.</p>
         <button class="btn btn-primary" onclick="navigate('prospects')">Lihat Pipeline Prospek →</button>
       </div>`;
     navigate("recommendation");
@@ -2649,7 +2838,7 @@ if (document.readyState === "loading") {
   $("prospectStatusFilter").addEventListener("change", renderProspectTable);
 
   // INIT PAGE
-  $("currentDate").textContent = "◷ " + new Date().toLocaleDateString("id-ID", {day:"numeric", month:"long", year:"numeric"});
+  $("currentDate").textContent = new Date().toLocaleDateString("id-ID", {day:"numeric", month:"long", year:"numeric"});
   renderAll();
 
   /* ==========================================
@@ -2666,12 +2855,23 @@ if (document.readyState === "loading") {
     const conv = get("Converted"), rej = get("Rejected");
     const rate = conv / total * 100, rejRate = rej / total * 100;
 
+    const kpiIcon = {
+      users: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>',
+      check: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>',
+      pct: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="5" x2="5" y2="19"/><circle cx="6.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/></svg>',
+      x: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6M9 9l6 6"/></svg>'
+    };
     const kpis = [
-      ["Total Prospek", total, "▲ 12% vs bulan lalu", "#0875E1"],
-      ["Merchant Converted", conv, "▲ 3 merchant baru", "#159A72"],
-      ["Conversion Rate", rate.toFixed(1) + "%", "▲ 1,0 poin", "#7662D9"],
-      ["Rejection Rate", rejRate.toFixed(1) + "%", "▼ 0,8 poin", "#E9B900"]
-    ].map(k => `<div class="an-kpi" style="--c:${k[3]}"><div class="an-kpi-label">${k[0]}</div><div class="an-kpi-value">${k[1]}</div><span class="an-delta">${k[2]}</span></div>`).join("");
+      ["Total Prospek", total, "▲ 12% vs bulan lalu", "#1D6FE0", "rgba(29,111,224,.10)", "ki-blue", kpiIcon.users, 100, "dari total"],
+      ["Merchant Converted", conv, "▲ 3 merchant baru", "#12906A", "rgba(18,144,106,.10)", "ki-green", kpiIcon.check, conv / total * 100, "dari total"],
+      ["Conversion Rate", rate.toFixed(1) + "%", "▲ 1,0 poin", "#6D54D6", "rgba(109,84,214,.10)", "ki-purple", kpiIcon.pct, rate, "dari prospek"],
+      ["Rejection Rate", rejRate.toFixed(1) + "%", "▼ 0,8 poin", "#E49A00", "rgba(228,154,0,.12)", "ki-yellow", kpiIcon.x, rejRate, "dari prospek"]
+    ].map(k => `<div class="an-kpi" style="--acc:${k[3]};--acc-soft:${k[4]};--w:${Math.min(100, k[7]).toFixed(1)}%">
+      <div class="an-kpi-top"><div class="an-kpi-label">${k[0]}</div><div class="kpi-icon ${k[5]}">${k[6]}</div></div>
+      <div class="an-kpi-value">${k[1]}</div>
+      <div class="an-kpi-foot">${k[2]}</div>
+      <div class="kpi-meter"><div class="kpi-meter-bar"><i></i></div><b>${Math.round(k[7])}%</b><span>${k[8]}</span></div>
+    </div>`).join("");
 
     // Funnel
     const fn = [
@@ -2875,7 +3075,7 @@ if (document.readyState === "loading") {
     $("activityList").innerHTML = recent.map(p => `
       <div class="activity-item">
         <div class="activity-icon">${icon[p.status] || "📍"}</div>
-        <div><div class="activity-title">${esc(p.officer || "Pegawai A")} ${verb[p.status] || "mengunjungi"} ${esc(p.name)}</div>
+        <div><div class="activity-title">${esc(p.officer || "Samuel")} ${verb[p.status] || "mengunjungi"} ${esc(p.name)}</div>
         <div class="activity-desc">${esc(formatDate(p.date))} · ${esc(p.status)}</div></div>
       </div>`).join("") || `<div class="empty-state"><div>◷</div>Belum ada aktivitas.</div>`;
 
@@ -2942,6 +3142,144 @@ if (document.readyState === "loading") {
   navigate = function (p) { _navOrig2(p); if (p === "dashboard") animateDashboard(); };
   renderDashLists();
   animateDashboard();
+
+  // KPI METER — persentase terhadap total prospek
+  (function () {
+    const els = ["kpiProspects", "kpiNeeds", "kpiFollow", "kpiActive"].map(id => document.getElementById(id));
+    if (els.some(e => !e)) return;
+    function upd() {
+      const tot = parseFloat(els[0].textContent) || 0;
+      document.querySelectorAll("#page-dashboard .kpi-grid .kpi-card").forEach((card, i) => {
+        const v = parseFloat(els[i].textContent) || 0;
+        const pct = tot ? Math.min(100, Math.round(v / tot * 100)) : 0;
+        card.querySelector(".kpi-meter i").style.width = pct + "%";
+        card.querySelector(".kpi-meter b").textContent = pct + "%";
+      });
+    }
+    const mo = new MutationObserver(upd);
+    els.forEach(e => mo.observe(e, { childList: true, characterData: true, subtree: true }));
+    upd();
+  })();
+
+  // NOTIFIKASI — pengingat dari Branch Manager ke pegawai
+  (function () {
+    const btn = $("notificationButton"), panel = $("notifPanel"), list = $("notifList");
+    const dot = btn.querySelector(".notification-dot");
+    const SELF = "Samuel", BM = "Branch Manager";
+    const read = new Set();
+    let acknowledged = false;
+
+    const ic = {
+      cal: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>',
+      ok: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>'
+    };
+    const initials = n => n === BM ? "BM" : n.slice(0, 2).toUpperCase();
+    const daysLate = f => f ? Math.round((new Date(todayString() + "T00:00:00") - new Date(f + "T00:00:00")) / 864e5) : null;
+    function dueInfo(p) {
+      const d = daysLate(p.followup);
+      if (d === null) return { late: false, text: "Belum dijadwalkan" };
+      if (d > 0) return { late: true, text: `Terlambat ${d} hari · jadwal ${formatDate(p.followup)}` };
+      if (d === 0) return { late: true, text: `Jadwal hari ini · ${formatDate(p.followup)}` };
+      return { late: false, text: `Jadwal ${formatDate(p.followup)}` };
+    }
+    const pendingFor = name => prospects
+      .filter(p => p.officer === name && ["Follow-up", "Visited / Discovery", "Pengajuan"].includes(p.status))
+      .sort((a, b) => String(a.followup || "9999").localeCompare(String(b.followup || "9999")));
+
+    function build() {
+      const items = [];
+      const pend = pendingFor(SELF);
+      const manager = currentRole === "manager";
+      if (pend[0]) {
+        const p = pend[0], di = dueInfo(p);
+        items.push({
+          id: "bm-main", from: BM, cls: "bm", urgent: true, tag: ["Mendesak", ""], time: "Baru saja",
+          msg: manager
+            ? `Anda mengirim pengingat ke <b>${esc(SELF)}</b>: segera follow up <b>${esc(p.name)}</b>. ${esc(p.action || "")}`
+            : `${esc(SELF)}, mohon segera follow up <b>${esc(p.name)}</b>. ${esc(p.action || "Tentukan langkah berikutnya bersama pemilik.")}`,
+          meta: di, pid: p.id, ack: true
+        });
+      }
+      if (pend[1]) {
+        const p = pend[1], di = dueInfo(p);
+        items.push({
+          id: "bm-second", from: BM, cls: "bm", tag: ["Pengingat", "info"], time: "1 jam lalu",
+          msg: manager
+            ? `Pengingat ke <b>${esc(SELF)}</b>: <b>${esc(p.name)}</b> belum ada tindak lanjut sejak kunjungan ${esc(formatDate(p.date))}.`
+            : `<b>${esc(p.name)}</b> belum ada tindak lanjut sejak kunjungan ${esc(formatDate(p.date))}. Jadwalkan pertemuan lanjutan.`,
+          meta: di, pid: p.id
+        });
+      }
+      const sofi = prospects.find(p => p.officer === "Sofi" && p.status === "Pengajuan");
+      if (sofi) items.push({
+        id: "team-sofi", from: "Sofi", cls: "sofi", tag: ["Tim", "ok"], time: "Kemarin",
+        msg: `<b>Sofi</b> mengajukan <b>${esc(sofi.name)}</b> ke tahap pengajuan resmi. Pantau progres bersama.`,
+        pid: sofi.id
+      });
+      const rafli = prospects.find(p => p.officer === "Rafli" && p.status === "Follow-up");
+      if (rafli) items.push({
+        id: "team-rafli", from: "Rafli", cls: "rafli", tag: ["Tim", "ok"], time: "Kemarin",
+        msg: `<b>Rafli</b> menjadwalkan follow-up <b>${esc(rafli.name)}</b>. Jadwal ${esc(formatDate(rafli.followup))}.`,
+        pid: rafli.id
+      });
+      return items;
+    }
+
+    function render() {
+      const items = build();
+      const unread = items.filter(i => !read.has(i.id)).length;
+      dot.textContent = unread; dot.classList.toggle("is-empty", unread === 0);
+      $("notifSub").textContent = unread ? `${unread} belum dibaca` : "Semua sudah dibaca";
+      list.innerHTML = items.length ? items.map(i => `
+        <div class="notif-item ${read.has(i.id) ? "" : "unread"} ${i.urgent ? "urgent" : ""}" data-id="${i.id}">
+          <div class="notif-av ${i.cls}">${initials(i.from)}</div>
+          <div class="notif-body">
+            <div class="notif-line1"><strong>${esc(i.from)}</strong><span class="notif-tag ${i.tag[1]}">${i.tag[0]}</span><span class="notif-time">${i.time}</span></div>
+            <p class="notif-msg">${i.msg}</p>
+            ${i.meta ? `<div class="notif-meta ${i.meta.late ? "late" : ""}">${ic.cal}<span>${i.meta.text}</span></div>` : ""}
+            ${i.ack && acknowledged ? `<div class="notif-done">${ic.ok}Dikonfirmasi — Branch Manager sudah diberi tahu</div>` : `
+            <div class="notif-actions">
+              ${i.ack && currentRole !== "manager" ? `<button type="button" class="notif-btn primary" data-act="ack" data-id="${i.id}">Siap, saya follow up</button>` : ""}
+              <button type="button" class="notif-btn" data-act="open" data-pid="${i.pid}" data-id="${i.id}">Lihat Merchant</button>
+            </div>`}
+          </div>
+        </div>`).join("") : `<div class="notif-empty">Belum ada notifikasi.</div>`;
+    }
+
+    function setOpen(open) {
+      panel.hidden = !open;
+      btn.setAttribute("aria-expanded", String(open));
+      if (open) render();
+    }
+
+    btn.addEventListener("click", e => { e.stopPropagation(); setOpen(panel.hidden); });
+    panel.addEventListener("click", e => {
+      e.stopPropagation();
+      const b = e.target.closest("[data-act]");
+      if (!b) return;
+      read.add(b.dataset.id);
+      if (b.dataset.act === "ack") {
+        acknowledged = true;
+        showToast("Konfirmasi terkirim ke Branch Manager");
+        render();
+      } else if (b.dataset.act === "open") {
+        setOpen(false);
+        openDetail(b.dataset.pid);
+        render();
+      }
+    });
+    $("notifMarkAll").addEventListener("click", () => { build().forEach(i => read.add(i.id)); render(); });
+    $("notifGoProspects").addEventListener("click", () => { setOpen(false); navigate("prospects"); });
+    document.addEventListener("click", () => { if (!panel.hidden) setOpen(false); });
+    document.addEventListener("keydown", e => { if (e.key === "Escape" && !panel.hidden) { setOpen(false); btn.focus(); } });
+
+    // perbarui badge saat data atau peran berubah
+    const _renderAllN = renderAll;
+    renderAll = function () { _renderAllN(); render(); };
+    $("roleOfficerBtn").addEventListener("click", render);
+    $("roleManagerBtn").addEventListener("click", render);
+    render();
+  })();
 </script>
 </body>
 </html>
